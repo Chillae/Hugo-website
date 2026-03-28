@@ -1,0 +1,14 @@
+{{/* Dynamic sidebar that lists all posts */}}
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <h2 class="sidebar-title">Posts</h2>
+    <nav class="sidebar-list">
+      {{ $posts := where .Site.RegularPages "Type" "in" (site.Params.mainSections | compare.Default (collections.Slice "post")) }}
+      {{ range $posts.ByDate.Reverse }}
+        <a href="{{ .RelPermalink }}" class="sidebar-link {{ if eq .RelPermalink $.RelPermalink }}active{{ end }}">
+          {{ .Title }}
+        </a>
+      {{ end }}
+    </nav>
+  </div>
+</aside>
