@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE if Statements | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="RE if statements&hellip;">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/re-if-staements/re-if-statements/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/posts/re-if-staements/re-if-statements/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE if Statements">
+  <meta property="og:description" content="RE if statements…">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-03-28T20:20:00+11:00">
+    <meta property="article:modified_time" content="2026-03-28T20:20:00+11:00">
+
+  <meta itemprop="name" content="RE if Statements">
+  <meta itemprop="description" content="RE if statements…">
+  <meta itemprop="datePublished" content="2026-03-28T20:20:00+11:00">
+  <meta itemprop="dateModified" content="2026-03-28T20:20:00+11:00">
+  <meta itemprop="wordCount" content="493">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE if Statements">
+  <meta name="twitter:description" content="RE if statements…">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-if-statements">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <h2 class="sidebar-title">Posts</h2>
+    <nav class="sidebar-list">
+      
+      
+        <a href="/posts/re-if-staements/re-if-statements/" class="sidebar-link active">
+          RE if Statements
+        </a>
+      
+        <a href="/posts/re-intro/" class="sidebar-link ">
+          Reverse Engineering Introduction
+        </a>
+      
+        <a href="/posts/postn/" class="sidebar-link ">
+          My First Post!
+        </a>
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-if-statements flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE if Statements</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-03-28T20:20:00+11:00">March 28, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Simple if comparison:
+![[Pasted image 20260309183000.png]]</p>
+<p>IDA:
+![[Pasted image 20260309181925.png]]</p>
+<p>Red arrow is if the jge is true. Green arrow is &lsquo;fall through&rsquo;, (if jge was false)
+jge = jump if greater or equal to, looks at flags only set by cmp)</p>
+<p>Steps:
+1: rename our variables var_8 &amp; var_4
+![[Pasted image 20260309182459.png]]</p>
+<p>Here we can see we are setting our X and Y to 1 and 2.
+We then move X (1) into eax
+We then &lsquo;compare&rsquo; Y (2) against eax</p>
+<p>So what it is actually doing is:
+X(1) - Y(2) = -1, -1 is discarded but the flags remain.</p>
+<p>The Relevant Flags set:
+<strong>SF (Sign Flag)</strong> is set based on the most significant bit of the result:</p>
+<pre tabindex="0"><code>result positive (0 or above)  →  SF = 0 (FALSE)
+result negative               →  SF = 1 (TRUE)
+</code></pre><p>so SF = 1 (TRUE), as our result was -1 (int).
+Sign means: &ldquo;IS THERE A -&rsquo;ve SIGN?&rdquo; &lt;- remember this, otherwise it is confusing.</p>
+<p>JGE cheat sheet:
+result positive - SF=0 (FALSE) = jump
+jump result zero - SF=0  (FALSE) = jump
+jump result negative - SF=1 (TRUE) = don&rsquo;t jump</p>
+<p>So, in our process jge then checks if flag SF is = 0, if it is, go to loc_1400014C4
+In our case: SF = 1, so the jump is not taken and
+![[Pasted image 20260309193752.png]]
+loc_1400014C4 is not executed. the fall through red arrow rout is taken.</p>
+<p>lea rax, _Format ; &ldquo;x is less than y&rdquo;
+mov rcx, rax ; _Format call
+printf jmp short loc_1400014D3</p>
+<p>with this process, we are loading address of &lsquo;Format&rsquo; (address of first character in our string) into rax, then we move rax into rcx so printf can use it, because printf first argument is stored in rcx</p>
+<p>printf is just like calling a function, it can take several variables which are stored in pre specified registers.</p>
+<p>notice that the right block is missing the jump command that the left block has, this is because if we look back at our c code after our if statement we have a else statement to skip over if this is executed. Our else statement (right hand side, loc_1400014C4) has already jumped the else statement and will logically execute the loc_1400014D3 after printf.</p>
+<p><strong>printf additional info:</strong>
+In this case we are doing a simple print, but when using something like printf(&ldquo;x = %d&rdquo;, x) more than one variable is input into printf.</p>
+<p>rcx → 1st argument
+rdx → 2nd argument
+r8 → 3rd argument
+r9 → 4th argument</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>  <span style="color:#66d9ef">rdx</span>, <span style="color:#66d9ef">DWORD</span> <span style="color:#66d9ef">PTR</span> -<span style="color:#ae81ff">4</span>[<span style="color:#66d9ef">rbp</span>]  <span style="color:#75715e">; x → second argument
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">lea</span>  <span style="color:#66d9ef">rax</span>, <span style="color:#66d9ef">.LC0</span>[<span style="color:#66d9ef">rip</span>]           <span style="color:#75715e">; address of &#34;x = %d&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>  <span style="color:#66d9ef">rcx</span>, <span style="color:#66d9ef">rax</span>                 <span style="color:#75715e">; format string → first argument
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">call</span> <span style="color:#66d9ef">printf</span>
+</span></span></code></pre></div><p>Compared to the simple print we did in the example, which only needed rcx, this one also loads <code>x</code> into <code>rdx</code> as the second argument.</p>
+<p>Note: I told a small lie for simplicity with how JGE works, which will be explained in the loops lesson!</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
