@@ -9,9 +9,12 @@ summary = 'RE if statements...'
 
 
 Simple if comparison:
+
+
 ![Pasted image](images/Pasted%20image%2020260309183000.png)
 
 IDA:
+
 ![Pasted image](images/Pasted%20image%2020260309181925.png)
 
 Red arrow is if the jge is true. Green arrow is 'fall through', (if jge was false)
@@ -19,6 +22,7 @@ jge = jump if greater or equal to, looks at flags only set by cmp)
 
 Steps:
 1: rename our variables var_8 & var_4
+
 ![Pasted image](images/Pasted%20image%2020260309182459.png)
 
 Here we can see we are setting our X and Y to 1 and 2.
@@ -44,6 +48,7 @@ jump result negative - SF=1 (TRUE) = don't jump
 
 So, in our process jge then checks if flag SF is = 0, if it is, go to loc_1400014C4
 In our case: SF = 1, so the jump is not taken and 
+
 ![Pasted image](images/Pasted%20image%2020260309193752.png)
 loc_1400014C4 is not executed. the fall through red arrow rout is taken.
 

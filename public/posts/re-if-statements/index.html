@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53274&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
@@ -32,12 +32,12 @@
     
 
     
-      <link rel="canonical" href="http://localhost:53274/posts/re-if-statements/">
+      <link rel="canonical" href="http://localhost:1313/posts/re-if-statements/">
     
 
     
     
-    <meta property="og:url" content="http://localhost:53274/posts/re-if-statements/">
+    <meta property="og:url" content="http://localhost:1313/posts/re-if-statements/">
   <meta property="og:site_name" content="baseaddress.org">
   <meta property="og:title" content="RE if Statements">
   <meta property="og:description" content="RE if statements…">
@@ -133,15 +133,15 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Simple if comparison:
-<img src="images/Pasted%20image%2020260309183000.png" alt="Pasted image"></p>
-<p>IDA:
-<img src="images/Pasted%20image%2020260309181925.png" alt="Pasted image"></p>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Simple if comparison:</p>
+<p><img src="images/Pasted%20image%2020260309183000.png" alt="Pasted image"></p>
+<p>IDA:</p>
+<p><img src="images/Pasted%20image%2020260309181925.png" alt="Pasted image"></p>
 <p>Red arrow is if the jge is true. Green arrow is &lsquo;fall through&rsquo;, (if jge was false)
 jge = jump if greater or equal to, looks at flags only set by cmp)</p>
 <p>Steps:
-1: rename our variables var_8 &amp; var_4
-<img src="images/Pasted%20image%2020260309182459.png" alt="Pasted image"></p>
+1: rename our variables var_8 &amp; var_4</p>
+<p><img src="images/Pasted%20image%2020260309182459.png" alt="Pasted image"></p>
 <p>Here we can see we are setting our X and Y to 1 and 2.
 We then move X (1) into eax
 We then &lsquo;compare&rsquo; Y (2) against eax</p>
@@ -158,8 +158,8 @@ result positive - SF=0 (FALSE) = jump
 jump result zero - SF=0  (FALSE) = jump
 jump result negative - SF=1 (TRUE) = don&rsquo;t jump</p>
 <p>So, in our process jge then checks if flag SF is = 0, if it is, go to loc_1400014C4
-In our case: SF = 1, so the jump is not taken and
-<img src="images/Pasted%20image%2020260309193752.png" alt="Pasted image">
+In our case: SF = 1, so the jump is not taken and</p>
+<p><img src="images/Pasted%20image%2020260309193752.png" alt="Pasted image">
 loc_1400014C4 is not executed. the fall through red arrow rout is taken.</p>
 <p>lea rax, _Format ; &ldquo;x is less than y&rdquo;
 mov rcx, rax ; _Format call
@@ -190,7 +190,7 @@ r9 → 4th argument</p>
     </div>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
-  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:53274/" >
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
     &copy;  baseaddress.org 2026 
   </a>
     <div><div class="ananke-socials"></div>
