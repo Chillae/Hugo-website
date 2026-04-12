@@ -4,6 +4,7 @@ draft = false
 title = 'My First Post!'
 slug = 'postn'
 summary = 'About me...'
+weight = 2
 +++
 
 This is the introduction to my article.

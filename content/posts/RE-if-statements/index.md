@@ -4,6 +4,7 @@ draft = false
 title = 'RE if Statements'
 slug = 'RE - if statements'
 summary = 'RE if statements...'
+weight = 3
 +++
 
 
