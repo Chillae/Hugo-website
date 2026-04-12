@@ -9,6 +9,13 @@
     <lastBuildDate>Sat, 28 Mar 2026 20:20:00 +1100</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Introduction to Reverse Engineering! (RE)</title>
+      <link>http://localhost:1313/posts/re_intro/</link>
+      <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
+      <guid>http://localhost:1313/posts/re_intro/</guid>
+      <description>Introduction to Reverse Engineering - setup and tools required</description>
+    </item>
+    <item>
       <title>RE if Statements</title>
       <link>http://localhost:1313/posts/re-if-statements/</link>
       <pubDate>Sat, 28 Mar 2026 20:20:00 +1100</pubDate>
@@ -21,13 +28,6 @@
       <pubDate>Sat, 28 Mar 2026 20:01:51 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-intro/</guid>
       <description>Here we will delve into Reverse Engineering&amp;hellip;</description>
-    </item>
-    <item>
-      <title>My First Post!</title>
-      <link>http://localhost:1313/posts/postn/</link>
-      <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
-      <guid>http://localhost:1313/posts/postn/</guid>
-      <description>About me&amp;hellip;</description>
     </item>
   </channel>
 </rss>

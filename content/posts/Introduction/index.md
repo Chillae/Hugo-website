@@ -27,13 +27,13 @@ The following is a list of tools you will need to follow along. I will only be r
 
 | **Tool**            | **How to get it**                            | **Purpose**                                                |
 | ------------------- | -------------------------------------------- | ---------------------------------------------------------- |
-| **VSCode**          | code.visualstudio.com                        | Main editor                                                |
-| **C/C++ Extension** | VSCode Extensions tab                        | Syntax highlighting, IntelliSense                          |
-| **gcc (Windows)**   | Install MSYS2, then: pacman -S mingw-w64-gcc | Compile C on Windows                                       |
-| **Godbolt**         | godbolt.org - no install, browser tool       | See C → assembly instantly, side by side                   |
-| ASM extension       | VSCode Extensions tab                        | VSCODE addon to colour .s files: "x86 and x86_64 Assembly" |
-| IDA Free            | https://hex-rays.com/ida-free                | decompiler, good for visualising                           |
-| x64dbg              | https://x64dbg.com/                          | decompiler, good for tinkering                             |
+| **VSCode**          | code.visualstudio.com                        | **Main editor**                                             |
+| **C/C++ Extension** | VSCode Extensions tab                        | **Syntax highlighting, IntelliSense**                        |
+| **gcc (Windows)**   | Install MSYS2, then: pacman -S mingw-w64-gcc | **Compile C on Windows**                                    |
+| **Godbolt**         | godbolt.org - no install, browser tool       | **See C → assembly instantly, side by side**                  |
+| **ASM extension**       | VSCode Extensions tab                        | **VSCODE addon to colour .s files: "x86 and x86_64 Assembly"** |
+| **IDA Free**            | https://hex-rays.com/ida-free                | **decompiler, good for visualising**                         |
+| **x64dbg**              | https://x64dbg.com/                          | **decompiler, good for tinkering**                             |
 
 In this tutorial we will be learning assembly by writing programs in C, compiling an exe via GCC, and then disassembling it using IDA Free or x64dbg.
 

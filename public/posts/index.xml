@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on baseaddress.org</title>
-    <link>http://localhost:53274/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 28 Mar 2026 20:20:00 +1100</lastBuildDate>
-    <atom:link href="http://localhost:53274/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to Reverse Engineering! (RE)</title>
+      <link>http://localhost:1313/posts/re_intro/</link>
+      <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
+      <guid>http://localhost:1313/posts/re_intro/</guid>
+      <description>Introduction to Reverse Engineering - setup and tools required</description>
+    </item>
     <item>
       <title>RE if Statements</title>
-      <link>http://localhost:53274/posts/re-if-statements/</link>
+      <link>http://localhost:1313/posts/re-if-statements/</link>
       <pubDate>Sat, 28 Mar 2026 20:20:00 +1100</pubDate>
-      <guid>http://localhost:53274/posts/re-if-statements/</guid>
+      <guid>http://localhost:1313/posts/re-if-statements/</guid>
       <description>RE if statements&amp;hellip;</description>
     </item>
     <item>
       <title>Reverse Engineering Introduction</title>
-      <link>http://localhost:53274/posts/re-intro/</link>
+      <link>http://localhost:1313/posts/re-intro/</link>
       <pubDate>Sat, 28 Mar 2026 20:01:51 +1100</pubDate>
-      <guid>http://localhost:53274/posts/re-intro/</guid>
+      <guid>http://localhost:1313/posts/re-intro/</guid>
       <description>Here we will delve into Reverse Engineering&amp;hellip;</description>
-    </item>
-    <item>
-      <title>My First Post!</title>
-      <link>http://localhost:53274/posts/postn/</link>
-      <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
-      <guid>http://localhost:53274/posts/postn/</guid>
-      <description>About me&amp;hellip;</description>
     </item>
   </channel>
 </rss>
