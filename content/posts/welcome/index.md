@@ -5,4 +5,4 @@ title = 'Welcome'
 weight = 2
 +++
 
-blah blah blah
+blah blah blah website splash page with custom links to the things I am prod of. 
