@@ -9,7 +9,7 @@ weight = 3
 
 
 
-Simple if comparison:
+Simple if comparison: 
 
 
 ![Pasted image](images/Pasted%20image%2020260309183000.png)
