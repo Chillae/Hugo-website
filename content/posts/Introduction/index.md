@@ -1,7 +1,7 @@
 +++
 date = '2026-03-28T19:21:29+11:00'
 draft = false
-title = 'Introduction to Reverse Engineering! (RE)'
+title = 'RE 0: Introduction & Setup'
 slug = 'RE_Intro'
 summary = 'Introduction to Reverse Engineering - setup and tools required'
 weight = 1

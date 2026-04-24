@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 9: Trainer | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/re-trainer/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/posts/re-trainer/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 9: Trainer">
+  <meta property="og:description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-04-19T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-04-19T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 9: Trainer">
+  <meta itemprop="description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
+  <meta itemprop="datePublished" content="2026-04-19T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-04-19T00:00:00+11:00">
+  <meta itemprop="wordCount" content="875">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 9: Trainer">
+  <meta name="twitter:description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-trainer">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <h2 class="sidebar-title">Posts</h2>
+    <nav class="sidebar-list">
+      
+      
+        <a href="/posts/re_intro/" class="sidebar-link ">
+          RE 0: Introduction &amp; Setup
+        </a>
+      
+        <a href="/posts/re-hello-world/" class="sidebar-link ">
+          RE 1: Hello World
+        </a>
+      
+        <a href="/posts/re-if-statements/" class="sidebar-link ">
+          RE 2: IF Statements
+        </a>
+      
+        <a href="/posts/re-loops/" class="sidebar-link ">
+          RE 3: Loops
+        </a>
+      
+        <a href="/posts/re-password-cracking/" class="sidebar-link ">
+          RE 4: Password Cracking
+        </a>
+      
+        <a href="/posts/re-structs/" class="sidebar-link ">
+          RE 5: Structs
+        </a>
+      
+        <a href="/posts/re-xor-crackme/" class="sidebar-link ">
+          RE 6: XOR Crackme
+        </a>
+      
+        <a href="/posts/re-code-cave/" class="sidebar-link ">
+          RE 8: Code Cave
+        </a>
+      
+        <a href="/posts/re-trainer/" class="sidebar-link active">
+          RE 9: Trainer
+        </a>
+      
+        <a href="/posts/re-intro/" class="sidebar-link ">
+          Reverse Engineering Introduction
+        </a>
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-trainer flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 9: Trainer</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-04-19T00:00:00+11:00">April 19, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Game Code:
+<img src="images/Pasted%20image%2020260419133747.png" alt="">
+Same as the code cave &lsquo;game&rsquo;, but altered to run in a loop so the game doesn&rsquo;t close, to avoid new memory addresses being created.</p>
+<p>Game Trainer Code:
+<img src="images/Pasted%20image%2020260419211640.png" alt="">
+<img src="images/Pasted%20image%2020260419211855.png" alt="">
+<img src="images/Pasted%20image%2020260419211922.png" alt=""></p>
+<p>A code cave is one way to alter values within a program, another way is via windows API! We can essentially do the same thing but externally, without altering the original exe. If you remember downloading CheatEngine trainers back in the day, that is the method we will do next.</p>
+<p><strong>What is a trainer?</strong> A trainer is a separate program that runs alongside your target and modifies its memory from the outside using Windows API calls. No patching, no code cave, the original exe is untouched.</p>
+<p>So, lets get into our game-trainer trainer code and explain what it is doing! The first step being just read through the code and get a vague idea of what it is doing.</p>
+<p>At a high level our trainer will do the following:</p>
+<ol>
+<li>get the unique ID (process ID) of the program we wish to alter</li>
+<li>using this process ID, get the base address of the program + offset</li>
+<li>access the struct for the character</li>
+<li>access the players health/gold</li>
+<li>update the players health/gold</li>
+</ol>
+<p><strong>The Windows API calls we use:</strong></p>
+<ul>
+<li><code>OpenProcess</code> - gets a handle (unique identifier) to the target process (our game)</li>
+<li><code>ReadProcessMemory</code> - reads a value from the target&rsquo;s memory (i.e. players health)</li>
+<li><code>WriteProcessMemory</code> - writes a value to the target&rsquo;s memory (update health to 100)</li>
+</ul>
+<hr>
+<p><strong>Finding the health address with Cheat Engine:</strong></p>
+<p>Before writing the trainer you need to find a <strong>pointer chain</strong> that always leads to the health value regardless of ASLR. In Cheat Engine:</p>
+<ol>
+<li>Launch <code>8_code_cave.exe</code></li>
+<li>Attach Cheat Engine to the process</li>
+<li>Scan for the value <code>100</code> (initial health)</li>
+<li>Let the game run one round so health drops to <code>75</code></li>
+<li>Scan for <code>75</code> to narrow down the addresses</li>
+</ol>
+<p><img src="images/Pasted%20image%2020260419105009.png" alt=""></p>
+<p>Wow, wasn&rsquo;t that easy! Or so you thought. The main problem with this approach is that if we hard-code this address, it is just an arbitrary address somewhere in memory. What happens if the user closes the game, opens something else that uses that part of memory, and then reopens the game? That memory address is no longer used by our game!
+So what do we do? We need to find the <strong>base address</strong> of health. The address we&rsquo;ve found is a good start, but it has the flaw mentioned previously. We need the base address, which is the offset from the start of the program to the health value, this offset will always be the same. In layman&rsquo;s terms, we reference where the health is based on where the program starts, meaning the health address will always be consistent.</p>
+<p>Now lets find our base address using the pointer scanner tool in cheat engine:
+<img src="images/Pasted%20image%2020260419123750.png" alt=""></p>
+<p>this last item: 9_game_trainer_game.exe+000070A8, with offset 344 is the one we want.
+Relaunch the .exe and complete a scan again, you will need to re find the value for health. Compare results, if the resulting base address is the same we have found a stable base address pointer. Anything with &lsquo;THREADSTACK&rsquo; should be ignored.</p>
+<p>now that we have: 9_game_trainer_game.exe+000070A8 + 344 lets re-add this to cheat engine to double verify it is correct.
+<img src="images/Pasted%20image%2020260419124345.png" alt="">
+as we currently had 50 health, this is correct!</p>
+<p>Now, this address and offset that we have goes directly to the health value, which is good, but what if we also wanted to update our gold? We know our health lives within a character struct, so if we get the base address of the struct, instead of directly to the health, then we can also easily alter the gold, or even the name of the player.</p>
+<p>To do this:</p>
+<ol>
+<li>Add the static address pointer &lsquo;9_game_trainer_game.exe+000070A8 + 344&rsquo; to cheat engine</li>
+<li>Take note of the address it provides us with, this is the address of health (F4911FFA14):</li>
+</ol>
+<p><img src="images/Pasted%20image%2020260419151636.png" alt=""></p>
+<ol start="3">
+<li>right click on this added address -&gt; &ldquo;find what access this address&rdquo; -&gt; &ldquo;Find what accesses the address pointed at by this pointer&rdquo;</li>
+</ol>
+<p><img src="images/Pasted%20image%2020260419152201.png" alt="">
+Here we can see what items are accessing the addresses this pointer points to, the first instruction we can see mov eax, [rax+14], if you remember our previous lessons, this offset looks very much like an offset to reference an item in a struct.</p>
+<ol start="4">
+<li>so if rax + 14 = health, then rax - 14 is likely the base address for our struct. F4911FFA14 - 14 = F4911FFA00, we can check this in cheat engine struct viewer via Ctrl+M to open memory viewer then tools -&gt; struct dissector tool and we get:</li>
+</ol>
+<p><img src="images/Pasted%20image%2020260419143847.png" alt=""></p>
+<ol start="5">
+<li>
+<p>Now we have our struct base address F4911FFA00, we should add this as a address in cheat engine and repeat the pointer scanning process which gives us:
+&ldquo;9_game_trainer_game.exe&rdquo;+000070A8 + 330.
+You may also notice that our original base address was:
+&ldquo;&lsquo;9_game_trainer_game.exe+000070A8 + 344.&rdquo;, which checks out perfectly as an offset of -14 from directly to health, goes to the start of the character struct.</p>
+</li>
+<li>
+<p>Now we have these values, lets update our trainer code, while our game is running:</p>
+</li>
+</ol>
+<pre tabindex="0"><code>#define BASE_OFFSET 0x70A8  // offset from exe base to the first pointer
+#define CHARACTER_STRUCT_OFFSET 0x330  //character struct base address
+#define HEALTH_OFFSET 0x14  // offset from pointer to health field
+#define GOLD_OFFSET 0x18    // offset from pointer to gold field
+</code></pre><p><img src="images/Pasted%20image%2020260419182137.png" alt="">
+Success!</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

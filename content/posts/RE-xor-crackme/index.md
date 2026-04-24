@@ -1,7 +1,7 @@
 +++
 date = '2026-04-01T00:00:00+11:00'
 draft = false
-title = 'RE: XOR Crackme'
+title = 'RE 6: XOR Crackme'
 slug = 'RE - xor crackme'
 summary = 'Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.'
 weight = 7

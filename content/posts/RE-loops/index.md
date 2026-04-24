@@ -1,7 +1,7 @@
 +++
 date = '2026-03-11T00:00:00+11:00'
 draft = false
-title = 'RE: Loops'
+title = 'RE 3: Loops'
 slug = 'RE - loops'
 summary = 'Reverse engineering for loops and while loops in IDA Free.'
 weight = 4

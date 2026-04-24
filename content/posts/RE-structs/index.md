@@ -1,7 +1,7 @@
 +++
 date = '2026-03-30T00:00:00+11:00'
 draft = false
-title = 'RE: Structs'
+title = 'RE 5: Structs'
 slug = 'RE - structs'
 summary = 'Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.'
 weight = 6

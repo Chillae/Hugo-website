@@ -1,7 +1,7 @@
 +++
 date = '2026-04-19T00:00:00+11:00'
 draft = false
-title = 'RE: Trainer'
+title = 'RE 9: Trainer'
 slug = 'RE - trainer'
 summary = 'Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.'
 weight = 9

@@ -1,7 +1,7 @@
 +++
 date = '2026-04-14T00:00:00+11:00'
 draft = false
-title = 'RE: Code Cave'
+title = 'RE 8: Code Cave'
 slug = 'RE - code cave'
 summary = 'Creating a code cave in x64dbg to intercept and modify program logic at runtime.'
 weight = 8

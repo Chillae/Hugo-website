@@ -1,7 +1,7 @@
 +++
 date = '2026-04-12T00:00:00+11:00'
 draft = false
-title = 'RE: Hello World'
+title = 'RE 1: Hello World'
 slug = 'RE - hello world'
 summary = 'Reverse engineering a hello world program in IDA Free.'
 weight = 2

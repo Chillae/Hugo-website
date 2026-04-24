@@ -1,7 +1,7 @@
 +++
 date = '2026-03-16T00:00:00+11:00'
 draft = false
-title = 'RE: Password Cracking'
+title = 'RE 4: Password Cracking'
 slug = 'RE - password cracking'
 summary = 'Multiple methods to crack a simple password protected program using IDA Free and x64dbg.'
 weight = 5
