@@ -1,13 +1,40 @@
-{{/* Dynamic sidebar that lists all posts */}}
+{{/* Sidebar: top-level sections → sub-sections → posts */}}
+{{ $currentPage := . }}
+
 <aside class="sidebar-nav">
   <div class="sidebar-content">
-    <h2 class="sidebar-title">Posts</h2>
-    <nav class="sidebar-list">
-      {{ $posts := where .Site.RegularPages "Type" "in" (site.Params.mainSections | compare.Default (collections.Slice "post")) }}
-      {{ range $posts.ByWeight }}
-        <a href="{{ .RelPermalink }}" class="sidebar-link {{ if eq .RelPermalink $.RelPermalink }}active{{ end }}">
-          {{ .Title }}
-        </a>
+    <nav>
+      {{ range .Site.Sections.ByWeight }}
+        {{ if ne .Section "posts" }}
+          {{ $section := . }}
+          {{ $sectionActive := or (eq $currentPage.RelPermalink $section.RelPermalink) ($currentPage.IsDescendant $section) }}
+
+          <a href="{{ $section.RelPermalink }}"
+             class="sidebar-section-link{{ if $sectionActive }} active{{ end }}">
+            {{ $section.Title }}
+          </a>
+
+          {{ if $sectionActive }}
+            {{ range $section.Sections.ByWeight }}
+              {{ $sub := . }}
+              {{ $subActive := or (eq $currentPage.RelPermalink $sub.RelPermalink) ($currentPage.IsDescendant $sub) }}
+
+              <a href="{{ $sub.RelPermalink }}"
+                 class="sidebar-sub-link{{ if $subActive }} active{{ end }}">
+                {{ $sub.Title }}
+              </a>
+
+              {{ if $subActive }}
+                {{ range $sub.Pages.ByWeight }}
+                  <a href="{{ .RelPermalink }}"
+                     class="sidebar-post-link{{ if eq .RelPermalink $currentPage.RelPermalink }} active{{ end }}">
+                    {{ .Title }}
+                  </a>
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
       {{ end }}
     </nav>
   </div>

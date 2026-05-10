@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 3: Loops | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Reverse engineering for loops and while loops in IDA Free.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/re/beginner-tutorial/re-loops/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/re/beginner-tutorial/re-loops/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 3: Loops">
+  <meta property="og:description" content="Reverse engineering for loops and while loops in IDA Free.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-03-11T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-03-11T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 3: Loops">
+  <meta itemprop="description" content="Reverse engineering for loops and while loops in IDA Free.">
+  <meta itemprop="datePublished" content="2026-03-11T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-03-11T00:00:00+11:00">
+  <meta itemprop="wordCount" content="861">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 3: Loops">
+  <meta name="twitter:description" content="Reverse engineering for loops and while loops in IDA Free.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-loops">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link active">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-loops flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 3: Loops</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-03-11T00:00:00+11:00">March 11, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Simple for loop which prints i if odd.
+<img src="images/Pasted%20image%2020260311201007.png" alt=""></p>
+<p>IDA:
+<img src="images/Pasted%20image%2020260311201140.png" alt=""></p>
+<p><img src="images/Pasted%20image%2020260311203058.png" alt="">
+Var_4 is our i, we allocate some space to hold this int
+we do our prologue
+we then put our starter value of 1 into var_4 (i)
+and we begin our loop at loc_1400014D4</p>
+<p><img src="images/Pasted%20image%2020260311223320.png" alt="">
+loc_1400014D4 initializes our comparison of i &lt; <strong>10</strong>, which is identical, logically, to &lt;=9, which is assessed via JLE (Jump if less than or equal to), lets break that down</p>
+<p>CMP &lsquo;compares&rsquo; the two numbers by subtracting the second argument (9) from the first argument (1, for our first iteration of the loop), throws away the result and sets flags, two of which are relevant to the next step JLE:</p>
+<pre tabindex="0"><code>The Zero Flag (ZF) - Set to 1 if the result was exactly zero (meaning `i == 9`)
+The Sign Flag (SF) - Set to 1 if the result was negative (meaning `i &lt; 9`)
+For our first loop (where i = 1) the math works out like this: CMP: 1 - 9(i) = -8, so ZF = 0, SF = 1.
+</code></pre><p>But how can we work out if i is &lt;= 9 using only ZF and SF? There is no combination of AND, OR or != which allows this!</p>
+<pre tabindex="0"><code>ZF only fires when i = 9, and SF only fires when the result is -&#39;ve. 
+But what about when i is 5? 5 - 9 = -4, SF = 1, ZF = 0 
+	What about when i is 9? 9 - 9 = 0, SF = 0, ZF = 1 
+				or i is 16? 16 - 9 = 7, SF = 0, ZF = 0
+</code></pre><p><img src="images/cute%20cat%20board.png" alt=""></p>
+<p>That&rsquo;s where the <strong>Overflow Flag (OF)</strong> comes in, it tells us whether the arithmetic produced a trustworthy result or whether something went wrong (overflow).</p>
+<p>So JLE actually does this:</p>
+<pre tabindex="0"><code>ZF = 1 (i == 9, they were equal)
+OR
+SF ≠ OF (i &lt; 9, signed less than, accounting for overflow)
+</code></pre><p>For our first iteration where: i=1: <code>1 - 9 = -8</code>, so,</p>
+<pre tabindex="0"><code>ZF = 0 (False)
+OR 
+(SF = 1, OF = 0), SF ≠ OF (1 ≠ 0) = 1 (True)
+</code></pre><p>the condition is True and JLE takes the green arrow into the loop body loc_1400014A6!!!</p>
+<pre tabindex="0"><code>SF ≠ OF Cheat sheet;
+
+SF = 1, OF = 0 - no overflow, result is trustworthy,  SF = 1 means i &lt; 9  ✓
+SF = 0, OF = 1 - overflow occurred, SF is a lie,      true result means i &lt; 9  ✓
+SF = 0, OF = 0 - no overflow, result is trustworthy,  SF = 0 means i &gt; 9  ✗
+SF = 1, OF = 1 - overflow occurred, SF is a lie,      true result means i &gt; 9  ✗
+</code></pre><p>Loop body:
+<img src="images/Pasted%20image%2020260312202653.png" alt="">
+(explain the stuff here about checking last bit of dword?? for 1 or 0 to determine if negative or possitive because all negative numbers will end with a 1, because binary!!! + does some other stuff to account for in case i = -&rsquo;ve number)</p>
+<p>jnz (jump if not zero, completed by comparing zero flags) simply compares eax to 1, so either 1 - 1 or 0 - 1 occurs, depending if the number is even or odd, if it is odd the printf executes with two arguments, the value of i and the formatting!</p>
+<pre tabindex="0"><code>mov  eax, [rbp+var_4]    ; first argument - the value of i
+lea  rcx, _Format        ; second argument - the format string &#34;%d\n&#34;
+mov  edx, eax
+call printf
+</code></pre><p>Now, back to our check before we enter the loop body:
+<img src="images/Pasted%20image%2020260312202522.png" alt=""></p>
+<p>For our second last iteration where: i=9: 9(i) - 9 = 0, so:</p>
+<pre tabindex="0"><code>ZF = 1 (True)
+OR 
+(SF = 0, OF = 0), SF ≠ OF (0 ≠ 0) = 0 (False)
+</code></pre><p>hence our JLE check is True, and the jump occurs, following the green arrow. (box on left)</p>
+<p>For our last iteration where: i=10: 10 - 9 = 1, so:</p>
+<pre tabindex="0"><code>ZF = 0 (False)
+OR 
+(SF = 0, OF = 0), SF ≠ OF (0 ≠ 0) = 0 (False)
+</code></pre><p>Which causes JLE to be FALSE and take the fall through, red arrow rout (box on right), ending the loop!</p>
+<p><img src="images/Pasted%20image%2020260311224823.png" alt=""></p>
+<p>SHOULD COMPARE THIS AGAINST A WHILE LOOP and see difference in IDA. see last box here actually gets executed even after the printf occurs, is there a type of loop that doesn&rsquo;t do this?</p>
+<p>do while loop:
+<img src="images/Pasted%20image%2020260311202722.png" alt=""></p>
+<p>IDA:
+<img src="images/Pasted%20image%2020260311202706.png" alt=""></p>
+<p>Logically you would think jle checks that ZF = 1 &amp; SF = 1, that makes sense right? But computers love to make these things extra complicated! Lets introduce the Overflow Flag (OF).</p>
+<p>What jle is actually doing is:</p>
+<pre tabindex="0"><code>ZF = 1 (they were equal) 
+OR 
+SF ≠ OF (signed less than)
+</code></pre><pre tabindex="0"><code>SF = 1, OF = 0  →  result genuinely negative       → i &lt; 9  ✓
+SF = 0, OF = 1  →  overflow made negative wrap to positive → i &lt; 9  ✓
+SF = 0, OF = 0  →  result genuinely positive        → i &gt; 9  ✗
+SF = 1, OF = 1  →  overflow made positive wrap to negative → i &gt; 9  ✗
+</code></pre><p>Trying to understand this too soon just adds unnecessary confusion, at least it did for me!</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

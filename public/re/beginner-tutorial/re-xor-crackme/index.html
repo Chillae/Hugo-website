@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 6: XOR Crackme | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/re/beginner-tutorial/re-xor-crackme/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/re/beginner-tutorial/re-xor-crackme/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 6: XOR Crackme">
+  <meta property="og:description" content="Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-04-01T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-04-01T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 6: XOR Crackme">
+  <meta itemprop="description" content="Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.">
+  <meta itemprop="datePublished" content="2026-04-01T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-04-01T00:00:00+11:00">
+  <meta itemprop="wordCount" content="724">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 6: XOR Crackme">
+  <meta name="twitter:description" content="Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-xor-crackme">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link active">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-xor-crackme flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 6: XOR Crackme</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-04-01T00:00:00+11:00">April 1, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Code:
+<img src="images/Pasted%20image%2020260401222534.png" alt=""></p>
+<p>IDA:
+<img src="images/Pasted%20image%2020260401222718.png" alt="">
+<img src="images/Pasted%20image%2020260401222759.png" alt=""></p>
+<p>XOR tutorial:</p>
+<p>You remember OR, AND etc, XOR returns true only if the two items compared are different, so if we have:</p>
+<pre tabindex="0"><code>1 XOR 1 = 0
+1 XOR 0 = 1
+0 XOR 0 = 0
+0 XOR 1 = 1
+
+and some more examples:
+
+110101 XOR 101010 = 011111
+111111 XOR 101010 = 010101
+</code></pre><p>So, what&rsquo;s so special about this? Well, hex is just binary, 1&rsquo;s and 0&rsquo;s.
+So we can apply a XOR against the hex that represents our characters of our password! But we also need to choose something to XOR it with, which we will call our key.</p>
+<p>Now there&rsquo;s something really cool about XORs, which is, they&rsquo;re reversable! What that means is if we want to hide something away from human eyes (and brains) then we can XOR it to hide it in plain sight and convert it back as we need.
+Remember back to the previous password RE lesson we did and how easily we found the password by searching for strings? XOR obfuscation directly counteracts that, because the password is stored as meaningless scrambled bytes in the binary and only decoded back to the original at runtime when the program actually needs it.</p>
+<p>So,</p>
+<pre tabindex="0"><code>original XOR key = scrambled
+scrambled XOR key = original
+</code></pre><p>Lets take our old password &lsquo;banana&rsquo; and convert it to hex, then run it through an XOR against a &lsquo;random&rsquo; key we chose (0x43)!</p>
+<pre tabindex="0"><code>b = 0x62 XOR 0x43 = 0x21
+a = 0x61 XOR 0x43 = 0x22
+n = 0x6E XOR 0x43 = 0x2D
+a = 0x61 XOR 0x43 = 0x22
+n = 0x6E XOR 0x43 = 0x2D
+a = 0x61 XOR 0x43 = 0x22
+</code></pre><p>Now we can store our password as 0x21, 0x22, 0x2D, 0x22, 0x2D, 0x22!</p>
+<p>Now we understand XORing, lets briefly go through what is happening in our decompiled IDA  screenshot</p>
+<p>first we set up our stack frame size via <code>sub rsp 60h</code> 0x60 (96 bytes of decimal, remember this size needs to be divisible by 16!)</p>
+<p>we then enter our decode loop at loc_1400014CE (first green arrow), we execute the code until our string is decoded, then fall through to our comparison of the decoded data against our user input (first red arrow), depending on the outcome we either tell the user they&rsquo;re in (second red arrow), or they&rsquo;ve entered the wrong password (second green arrow)!</p>
+<p>Don&rsquo;t get too caught up in the weeds if you don&rsquo;t understand each and every step, but with what we&rsquo;ve learned so far you should be able to identify basic loops, decoding, where user input is taken and compared.</p>
+<p>Now, lets try and crack this extremely complex XOR encrypted password&hellip;</p>
+<p>Once again this is quite easy to crack in x64dbg by intercepting the decrypted password right before it gets compared against the user input (lol) and either changing that to what the user entered or vise versa, either one works!
+<img src="images/Pasted%20image%2020260408200744.png" alt=""></p>
+<p>&amp; Connecting all the dots, RDX contains an address which we can view in the memory dump by right clicking in the dump and using the &lsquo;go to -&gt; expression&rsquo; function, pasting in the expression copied from RDX.
+<img src="images/Pasted%20image%2020260408201036.png" alt=""></p>
+<p>if we set RDX = RAX or vise versa at this point, our test will always pass.</p>
+<p><img src="images/Pasted%20image%2020260408201140.png" alt=""></p>
+<p>The more common method than decoding the password to compare aginst user input would be to actually encrypt the user input then compare that against the password, that way the password never has to be decrypted and exposed in plaintext. Although given the key is stored in the code, finding the key would unlock the password. Cracking a program like this would be the same process, except with that additional step!</p>
+<p>this is called security through obscurity. Its not removing all possibilities to crack a program, but each additional barrier does effectively stop as many people breaking your program.</p>
+<p>What real software does instead:
+Use a one way hash like SHA256 or bcrypt. These are designed so you can verify a password without being able to reverse it:</p>
+<ul>
+<li>Store <code>SHA256(&quot;banana&quot;)</code> in the binary</li>
+<li>Hash the user input and compare the two hashes</li>
+<li>There&rsquo;s no key to find because there&rsquo;s nothing to reverse</li>
+</ul>
+<p>Even then a determined reverser could brute force common passwords against the stored hash, which is why real software adds a salt and uses slow hashing algorithms to make brute forcing expensive.</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

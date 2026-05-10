@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 0: Introduction &amp; Setup | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Introduction to Reverse Engineering - setup and tools required">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/re/beginner-tutorial/re_intro/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/re/beginner-tutorial/re_intro/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 0: Introduction & Setup">
+  <meta property="og:description" content="Introduction to Reverse Engineering - setup and tools required">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-03-28T19:21:29+11:00">
+    <meta property="article:modified_time" content="2026-03-28T19:21:29+11:00">
+
+  <meta itemprop="name" content="RE 0: Introduction & Setup">
+  <meta itemprop="description" content="Introduction to Reverse Engineering - setup and tools required">
+  <meta itemprop="datePublished" content="2026-03-28T19:21:29+11:00">
+  <meta itemprop="dateModified" content="2026-03-28T19:21:29+11:00">
+  <meta itemprop="wordCount" content="508">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 0: Introduction & Setup">
+  <meta name="twitter:description" content="Introduction to Reverse Engineering - setup and tools required">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-Introduction">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link active">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-Introduction flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 0: Introduction &amp; Setup</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-03-28T19:21:29+11:00">March 28, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Hello!</p>
+<h2 id="about-me">About me</h2>
+<p>My first introduction to programming was learning how to write Runescape bots using Simba and Scar many years ago. Watching my mouse move on its own, following an algorithm I had written, was something to wonder at.</p>
+<p>Ever since then I&rsquo;ve always had an interest in programming and computers. I&rsquo;ve dabbled with Visual Basic, Python, and a few others along the way.</p>
+<p>I make no claim to be an expert. I try my best to make everything I write as accurate as possible, but given I am also learning, there will be mistakes. I find the act of writing about what I am learning a great way to truly commit it to memory, I recommend you take your own notes too, as writing things down reinforces knowledge in a way that just reading never quite does.</p>
+<p>Reverse engineering has always fascinated me. My brain works best when I understand how something works at a base level, it helps me understand things more thoroughly and build bigger and better things on top of that foundation. Understanding how a computer fundamentally works has always been a goal of mine.</p>
+<p>Come along for the ride.</p>
+<h2 id="required-tools">Required Tools</h2>
+<p>The following is a list of tools you will need to follow along. I will only be recommending tools for Windows machines.</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Tool</strong></th>
+          <th><strong>How to get it</strong></th>
+          <th><strong>Purpose</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>VSCode</strong></td>
+          <td>code.visualstudio.com</td>
+          <td><strong>Main editor</strong></td>
+      </tr>
+      <tr>
+          <td><strong>C/C++ Extension</strong></td>
+          <td>VSCode Extensions tab</td>
+          <td><strong>Syntax highlighting, IntelliSense</strong></td>
+      </tr>
+      <tr>
+          <td><strong>gcc (Windows)</strong></td>
+          <td>Install MSYS2, then: pacman -S mingw-w64-gcc</td>
+          <td><strong>Compile C on Windows</strong></td>
+      </tr>
+      <tr>
+          <td><strong>Godbolt</strong></td>
+          <td>godbolt.org - no install, browser tool</td>
+          <td><strong>See C → assembly instantly, side by side</strong></td>
+      </tr>
+      <tr>
+          <td><strong>ASM extension</strong></td>
+          <td>VSCode Extensions tab</td>
+          <td><strong>VSCODE addon to colour .s files: &ldquo;x86 and x86_64 Assembly&rdquo;</strong></td>
+      </tr>
+      <tr>
+          <td><strong>IDA Free</strong></td>
+          <td><a href="https://hex-rays.com/ida-free">https://hex-rays.com/ida-free</a></td>
+          <td><strong>decompiler, good for visualising</strong></td>
+      </tr>
+      <tr>
+          <td><strong>x64dbg</strong></td>
+          <td><a href="https://x64dbg.com/">https://x64dbg.com/</a></td>
+          <td><strong>decompiler, good for tinkering</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>In this tutorial we will be learning assembly by writing programs in C, compiling an exe via GCC, and then disassembling it using IDA Free or x64dbg.</p>
+<p>The instructions below also generate an .s file containing the assembly instructions, which you can view directly in VSCode, but I would highly recommend downloading and installing IDA Free and x64dbg instead.</p>
+<p>I will not be going over how to use x64dbg or IDA Free in depth, as beginner tutorials can be found on YouTube, although basic usage of these tools will be explained along the way.</p>
+<h2 id="to-view-assembly-output">To View Assembly Output</h2>
+<p>Here&rsquo;s a windows .bat file you can run in your code directory to build the .exe&rsquo;s and .s files:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-batch" data-lang="batch"><span style="display:flex;"><span>@<span style="color:#66d9ef">echo</span> off
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exist</span> build <span style="color:#66d9ef">mkdir</span> build
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#ae81ff">%%</span>f <span style="color:#66d9ef">in</span> (*.c) <span style="color:#66d9ef">do</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> Compiling <span style="color:#ae81ff">%%</span>f...
+</span></span><span style="display:flex;"><span>    gcc -S -O0 -fverbose-asm -masm=intel <span style="color:#ae81ff">%%</span>f &amp;&amp; gcc -O0 -o build\<span style="color:#ae81ff">%%</span>~nf.exe <span style="color:#ae81ff">%%</span>f
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">copy</span> <span style="color:#ae81ff">%%</span>~nf.s build\<span style="color:#ae81ff">%%</span>~nf.s &gt;nul
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">del</span> <span style="color:#ae81ff">%%</span>~nf.s
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> Done: build\<span style="color:#ae81ff">%%</span>~nf.exe + build\<span style="color:#ae81ff">%%</span>~nf.s
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> All done!
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pause</span>
+</span></span></code></pre></div><p>Run with <code>cmd /c &lt;DIR&gt;\build_all.bat</code> from powershell terminal.</p>
+<p>This is the most important step for your RE understanding, you should do it. Interact with the assembly, don&rsquo;t just read this tutorial!</p>
+<p><strong>Single line command</strong> if you want both .s and .exe output:</p>
+<pre tabindex="0"><code>gcc -S -O0 -fverbose-asm -masm=intel &lt;FNAME&gt;.c &amp;&amp; gcc -O0 -o &lt;FNAME&gt;.exe &lt;FNAME&gt;.c
+</code></pre><ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 4: Password Cracking | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/re/beginner-tutorial/re-password-cracking/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/re/beginner-tutorial/re-password-cracking/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 4: Password Cracking">
+  <meta property="og:description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-03-16T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-03-16T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 4: Password Cracking">
+  <meta itemprop="description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
+  <meta itemprop="datePublished" content="2026-03-16T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-03-16T00:00:00+11:00">
+  <meta itemprop="wordCount" content="1282">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 4: Password Cracking">
+  <meta name="twitter:description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-password-cracking">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link active">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-password-cracking flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 4: Password Cracking</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-03-16T00:00:00+11:00">March 16, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Our code:
+<img src="images/Pasted%20image%2020260316210814.png" alt=""></p>
+<p>Lets first look at the program in Ida Free to see what it does:
+<img src="images/Pasted%20image%2020260322211849.png" alt=""></p>
+<p>As our code is becoming more complex, we have more &rsquo;things&rsquo; stored in .rdata (read only data section, contains all of our constant data that doesn&rsquo;t change at runtime) section:
+<img src="images/Pasted%20image%2020260322210006.png" alt=""></p>
+<p>Here we can see all of our string literals stored in .rdata, along with the auto-generated names IDA has assigned them.
+<img src="images/Pasted%20image%2020260327224834.png" alt="">
+These names are derived from the parameter names of the CRT (C Runtime Library) functions they are passed to as arguments for example, fgets declares its first parameter as buffer, so IDA names that string literal Buffer.</p>
+<pre tabindex="0"><code>Buffer - &#39;Enter password prompt&#39;    - from fgets(buffer)
+Control - &#39;0Ah is hex for \n&#39;       - from strcspn(str, control)
+_Format - &#39;You entered: ...&#39;        - from printf(format)
+aYouEnter...                      - from printf, but format was already taken?
+</code></pre><p>This makes it more confusing to read initially, but once you realize you can hover over the call to fgets_0 for example, and see that the comments align with the function:</p>
+<p><img src="images/Pasted%20image%2020260322214041.png" alt="">
+These functions are call&rsquo;s due to CRT functions are pre-compiled in assembly, and are called as needed. these items come from &lt;.h&gt; includes.</p>
+<p>So, with that in mind, lets read what this actually does!</p>
+<p>First step is to print the output for the user to read:
+<img src="images/Pasted%20image%2020260327225334.png" alt="">
+this is achieved via puts_0, which loads the string we want to print into rcx!
+Puts is just like a function in programming language, we call it and pass in one variable which is located at a pre defined register. In this case rcx stores the pointer (address) to the string of what we want to print.</p>
+<p>Puts i/o:</p>
+<pre tabindex="0"><code>lea rax, Buffer ; load address of &#34;Type in ze password!: &#34; 
+mov rcx, rax ; 1st arg of puts (in rcx) = Buffer (the string to print)
+</code></pre><p><img src="images/Pasted%20image%2020260328172348.png" alt="">
+then, set up the keyboard stream for the user input, in a two step process:</p>
+<pre tabindex="0"><code>mov  ecx, 0                        ; 1st arg = 0 (requesting stdin, keyboard in)
+mov  rax, cs:__imp___acrt_iob_func ; load function address from import table
+call rax                           ; call it, returns stdin pointer in rax
+</code></pre><p>cs:imp___acrt_iob_func takes the argument 0 (stored in ecx), then stores the address to the function in rax, then we call the function.</p>
+<p>Once the function is called, then the output has overwritten rax with the pointer to stdin (keyboard input stream)</p>
+<pre tabindex="0"><code>mov  rdx, rax                      ; save stdin pointer into rdx (ready for fgets)
+lea  rax, [rbp+Variables]          ; load userInput address (ready for fgets)
+</code></pre><p>then, get the user input:
+fgets i/o:
+<img src="images/Pasted%20image%2020260322213257.png" alt=""></p>
+<pre tabindex="0"><code>mov  r8, rdx         ; 3rd arg = Stream (stdin pointer, user input via keyboard,)
+mov  edx, 14h        ; 2nd arg = MaxCount (0x14 = 20, your buffer size)
+mov  rcx, rax        ; 1st arg = Buffer (your userInput pointer, where to write)
+call fgets_0
+</code></pre><p>now our user input is saved into the userInput memory location (variable)!</p>
+<p>We then do strcmp on the remaining user input string and our password:
+strcmp i/o:
+<img src="images/Pasted%20image%2020260322213339.png" alt=""></p>
+<pre tabindex="0"><code>lea  rax, [rbp+Variables]  ; load address of userInput
+mov  rcx, rax              ; 1st arg = Str1 (userInput, what the user typed)
+mov  rdx, password         ; 2nd arg = Str2 (&#34;banana&#34;, the correct password)
+call strcmp                ; compares strings, returning 0 to eax if all match
+test eax, eax              ; check if return value is 0
+jnz  short loc_14000151F   ; jump to wrong password branch if not 0
+</code></pre><p>Now we know if the user input &lsquo;matched&rsquo; the password, or not, and then print the result either way.</p>
+<p><img src="images/Pasted%20image%2020260322220508.png" alt=""></p>
+<p>Complete!</p>
+<p>Now we understand what the program does, we can bend and break it to do what we want, in this case, we want to trick the program into thinking we entered the correct password when we didnt! For this we will use x64dbg.</p>
+<p>pre-setup:
+This .exe will exit instantly once complete, to stop this:
+in x64dbg: click symbols tab, find kernel32, click it, find ExitProcess, then add breakpoint to it
+<img src="images/Pasted%20image%2020260316210636.png" alt=""></p>
+<p>First method:
+In our code we compare the userInput against the password, banana!
+There are so many ways we can get around this very basic password protection.</p>
+<p>0: Search for the password via Strings!
+1: Change the value of the comparison to match whatever we type in as the password
+2: Change the flags after comparison to say it was a match, no matter what we type in
+3: Make it always true by totally skipping parts of the code
+4: overkill, create a code cave to print out the password before we even type it in!</p>
+<p>0:
+<img src="images/Pasted%20image%2020260322202645.png" alt="">
+Right click on the main window and search for string references!
+<img src="images/Pasted%20image%2020260322202737.png" alt="">
+As we already know what the password is, so it is easy to identify. If you did not know what the password was already, this would be a little more difficult. But by looking at the location of the password alongside the prompt, that gives us a hint of which string is the password!</p>
+<p>1:
+Another simple way to get past the password check is to alter the logic which jumps to the successful password code block (red arrow),
+<img src="images/Pasted%20image%2020260328172714.png" alt=""></p>
+<p>First we do a strcmp, which if the password is incorrect will return -1, 0 if the password entered is correct. Here we could do multiple things to get past this either by altering the instructions and running the program, or we can add a breakpoint and alter the flags used for compairson for the jump.</p>
+<p>Breakpoint methods:
+a) change the ZF used in JNZ to 1
+b) modify eax to be 0 before the test case is executed</p>
+<p>Altering code methods:
+a) we can alter the instruction and change &lsquo;strcmp&rsquo; to &lsquo;mov eax, 0&rsquo;, so the test below it is always successful
+b) change the test instruction to 0,0, therefore setting the zero flag to 1.
+c) simply nop the jump, as the code will only go to the fail case (green arrow)</p>
+<p>Lets start by doing some breakpoint methods:
+<img src="images/Pasted%20image%2020260328175025.png" alt="">
+Breakpoint work like this, the &lsquo;break&rsquo; or pause happens on the line that is about to be executed. at green label &ldquo;1&rdquo;, you can see the &rsquo;test eax, eax&rsquo; has just executed. at green label &ldquo;2&rdquo; we can see the zero flag has been set to 0! (indicating that eax != eax, and hence the password is wrong).</p>
+<p>Here we will add a breakpoint right after the test has executed and change the zero flag from 0, to 1! which gives us some very odd output!
+<img src="images/Pasted%20image%2020260328175246.png" alt=""></p>
+<p>Even though we typed in the wrong password, we got into the program! all by flipping one single ZF bit.</p>
+<p>Ok, lets try one more breakpoint method, this time we will mess with:</p>
+<p><code>test eax, eax</code> which is purely just asking &ldquo;is eax zero or not?&rdquo;
+<img src="images/Pasted%20image%2020260328180143.png" alt=""></p>
+<p>Here we intercept right before the &rsquo;test eax, eax&rsquo;, as you can see at label &ldquo;1&rdquo;, rax = 1. indicating that the passwords are not equivalent after the strcmp completed. If we edit rax at label &ldquo;2&rdquo; to be zero, then the following instruction will set the zero flag as 1, saying that the password was a match! Success!</p>
+<p>Now, lets move onto altering the code as a method to &lsquo;break&rsquo; this very secure password checking system.
+<img src="images/Pasted%20image%2020260328180731.png" alt="">
+This one is easy, just right click on the jnz and fill with nops! As we know the default flow of the code will go through to the success pathway (as it just so happens to be compiled this way). To reiterate, the jump is only taken if the password is incorrect so by noping the jump, we just continue on to the success pathway!</p>
+<p>Using x64dbg we can also &lsquo;patch&rsquo; our exe, which will permanently replace the jnz with nops. so no matter what you type in, you will always have a &lsquo;correct&rsquo; password!
+<img src="images/Pasted%20image%2020260328181416.png" alt=""></p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

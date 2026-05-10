@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 8: Code Cave | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/re/beginner-tutorial/re-code-cave/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/re/beginner-tutorial/re-code-cave/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 8: Code Cave">
+  <meta property="og:description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-04-14T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-04-14T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 8: Code Cave">
+  <meta itemprop="description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
+  <meta itemprop="datePublished" content="2026-04-14T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-04-14T00:00:00+11:00">
+  <meta itemprop="wordCount" content="1210">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 8: Code Cave">
+  <meta name="twitter:description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-code-cave">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link active">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-code-cave flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 8: Code Cave</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-04-14T00:00:00+11:00">April 14, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Code:
+<img src="images/Pasted%20image%2020260414180321.png" alt=""></p>
+<p>IDA main:
+<img src="images/Pasted%20image%2020260414180711.png" alt="">
+To quickly go through our logic,</p>
+<p>we set up our character variables, name, gold, health, put the variables into the required registers for printf, print the output, then jump to loc_140001582 to begin our game loop. which includes the takeDamage function we want to alter. Our goal is to stop the player from dying.</p>
+<p>IDA takeDamage function:
+<img src="images/Pasted%20image%2020260414181339.png" alt=""></p>
+<p>If we wanted to stop the player from dying after 4 turns (-25 hp each turn), we could NOP out the subtraction logic <code>sub     eax, [rbp+arg_8]</code>, but what would happen if our health value determined some other game logic, such as giving more loot depending on how much health the player lost, or if the game does some anti-cheat routine which checks to make sure the health value isn&rsquo;t static and is changing.
+So lets create our code cave to account for these example circumstances. We want our health to not be NOP&rsquo;d, we want to still lose health, but we do not want to die.</p>
+<p>This requires a slightly more complex rout, in which we want to set up something called a code cave. A code cave is essentially a area of memory which we jump to, execute some assembly instructions then jump back to our original process, as if nothing happened.</p>
+<p>To achieve the desired outcome which is stated previously, we will set up a code cave which still completes the damage logic (-25hp) per round, but if the player has less than 50 health, then we want to restore it back to 100.</p>
+<p>Now to create this code cave we will use x64dbg,</p>
+<p>Remember to do our normal routine of setting up the kernell.32 ExitProcess breakpoint, then search for strings to find the start of our process, setting up another breakpoint.</p>
+<p>From there compare IDA against x64dbg, looking for calls to functions, investigate and eventually you will find the TakeDamage function, it will look like this:
+<img src="images/Pasted%20image%2020260414183231.png" alt=""></p>
+<p>To get to this takeDamage function, double click on the yellow highlighted item after the cyan &lsquo;call&rsquo;
+<img src="images/Pasted%20image%2020260414183828.png" alt=""></p>
+<p>now, to set up our code cave we first must find an area of free memory where we can place our new instuctions, to find this first go to:</p>
+<p>memory map tab, then take note of the address/size of .text (.text is the section of the program where all of our executable code goes, so you can use this rout to find the start of our program in the future, instead of using the strings method we did previously)
+<img src="images/Pasted%20image%2020260414185224.png" alt=""></p>
+<p>Lets take note of the address and size of this .text section of our program:
+Address=00007FF747BE1000
+Size=0000000000002000
+Party=User
+Page Information=&quot;.text&quot;</p>
+<p>Size = <code>0x2000</code> (hex) = 8192 bytes of space in the <code>.text</code> section</p>
+<p>scrolling through our .text section, we want to find a space with a bunch of NOPs where we can add our code cave, here I&rsquo;ve found some, the more NOPs in a row the better.
+<img src="images/Pasted%20image%2020260414193355.png" alt=""></p>
+<p>Next, lets create our logic for our code cave.</p>
+<p>What we want to achieve is:
+Check if health is above 50
+if health is above 50: do the normal subtraction logic
+else: restore health back to 100
+jump back</p>
+<p>Looking at our takeDamage function again:
+<img src="images/Pasted%20image%2020260414193618.png" alt="">
+we can see we subtract rbp+arg_8 from eax</p>
+<p>combining this info with the register prior to the takeDamage function
+<img src="images/Pasted%20image%2020260414194233.png" alt=""></p>
+<p>we can see that</p>
+<pre tabindex="0"><code>rcx contains the players pointer to the player structs health
+edx contains 19h/0x19 = 25 - the damage to be negated from player health
+</code></pre><p>side note: we can see that rax contains the initial pointer to the player struct (as we pass in the player struct pointer into the function, see c code), then we reference player health specifically via <code>[rax+14h]</code> to get the address of health specifically.</p>
+<p>So the first step is we should jump to where our code cave will exist, at the start of a large section of NOPs within .text section.</p>
+<p>After searching, I couldn&rsquo;t find enough NOPs to write my code cave, so instead I&rsquo;ll navigate to .data section, ensuring that I can actually execute code from it via going to the memory map tap, -&gt; right click .data -&gt; set to full access.
+<img src="images/Pasted%20image%2020260414211706.png" alt="">
+make sure to set rights at this stage with full access selected. As the data section doesn&rsquo;t have execution rights by default.</p>
+<p>Important side note:
+In large games, the compiler generates lots of alignment padding (NOP bytes) between the many functions in <code>.text</code>, giving you natural cave space to work with. Your program is small with only a handful of functions, so there simply isn&rsquo;t enough padding generated to fit your cave code. The <code>.data</code> section is another option, however it is not marked as executable by default when compiled into an .exe, meaning your cave code won&rsquo;t run outside of x64dbg. There are ways to make more NOPs in .text but I will not be going into that.</p>
+<p>So, lets first replace our takeDamage sub with a jmp to 0x7FF747BE30A5
+to do this, right click the sub in takeDamange, and replace it with: jmp 0x7FF747BE30A5</p>
+<p>As I am doing this, I notice that my jmp 0x7FF747BE30A5 actually requires more space than what the current sub address uses, and ends up eating the next instruction too!</p>
+<p>Before replacing sub:
+<img src="images/Pasted%20image%2020260414213530.png" alt=""></p>
+<p>after replacing sub:
+<img src="images/Pasted%20image%2020260414213759.png" alt=""></p>
+<p>both
+<code>sub     eax, [rbp+arg_8]</code>
+<code>mov     edx, eax</code>
+were eaten up, so we will have to include both of these instructions in our code cave. (also note the memory addresses of my code cave, and the eaten up mov are very similar, coincidence I promise!)</p>
+<p>So the next step is, lets create our code cave at 0x7FF747BE30A5:</p>
+<p>Here is our pseudo assembly code:</p>
+<pre tabindex="0"><code>;code cave
+cmp eax, 50  ;is health less than 50
+jg do_normal_subtraction ;if it isnt less than 50 jmp to oiginal subtraction logic
+mov eax, 100 ;else restore health to 100
+mov edx, eax ;replace eaten up next instruction
+jmp &lt;return address&gt; ;return to the next instrunction after sub in takeDamage
+
+do_normal_subtraction:
+sub eax,dword ptr ss:[rbp+18] ;do our normal logic, which we replaced with a jmp
+mov edx, eax ;replace eaten up next instruction
+jmp &lt;return address&gt; ;return to the next instrunction after sub in takeDamage
+</code></pre><p>Now we come across another issue we need to resolve, we don&rsquo;t actually know what our jg addresse will be, so this will require two passes to figure out, the first pass we will assemble the following, with some placeholders:</p>
+<pre tabindex="0"><code>cmp eax, 50
+jg 0x7FF747BE30A1    ; placeholder for the sub eax
+mov eax, 100
+mov edx, eax
+jmp 0x7FF747BE14A7   ;return address to our next line of code after sub
+sub eax, dword ptr ss:[rbp+18h]
+mov edx, eax
+jmp 0x7FF747BE14A7   ;return address to our next line of code after sub
+</code></pre><p>and the second pass, we update the jg to go to the correct memory locations, which are the memory locations of the sub instruction we just made!</p>
+<p>And here we have it:
+<img src="images/Pasted%20image%2020260415171237.png" alt=""></p>
+<p>now we&rsquo;ve completed the alternative logic, we can test it in x64dbg, running through the logic, making sure to select &lsquo;step into&rsquo; when we reach our code cave, also add some break points within your code cave before you do this.</p>
+<p>And our result:
+<img src="images/Pasted%20image%2020260415172100.png" alt=""></p>
+<p>Success!</p>
+<p>now, if we had written our code in the .text section we could patch our file like this:
+<img src="images/Pasted%20image%2020260415171700.png" alt="">
+This would make our changes permanent!</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

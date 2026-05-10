@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Beginner Tutorial on baseaddress.org</title>
+    <link>http://localhost:1313/re/beginner-tutorial/</link>
+    <description>Recent content in Beginner Tutorial on baseaddress.org</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Apr 2026 00:00:00 +1100</lastBuildDate>
+    <atom:link href="http://localhost:1313/re/beginner-tutorial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RE 0: Introduction &amp; Setup</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re_intro/</link>
+      <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re_intro/</guid>
+      <description>Introduction to Reverse Engineering - setup and tools required</description>
+    </item>
+    <item>
+      <title>RE 1: Hello World</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-hello-world/</link>
+      <pubDate>Sun, 12 Apr 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-hello-world/</guid>
+      <description>Reverse engineering a hello world program in IDA Free.</description>
+    </item>
+    <item>
+      <title>RE 2: IF Statements</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-if-statements/</link>
+      <pubDate>Sat, 28 Mar 2026 20:20:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-if-statements/</guid>
+      <description>RE if statements&amp;hellip;</description>
+    </item>
+    <item>
+      <title>RE 3: Loops</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-loops/</link>
+      <pubDate>Wed, 11 Mar 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-loops/</guid>
+      <description>Reverse engineering for loops and while loops in IDA Free.</description>
+    </item>
+    <item>
+      <title>RE 4: Password Cracking</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-password-cracking/</link>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-password-cracking/</guid>
+      <description>Multiple methods to crack a simple password protected program using IDA Free and x64dbg.</description>
+    </item>
+    <item>
+      <title>RE 5: Structs</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-structs/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-structs/</guid>
+      <description>Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.</description>
+    </item>
+    <item>
+      <title>RE 6: XOR Crackme</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-xor-crackme/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-xor-crackme/</guid>
+      <description>Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.</description>
+    </item>
+    <item>
+      <title>RE 8: Code Cave</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-code-cave/</link>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-code-cave/</guid>
+      <description>Creating a code cave in x64dbg to intercept and modify program logic at runtime.</description>
+    </item>
+    <item>
+      <title>RE 9: Trainer</title>
+      <link>http://localhost:1313/re/beginner-tutorial/re-trainer/</link>
+      <pubDate>Sun, 19 Apr 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/re/beginner-tutorial/re-trainer/</guid>
+      <description>Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.</description>
+    </item>
+  </channel>
+</rss>

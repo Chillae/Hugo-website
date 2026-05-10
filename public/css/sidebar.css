@@ -7,91 +7,87 @@
 
 .sidebar-nav {
   width: 250px;
-  background-color: #333;
-  color: white;
-  padding: 20px;
+  background-color: #1e1e1e;
+  padding: 16px 12px;
   max-height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
-  position: relative;
   flex-shrink: 0;
 }
 
-.sidebar-content {
-  width: 100%;
-}
-
-.sidebar-title {
-  margin: 0 0 20px 0;
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: white;
-  padding: 0;
-}
-
-.sidebar-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-link {
+/* Reset all links inside sidebar — beats theme/Tachyons specificity */
+.sidebar-nav a {
   display: block;
-  padding: 10px 12px;
-  color: #ccc;
-  text-decoration: none;
+  text-decoration: none !important;
   border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   word-break: break-word;
+}
+
+/* Top-level sections: RE, Maps, Art, Videos */
+.sidebar-nav .sidebar-section-link {
+  padding: 9px 12px;
+  color: #ffffff !important;
+  font-weight: 700;
   font-size: 0.95rem;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-.sidebar-link:hover {
-  background-color: #555;
-  color: white;
-  padding-left: 16px;
+.sidebar-nav .sidebar-section-link:hover {
+  background-color: #2e2e2e;
 }
 
-.sidebar-link.active {
+.sidebar-nav .sidebar-section-link.active {
   background-color: #0066cc;
-  color: white;
-  font-weight: bold;
+  color: #ffffff !important;
 }
 
+/* Sub-sections: Beginner Tutorial, AOE2, CrackMes … */
+.sidebar-nav .sidebar-sub-link {
+  padding: 7px 12px 7px 20px;
+  color: #b0b0b0 !important;
+  font-size: 0.88rem;
+  margin-top: 2px;
+  border-left: 2px solid transparent;
+}
+
+.sidebar-nav .sidebar-sub-link:hover {
+  background-color: #2a2a2a;
+  color: #e0e0e0 !important;
+}
+
+.sidebar-nav .sidebar-sub-link.active {
+  color: #7ab8ff !important;
+  border-left-color: #7ab8ff;
+  font-weight: 600;
+}
+
+/* Individual articles */
+.sidebar-nav .sidebar-post-link {
+  padding: 5px 12px 5px 32px;
+  color: #888 !important;
+  font-size: 0.8rem;
+  margin-top: 1px;
+}
+
+.sidebar-nav .sidebar-post-link:hover {
+  background-color: #2a2a2a;
+  color: #ccc !important;
+}
+
+.sidebar-nav .sidebar-post-link.active {
+  background-color: #0066cc;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Main content area */
 .main-content {
   flex: 1;
   min-width: 0;
   box-sizing: border-box;
-}
-
-/* Mobile responsive: hide sidebar by default on small screens */
-@media (max-width: 768px) {
-  .site-wrapper {
-    flex-direction: column;
-  }
-
-  .sidebar-nav {
-    width: 100%;
-    max-height: auto;
-    order: -1;
-    border-bottom: 2px solid #444;
-  }
-
-  .sidebar-title {
-    margin-bottom: 15px;
-  }
-
-  .sidebar-list {
-    gap: 8px;
-  }
-
-  .sidebar-link {
-    padding: 8px 10px;
-    font-size: 0.9rem;
-  }
 }
 
 /* Prevent horizontal overflow on mobile */
@@ -118,18 +114,33 @@ html, body {
   max-width: 100%;
 }
 
-/* Extra small screens */
+/* Mobile: stack sidebar above content */
+@media (max-width: 768px) {
+  .site-wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar-nav {
+    width: 100%;
+    max-height: none;
+    border-bottom: 2px solid #333;
+  }
+
+  .sidebar-nav .sidebar-section-link {
+    padding: 8px 10px;
+  }
+
+  .sidebar-nav .sidebar-sub-link {
+    padding: 6px 10px 6px 18px;
+  }
+
+  .sidebar-nav .sidebar-post-link {
+    padding: 5px 10px 5px 28px;
+  }
+}
+
 @media (max-width: 480px) {
   .sidebar-nav {
-    padding: 15px;
-  }
-
-  .sidebar-title {
-    font-size: 1.1rem;
-  }
-
-  .sidebar-link {
-    padding: 8px 8px;
-    font-size: 0.85rem;
+    padding: 12px 10px;
   }
 }
