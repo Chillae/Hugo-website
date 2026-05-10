@@ -9,63 +9,63 @@
     <lastBuildDate>Sun, 19 Apr 2026 00:00:00 +1100</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Introduction to Reverse Engineering! (RE)</title>
+      <title>RE 0: Introduction &amp; Setup</title>
       <link>http://localhost:1313/posts/re_intro/</link>
       <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
       <guid>http://localhost:1313/posts/re_intro/</guid>
       <description>Introduction to Reverse Engineering - setup and tools required</description>
     </item>
     <item>
-      <title>RE: Hello World</title>
+      <title>RE 1: Hello World</title>
       <link>http://localhost:1313/posts/re-hello-world/</link>
       <pubDate>Sun, 12 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-hello-world/</guid>
       <description>Reverse engineering a hello world program in IDA Free.</description>
     </item>
     <item>
-      <title>RE if Statements</title>
+      <title>RE 2: IF Statements</title>
       <link>http://localhost:1313/posts/re-if-statements/</link>
       <pubDate>Sat, 28 Mar 2026 20:20:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-if-statements/</guid>
       <description>RE if statements&amp;hellip;</description>
     </item>
     <item>
-      <title>RE: Loops</title>
+      <title>RE 3: Loops</title>
       <link>http://localhost:1313/posts/re-loops/</link>
       <pubDate>Wed, 11 Mar 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-loops/</guid>
       <description>Reverse engineering for loops and while loops in IDA Free.</description>
     </item>
     <item>
-      <title>RE: Password Cracking</title>
+      <title>RE 4: Password Cracking</title>
       <link>http://localhost:1313/posts/re-password-cracking/</link>
       <pubDate>Mon, 16 Mar 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-password-cracking/</guid>
       <description>Multiple methods to crack a simple password protected program using IDA Free and x64dbg.</description>
     </item>
     <item>
-      <title>RE: Structs</title>
+      <title>RE 5: Structs</title>
       <link>http://localhost:1313/posts/re-structs/</link>
       <pubDate>Mon, 30 Mar 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-structs/</guid>
       <description>Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.</description>
     </item>
     <item>
-      <title>RE: XOR Crackme</title>
+      <title>RE 6: XOR Crackme</title>
       <link>http://localhost:1313/posts/re-xor-crackme/</link>
       <pubDate>Wed, 01 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-xor-crackme/</guid>
       <description>Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.</description>
     </item>
     <item>
-      <title>RE: Code Cave</title>
+      <title>RE 8: Code Cave</title>
       <link>http://localhost:1313/posts/re-code-cave/</link>
       <pubDate>Tue, 14 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-code-cave/</guid>
       <description>Creating a code cave in x64dbg to intercept and modify program logic at runtime.</description>
     </item>
     <item>
-      <title>RE: Trainer</title>
+      <title>RE 9: Trainer</title>
       <link>http://localhost:1313/posts/re-trainer/</link>
       <pubDate>Sun, 19 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1313/posts/re-trainer/</guid>
