@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="section-content">
+
+  {{ with .Content }}
+    <div class="section-body">{{ . }}</div>
+  {{ end }}
+
+  {{/* Sub-sections as clickable cards — auto-generated from directory structure */}}
+  {{ if .Sections }}
+    <div class="section-cards">
+      {{ range .Sections.ByWeight }}
+        <a href="{{ .RelPermalink }}" class="section-card">
+          <h2 class="section-card-title">{{ .Title }}</h2>
+          {{ $count := len .RegularPages }}
+          {{ if gt $count 0 }}
+            <span class="section-card-count">{{ $count }} article{{ if gt $count 1 }}s{{ end }}</span>
+          {{ else }}
+            <span class="section-card-count">Coming soon</span>
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{/* Regular pages as a numbered list — auto-generated from pages in this section */}}
+  {{ if .RegularPages }}
+    <ol class="section-page-list">
+      {{ range .RegularPages.ByWeight }}
+        <li class="section-page-item">
+          <a href="{{ .RelPermalink }}" class="section-page-link">{{ .Title }}</a>
+          {{ with .Summary }}
+            <p class="section-page-summary">{{ . }}</p>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+
+</div>
+{{ end }}

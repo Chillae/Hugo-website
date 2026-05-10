@@ -53,7 +53,7 @@
   <meta name="twitter:title" content="Beginner Tutorial">
 
     
-    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
     
 	
   </head><body class="ma0 avenir bg-near-white development is-section is-section">
@@ -87,6 +87,10 @@
     </div>
   </header>
 
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
 
     <div class="site-wrapper">
       
@@ -241,174 +245,84 @@
 
       <main class="pb7 main-content" role="main">
         
-  <article class="pa3 pa4-ns nested-copy-line-height">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links mid-gray"></section>
-    <section class="flex-ns mt5 flex-wrap justify-around">
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re_intro/" class="link black dim">
-        RE 0: Introduction &amp; Setup
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction to Reverse Engineering - setup and tools required
-    </div>
-    <a href="/re/beginner-tutorial/re_intro/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
+<div class="section-content">
 
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-hello-world/" class="link black dim">
-        RE 1: Hello World
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Reverse engineering a hello world program in IDA Free.
-    </div>
-    <a href="/re/beginner-tutorial/re-hello-world/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
+  
 
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-if-statements/" class="link black dim">
-        RE 2: IF Statements
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      RE if statements&hellip;
-    </div>
-    <a href="/re/beginner-tutorial/re-if-statements/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
+  
+  
 
-        </div>
+  
+  
+    <ol class="section-page-list">
       
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-loops/" class="link black dim">
-        RE 3: Loops
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Reverse engineering for loops and while loops in IDA Free.
-    </div>
-    <a href="/re/beginner-tutorial/re-loops/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re_intro/" class="section-page-link">RE 0: Introduction &amp; Setup</a>
+          
+            <p class="section-page-summary">Introduction to Reverse Engineering - setup and tools required</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-hello-world/" class="section-page-link">RE 1: Hello World</a>
+          
+            <p class="section-page-summary">Reverse engineering a hello world program in IDA Free.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-if-statements/" class="section-page-link">RE 2: IF Statements</a>
+          
+            <p class="section-page-summary">RE if statements&hellip;</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-loops/" class="section-page-link">RE 3: Loops</a>
+          
+            <p class="section-page-summary">Reverse engineering for loops and while loops in IDA Free.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-password-cracking/" class="section-page-link">RE 4: Password Cracking</a>
+          
+            <p class="section-page-summary">Multiple methods to crack a simple password protected program using IDA Free and x64dbg.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-structs/" class="section-page-link">RE 5: Structs</a>
+          
+            <p class="section-page-summary">Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-xor-crackme/" class="section-page-link">RE 6: XOR Crackme</a>
+          
+            <p class="section-page-summary">Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-code-cave/" class="section-page-link">RE 8: Code Cave</a>
+          
+            <p class="section-page-summary">Creating a code cave in x64dbg to intercept and modify program logic at runtime.</p>
+          
+        </li>
+      
+        <li class="section-page-item">
+          <a href="/re/beginner-tutorial/re-trainer/" class="section-page-link">RE 9: Trainer</a>
+          
+            <p class="section-page-summary">Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.</p>
+          
+        </li>
+      
+    </ol>
+  
 
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-password-cracking/" class="link black dim">
-        RE 4: Password Cracking
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Multiple methods to crack a simple password protected program using IDA Free and x64dbg.
-    </div>
-    <a href="/re/beginner-tutorial/re-password-cracking/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
 </div>
-
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-structs/" class="link black dim">
-        RE 5: Structs
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.
-    </div>
-    <a href="/re/beginner-tutorial/re-structs/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-xor-crackme/" class="link black dim">
-        RE 6: XOR Crackme
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Understanding XOR obfuscation and cracking an XOR encrypted password in x64dbg.
-    </div>
-    <a href="/re/beginner-tutorial/re-xor-crackme/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-code-cave/" class="link black dim">
-        RE 8: Code Cave
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Creating a code cave in x64dbg to intercept and modify program logic at runtime.
-    </div>
-    <a href="/re/beginner-tutorial/re-code-cave/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          <div class="w-100 mb4 nested-copy-line-height relative bg-white">
-  <div class="mb3 pa4 gray overflow-hidden bg-white">
-    <span class="f6 db">Beginner Tutorial</span>
-    <h1 class="f3 near-black">
-      <a href="/re/beginner-tutorial/re-trainer/" class="link black dim">
-        RE 9: Trainer
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.
-    </div>
-    <a href="/re/beginner-tutorial/re-trainer/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-  </div>
-</div>
-
-        </div>
-      
-    </section>
-    </article>
 
       </main>
     </div>
@@ -422,5 +336,24 @@
   </div>
 </footer>
 
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
   </body>
 </html>

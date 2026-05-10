@@ -53,7 +53,7 @@
   <meta name="twitter:title" content="CrackMes">
 
     
-    <link rel="stylesheet" href="/css/sidebar.css?v=3">
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
     
 	
   </head><body class="ma0 avenir bg-near-white development is-section is-section">
@@ -87,6 +87,10 @@
     </div>
   </header>
 
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
 
     <div class="site-wrapper">
       
@@ -196,12 +200,17 @@
 
       <main class="pb7 main-content" role="main">
         
-  <article class="pa3 pa4-ns nested-copy-line-height">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links mid-gray"></section>
-    <section class="flex-ns mt5 flex-wrap justify-around">
-      
-    </section>
-    </article>
+<div class="section-content">
+
+  
+
+  
+  
+
+  
+  
+
+</div>
 
       </main>
     </div>
@@ -215,5 +224,24 @@
   </div>
 </footer>
 
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
   </body>
 </html>

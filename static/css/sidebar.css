@@ -114,33 +114,170 @@ html, body {
   max-width: 100%;
 }
 
-/* Mobile: stack sidebar above content */
-@media (max-width: 768px) {
-  .site-wrapper {
-    flex-direction: column;
-  }
+/* ── Section landing pages ─────────────────────────────────── */
 
-  .sidebar-nav {
-    width: 100%;
-    max-height: none;
-    border-bottom: 2px solid #333;
-  }
-
-  .sidebar-nav .sidebar-section-link {
-    padding: 8px 10px;
-  }
-
-  .sidebar-nav .sidebar-sub-link {
-    padding: 6px 10px 6px 18px;
-  }
-
-  .sidebar-nav .sidebar-post-link {
-    padding: 5px 10px 5px 28px;
-  }
+.section-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
 }
 
-@media (max-width: 480px) {
+.section-body {
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* Sub-section cards grid */
+.section-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: #1e1e1e;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid #333;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.section-card:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.section-card-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.section-card-count {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+/* Article list (for sub-sections like Beginner Tutorial) */
+.section-page-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: article-counter;
+}
+
+.section-page-item {
+  counter-increment: article-counter;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-page-item::before {
+  content: counter(article-counter, decimal-leading-zero);
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.section-page-link {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.section-page-link:hover {
+  color: #0066cc;
+}
+
+.section-page-summary {
+  margin: 0.3rem 0 0;
+  font-size: 0.88rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* ── Hamburger button — hidden on desktop */
+.sidebar-toggle {
+  display: none;
+}
+
+/* Dim overlay — hidden on desktop */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+/* Mobile: slide-in drawer */
+@media (max-width: 768px) {
   .sidebar-nav {
-    padding: 12px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    max-height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    border-bottom: none;
+    padding-top: 24px;
+  }
+
+  .sidebar-nav.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .sidebar-overlay.sidebar-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Floating hamburger button — bottom right, easy thumb reach */
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+    transition: background-color 0.2s ease;
+  }
+
+  .sidebar-toggle:hover {
+    background: #0052a3;
   }
 }
