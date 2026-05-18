@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-03-11T00:00:00+11:00'
 draft = false
 title = 'RE 3: Loops'
@@ -6,6 +6,8 @@ slug = 'RE - loops'
 summary = 'Reverse engineering for loops and while loops in IDA Free.'
 weight = 4
 +++
+
+Loops are where things start to get interesting. We've seen how the CPU handles a simple if statement, now lets see what it does when we ask it to repeat itself.
 
 Simple for loop which prints i if odd. 
 ![](images/Pasted%20image%2020260311201007.png)
@@ -104,7 +106,21 @@ Which causes JLE to be FALSE and take the fall through, red arrow rout (box on r
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 SHOULD COMPARE THIS AGAINST A WHILE LOOP and see difference in IDA. see last box here actually gets executed even after the printf occurs, is there a type of loop that doesn't do this?
+
+
 
 
 
@@ -114,6 +130,9 @@ do while loop:
 
 IDA:
 ![](images/Pasted%20image%2020260311202706.png)
+
+
+
 
 
 

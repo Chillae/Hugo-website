@@ -51,7 +51,7 @@
   <meta itemprop="description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
   <meta itemprop="datePublished" content="2026-04-14T00:00:00+11:00">
   <meta itemprop="dateModified" content="2026-04-14T00:00:00+11:00">
-  <meta itemprop="wordCount" content="1210">
+  <meta itemprop="wordCount" content="1245">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RE 8: Code Cave">
   <meta name="twitter:description" content="Creating a code cave in x64dbg to intercept and modify program logic at runtime.">
@@ -167,6 +167,11 @@
                     RE 9: Trainer
                   </a>
                 
+                  <a href="/re/beginner-tutorial/re-dll-injector/"
+                     class="sidebar-post-link">
+                    RE 10: DLL Injector
+                  </a>
+                
               
             
               
@@ -195,6 +200,16 @@
               <a href="/re/crackmes/"
                  class="sidebar-sub-link">
                 CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
               </a>
 
               
@@ -276,7 +291,8 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Code:
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>So far we&rsquo;ve been patching code the brute force way: NOPs, flag flips, swapping registers. A code cave is a step up from that, it lets you inject your own logic without destroying the original.</p>
+<p>Code:
 <img src="images/Pasted%20image%2020260414180321.png" alt=""></p>
 <p>IDA main:
 <img src="images/Pasted%20image%2020260414180711.png" alt="">

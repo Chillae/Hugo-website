@@ -51,7 +51,7 @@
   <meta itemprop="description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
   <meta itemprop="datePublished" content="2026-04-19T00:00:00+11:00">
   <meta itemprop="dateModified" content="2026-04-19T00:00:00+11:00">
-  <meta itemprop="wordCount" content="875">
+  <meta itemprop="wordCount" content="907">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RE 9: Trainer">
   <meta name="twitter:description" content="Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.">
@@ -167,6 +167,11 @@
                     RE 9: Trainer
                   </a>
                 
+                  <a href="/re/beginner-tutorial/re-dll-injector/"
+                     class="sidebar-post-link">
+                    RE 10: DLL Injector
+                  </a>
+                
               
             
               
@@ -195,6 +200,16 @@
               <a href="/re/crackmes/"
                  class="sidebar-sub-link">
                 CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
               </a>
 
               
@@ -276,7 +291,8 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Game Code:
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>If you downloaded game trainers as a kid you were already using this technique without knowing it. A separate program, running alongside your game, quietly rewriting memory values through the Windows API.</p>
+<p>Game Code:
 <img src="images/Pasted%20image%2020260419133747.png" alt="">
 Same as the code cave &lsquo;game&rsquo;, but altered to run in a loop so the game doesn&rsquo;t close, to avoid new memory addresses being created.</p>
 <p>Game Trainer Code:
@@ -323,20 +339,19 @@ as we currently had 50 health, this is correct!</p>
 <p>Now, this address and offset that we have goes directly to the health value, which is good, but what if we also wanted to update our gold? We know our health lives within a character struct, so if we get the base address of the struct, instead of directly to the health, then we can also easily alter the gold, or even the name of the player.</p>
 <p>To do this:</p>
 <ol>
-<li>Add the static address pointer &lsquo;9_game_trainer_game.exe+000070A8 + 344&rsquo; to cheat engine</li>
-<li>Take note of the address it provides us with, this is the address of health (F4911FFA14):</li>
-</ol>
-<p><img src="images/Pasted%20image%2020260419151636.png" alt=""></p>
-<ol start="3">
-<li>right click on this added address -&gt; &ldquo;find what access this address&rdquo; -&gt; &ldquo;Find what accesses the address pointed at by this pointer&rdquo;</li>
-</ol>
-<p><img src="images/Pasted%20image%2020260419152201.png" alt="">
+<li>
+<p>Add the static address pointer &lsquo;9_game_trainer_game.exe+000070A8 + 344&rsquo; to cheat engine</p>
+</li>
+<li>
+<p>Take note of the address it provides us with, this is the address of health (F4911FFA14):<img src="images/Pasted%20image%2020260419151636.png" alt=""></p>
+</li>
+<li>
+<p>right click on this added address -&gt; &ldquo;find what access this address&rdquo; -&gt; &ldquo;Find what accesses the address pointed at by this pointer&rdquo;         <img src="images/Pasted%20image%2020260419152201.png" alt="">
 Here we can see what items are accessing the addresses this pointer points to, the first instruction we can see mov eax, [rax+14], if you remember our previous lessons, this offset looks very much like an offset to reference an item in a struct.</p>
-<ol start="4">
-<li>so if rax + 14 = health, then rax - 14 is likely the base address for our struct. F4911FFA14 - 14 = F4911FFA00, we can check this in cheat engine struct viewer via Ctrl+M to open memory viewer then tools -&gt; struct dissector tool and we get:</li>
-</ol>
-<p><img src="images/Pasted%20image%2020260419143847.png" alt=""></p>
-<ol start="5">
+</li>
+<li>
+<p>so if rax + 14 = health, then rax - 14 is likely the base address for our struct. F4911FFA14 - 14 = F4911FFA00, we can check this in cheat engine struct viewer via Ctrl+M to open memory viewer then tools -&gt; struct dissector tool and we get:<img src="images/Pasted%20image%2020260419143847.png" alt=""></p>
+</li>
 <li>
 <p>Now we have our struct base address F4911FFA00, we should add this as a address in cheat engine and repeat the pointer scanning process which gives us:
 &ldquo;9_game_trainer_game.exe&rdquo;+000070A8 + 330.
@@ -347,10 +362,10 @@ You may also notice that our original base address was:
 <p>Now we have these values, lets update our trainer code, while our game is running:</p>
 </li>
 </ol>
-<pre tabindex="0"><code>#define BASE_OFFSET 0x70A8  // offset from exe base to the first pointer
-#define CHARACTER_STRUCT_OFFSET 0x330  //character struct base address
-#define HEALTH_OFFSET 0x14  // offset from pointer to health field
-#define GOLD_OFFSET 0x18    // offset from pointer to gold field
+<pre tabindex="0"><code>#define BASE_OFFSET 0x70A8  // offset from exe base to the first pointer
+#define CHARACTER_STRUCT_OFFSET 0x330  //character struct base address
+#define HEALTH_OFFSET 0x14  // offset from pointer to health field
+#define GOLD_OFFSET 0x18    // offset from pointer to gold field
 </code></pre><p><img src="images/Pasted%20image%2020260419182137.png" alt="">
 Success!</p>
 <ul class="pa0">

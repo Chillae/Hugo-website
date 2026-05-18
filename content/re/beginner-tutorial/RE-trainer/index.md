@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-04-19T00:00:00+11:00'
 draft = false
 title = 'RE 9: Trainer'
@@ -6,6 +6,8 @@ slug = 'RE - trainer'
 summary = 'Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.'
 weight = 9
 +++
+
+If you downloaded game trainers as a kid you were already using this technique without knowing it. A separate program, running alongside your game, quietly rewriting memory values through the Windows API.
 
 Game Code:
 ![](images/Pasted%20image%2020260419133747.png)
@@ -36,6 +38,8 @@ At a high level our trainer will do the following:
 - `OpenProcess` - gets a handle (unique identifier) to the target process (our game)
 - `ReadProcessMemory` - reads a value from the target's memory (i.e. players health)
 - `WriteProcessMemory` - writes a value to the target's memory (update health to 100)
+
+
 
 
 
@@ -76,18 +80,12 @@ Now, this address and offset that we have goes directly to the health value, whi
 
 To do this:
 1. Add the static address pointer '9_game_trainer_game.exe+000070A8 + 344' to cheat engine
-2. Take note of the address it provides us with, this is the address of health (F4911FFA14):
+2. Take note of the address it provides us with, this is the address of health (F4911FFA14):![](images/Pasted%20image%2020260419151636.png)
 
-![](images/Pasted%20image%2020260419151636.png)
-
-3. right click on this added address -> "find what access this address" -> "Find what accesses the address pointed at by this pointer"
-
-![](images/Pasted%20image%2020260419152201.png)
+3. right click on this added address -> "find what access this address" -> "Find what accesses the address pointed at by this pointer"         ![](images/Pasted%20image%2020260419152201.png)
    Here we can see what items are accessing the addresses this pointer points to, the first instruction we can see mov eax, \[rax+14], if you remember our previous lessons, this offset looks very much like an offset to reference an item in a struct.
    
-4. so if rax + 14 = health, then rax - 14 is likely the base address for our struct. F4911FFA14 - 14 = F4911FFA00, we can check this in cheat engine struct viewer via Ctrl+M to open memory viewer then tools -> struct dissector tool and we get:
-
-![](images/Pasted%20image%2020260419143847.png)
+4. so if rax + 14 = health, then rax - 14 is likely the base address for our struct. F4911FFA14 - 14 = F4911FFA00, we can check this in cheat engine struct viewer via Ctrl+M to open memory viewer then tools -> struct dissector tool and we get:![](images/Pasted%20image%2020260419143847.png)
    
 5. Now we have our struct base address F4911FFA00, we should add this as a address in cheat engine and repeat the pointer scanning process which gives us:
    "9_game_trainer_game.exe"+000070A8 + 330.
@@ -96,12 +94,18 @@ To do this:
    
 6. Now we have these values, lets update our trainer code, while our game is running:
 ```
-#define BASE_OFFSET 0x70A8  // offset from exe base to the first pointer
-#define CHARACTER_STRUCT_OFFSET 0x330  //character struct base address
-#define HEALTH_OFFSET 0x14  // offset from pointer to health field
-#define GOLD_OFFSET 0x18    // offset from pointer to gold field
+#define BASE_OFFSET 0x70A8  // offset from exe base to the first pointer
+#define CHARACTER_STRUCT_OFFSET 0x330  //character struct base address
+#define HEALTH_OFFSET 0x14  // offset from pointer to health field
+#define GOLD_OFFSET 0x18    // offset from pointer to gold field
 ```
 
 
 ![](images/Pasted%20image%2020260419182137.png)
 Success!
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-04-14T00:00:00+11:00'
 draft = false
 title = 'RE 8: Code Cave'
@@ -6,6 +6,10 @@ slug = 'RE - code cave'
 summary = 'Creating a code cave in x64dbg to intercept and modify program logic at runtime.'
 weight = 8
 +++
+
+
+So far we've been patching code the brute force way: NOPs, flag flips, swapping registers. A code cave is a step up from that, it lets you inject your own logic without destroying the original.
+
 
 Code:
 ![](images/Pasted%20image%2020260414180321.png)
@@ -112,6 +116,7 @@ were eaten up, so we will have to include both of these instructions in our code
 
 
 
+
 So the next step is, lets create our code cave at 0x7FF747BE30A5:
 
 Here is our pseudo assembly code:
@@ -160,3 +165,19 @@ Success!
 now, if we had written our code in the .text section we could patch our file like this:
 ![](images/Pasted%20image%2020260415171700.png)
 This would make our changes permanent! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

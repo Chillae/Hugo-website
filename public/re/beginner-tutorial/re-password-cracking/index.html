@@ -51,7 +51,7 @@
   <meta itemprop="description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
   <meta itemprop="datePublished" content="2026-03-16T00:00:00+11:00">
   <meta itemprop="dateModified" content="2026-03-16T00:00:00+11:00">
-  <meta itemprop="wordCount" content="1282">
+  <meta itemprop="wordCount" content="1305">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RE 4: Password Cracking">
   <meta name="twitter:description" content="Multiple methods to crack a simple password protected program using IDA Free and x64dbg.">
@@ -167,6 +167,11 @@
                     RE 9: Trainer
                   </a>
                 
+                  <a href="/re/beginner-tutorial/re-dll-injector/"
+                     class="sidebar-post-link">
+                    RE 10: DLL Injector
+                  </a>
+                
               
             
               
@@ -195,6 +200,16 @@
               <a href="/re/crackmes/"
                  class="sidebar-sub-link">
                 CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
               </a>
 
               
@@ -276,7 +291,8 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Our code:
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Alright, now we&rsquo;re getting into the fun stuff. We&rsquo;ve learned how to read disassembly, now lets use that knowledge to do something exciting!</p>
+<p>Our code:
 <img src="images/Pasted%20image%2020260316210814.png" alt=""></p>
 <p>Lets first look at the program in Ida Free to see what it does:
 <img src="images/Pasted%20image%2020260322211849.png" alt=""></p>
@@ -289,8 +305,7 @@ These names are derived from the parameter names of the CRT (C Runtime Library) 
 Control - &#39;0Ah is hex for \n&#39;       - from strcspn(str, control)
 _Format - &#39;You entered: ...&#39;        - from printf(format)
 aYouEnter...                      - from printf, but format was already taken?
-</code></pre><p>This makes it more confusing to read initially, but once you realize you can hover over the call to fgets_0 for example, and see that the comments align with the function:</p>
-<p><img src="images/Pasted%20image%2020260322214041.png" alt="">
+</code></pre><p>This makes it more confusing to read initially, but once you realize you can hover over the call to fgets_0 for example, and see that the comments align with the function:<img src="images/Pasted%20image%2020260322214041.png" alt="">
 These functions are call&rsquo;s due to CRT functions are pre-compiled in assembly, and are called as needed. these items come from &lt;.h&gt; includes.</p>
 <p>So, with that in mind, lets read what this actually does!</p>
 <p>First step is to print the output for the user to read:

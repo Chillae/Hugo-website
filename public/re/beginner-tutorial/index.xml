@@ -6,7 +6,7 @@
     <description>Recent content in Beginner Tutorial on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 00:00:00 +1100</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 00:00:00 +1100</lastBuildDate>
     <atom:link href="http://localhost:1314/re/beginner-tutorial/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RE 0: Introduction &amp; Setup</title>
@@ -70,6 +70,13 @@
       <pubDate>Sun, 19 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1314/re/beginner-tutorial/re-trainer/</guid>
       <description>Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.</description>
+    </item>
+    <item>
+      <title>RE 10: DLL Injector</title>
+      <link>http://localhost:1314/re/beginner-tutorial/re-dll-injector/</link>
+      <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/re/beginner-tutorial/re-dll-injector/</guid>
+      <description>Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.</description>
     </item>
   </channel>
 </rss>

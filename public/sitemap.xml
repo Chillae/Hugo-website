@@ -2,19 +2,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
+  </url><url>
     <loc>http://localhost:1314/re/beginner-tutorial/</loc>
-    <lastmod>2026-04-19T00:00:00+11:00</lastmod>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
   </url><url>
     <loc>http://localhost:1314/re/</loc>
-    <lastmod>2026-04-19T00:00:00+11:00</lastmod>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
   </url><url>
     <loc>http://localhost:1314/re/beginner-tutorial/re_intro/</loc>
     <lastmod>2026-03-28T19:21:29+11:00</lastmod>
   </url><url>
+    <loc>http://localhost:1314/re/aoe2/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present-workaround/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
+  </url><url>
     <loc>http://localhost:1314/re/beginner-tutorial/re-hello-world/</loc>
     <lastmod>2026-04-12T00:00:00+11:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1314/re/aoe2/</loc>
   </url><url>
     <loc>http://localhost:1314/maps/</loc>
   </url><url>
@@ -31,6 +41,9 @@
     <loc>http://localhost:1314/re/crackmes/</loc>
   </url><url>
     <loc>http://localhost:1314/videos/</loc>
+  </url><url>
+    <loc>http://localhost:1314/re/beginner-malware-analysis/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
   </url><url>
     <loc>http://localhost:1314/re/beginner-tutorial/re-password-cracking/</loc>
     <lastmod>2026-03-16T00:00:00+11:00</lastmod>
@@ -49,8 +62,11 @@
     <loc>http://localhost:1314/re/beginner-tutorial/re-trainer/</loc>
     <lastmod>2026-04-19T00:00:00+11:00</lastmod>
   </url><url>
+    <loc>http://localhost:1314/re/beginner-tutorial/re-dll-injector/</loc>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
+  </url><url>
     <loc>http://localhost:1314/</loc>
-    <lastmod>2026-04-19T00:00:00+11:00</lastmod>
+    <lastmod>2026-05-18T00:00:00+11:00</lastmod>
   </url><url>
     <loc>http://localhost:1314/categories/</loc>
   </url><url>

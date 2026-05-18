@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-04-12T00:00:00+11:00'
 draft = false
 title = 'RE 1: Hello World'
@@ -85,5 +85,6 @@ For example after a `cmp eax, 50` instruction, the CPU subtracts 50 from eax and
 Side note:
 
 To convert any values for example '40h', open up your windows calculator, select hex, and enter the number! (remember that h is added in IDA free to indicate its hex, so don't include that!)
-
 ![](images/Pasted%20image%2020260330200335.png)
+
+

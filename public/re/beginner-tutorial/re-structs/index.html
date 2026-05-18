@@ -51,7 +51,7 @@
   <meta itemprop="description" content="Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.">
   <meta itemprop="datePublished" content="2026-03-30T00:00:00+11:00">
   <meta itemprop="dateModified" content="2026-03-30T00:00:00+11:00">
-  <meta itemprop="wordCount" content="1139">
+  <meta itemprop="wordCount" content="1174">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RE 5: Structs">
   <meta name="twitter:description" content="Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.">
@@ -167,6 +167,11 @@
                     RE 9: Trainer
                   </a>
                 
+                  <a href="/re/beginner-tutorial/re-dll-injector/"
+                     class="sidebar-post-link">
+                    RE 10: DLL Injector
+                  </a>
+                
               
             
               
@@ -195,6 +200,16 @@
               <a href="/re/crackmes/"
                  class="sidebar-sub-link">
                 CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
               </a>
 
               
@@ -276,7 +291,8 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Our code:
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Every game has a player object somewhere in memory. Health, gold, name, all sit together in a struct. This time we&rsquo;re going to see exactly how that looks under the hood, and then manipulate it.</p>
+<p>Our code:
 <img src="images/Pasted%20image%2020260330204421.png" alt=""></p>
 <p>IDA:
 <img src="images/Pasted%20image%2020260330204346.png" alt=""></p>

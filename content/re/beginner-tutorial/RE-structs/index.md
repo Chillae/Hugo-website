@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-03-30T00:00:00+11:00'
 draft = false
 title = 'RE 5: Structs'
@@ -6,6 +6,9 @@ slug = 'RE - structs'
 summary = 'Reverse engineering structs, stack layout, and memory manipulation in IDA Free and x64dbg.'
 weight = 6
 +++
+
+Every game has a player object somewhere in memory. Health, gold, name, all sit together in a struct. This time we're going to see exactly how that looks under the hood, and then manipulate it.
+
 
 Our code:
 ![](images/Pasted%20image%2020260330204421.png)
@@ -101,6 +104,12 @@ Lets double click on takeDamage and inspect what it does:
 
 
 
+
+
+
+
+
+
 Now for some fun!
 
 What happens if we mess with our variables in this loop?
@@ -135,3 +144,7 @@ You could also totally NOP out the subtraction instruction and be 'invincible'.
 ![](images/Pasted%20image%2020260331223752.png)
 
 This may be only a simple example, but this essentially can work exactly the same in modern games!
+
+
+
+

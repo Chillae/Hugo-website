@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1314&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>RE 10: DLL Injector | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1314/re/beginner-tutorial/re-dll-injector/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1314/re/beginner-tutorial/re-dll-injector/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="RE 10: DLL Injector">
+  <meta property="og:description" content="Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-05-18T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-05-18T00:00:00+11:00">
+
+  <meta itemprop="name" content="RE 10: DLL Injector">
+  <meta itemprop="description" content="Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.">
+  <meta itemprop="datePublished" content="2026-05-18T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-05-18T00:00:00+11:00">
+  <meta itemprop="wordCount" content="1440">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RE 10: DLL Injector">
+  <meta name="twitter:description" content="Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-RE-dll-injector">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link active">
+                Beginner Tutorial
+              </a>
+
+              
+                
+                  <a href="/re/beginner-tutorial/re_intro/"
+                     class="sidebar-post-link">
+                    RE 0: Introduction &amp; Setup
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-hello-world/"
+                     class="sidebar-post-link">
+                    RE 1: Hello World
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-if-statements/"
+                     class="sidebar-post-link">
+                    RE 2: IF Statements
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-loops/"
+                     class="sidebar-post-link">
+                    RE 3: Loops
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-password-cracking/"
+                     class="sidebar-post-link">
+                    RE 4: Password Cracking
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-structs/"
+                     class="sidebar-post-link">
+                    RE 5: Structs
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-xor-crackme/"
+                     class="sidebar-post-link">
+                    RE 6: XOR Crackme
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-code-cave/"
+                     class="sidebar-post-link">
+                    RE 8: Code Cave
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-trainer/"
+                     class="sidebar-post-link">
+                    RE 9: Trainer
+                  </a>
+                
+                  <a href="/re/beginner-tutorial/re-dll-injector/"
+                     class="sidebar-post-link active">
+                    RE 10: DLL Injector
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link">
+                AOE2
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/interactive-tools/"
+             class="sidebar-section-link">
+            Interactive Tools
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-RE-dll-injector flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Beginner Tutorial
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">RE 10: DLL Injector</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-05-18T00:00:00+11:00">May 18, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>We&rsquo;ve patched memory from the outside and written assembly from the inside, this time we combine both. An injector gets your DLL into the target, and the DLL installs a hook that intercepts takeDamage before it even runs.
+A DLL is basically the same as an .exe, its some code we can run, you can compile your c code directly into a DLL!</p>
+<p>Memory jogs to remember what &amp; and * mean:</p>
+<pre tabindex="0"><code>`&amp;` = address -&gt; &amp;dress (pronounced AND dress, get it? remember &amp;=AND=ADDRESS!)
+
+`*` = star -&gt; points to a star in the sky = you have to look up where it points to = dereference = follow the pointer to find what&#39;s there!
+</code></pre><p>This one kicks it up a notch with what we will be creating and learning, if you can make it through this you can tackle anything!</p>
+<p>For this process we will be using the 9_game_trainer_game.exe we created in the last lesson, you should download the repo from github as the code has become larger and more complex, and a screenshots no longer totally suffice.</p>
+<p>We will be creating 3 items to do DLL injection:
+A)  A DLL injector - &ldquo;10_game_dll_injector.c&rdquo;
+B)  A testing DLL to see if our injector worked - &ldquo;10_game_initial_dll_injected_tester.c&rdquo;
+C)  Our complete DLL which hooks the takeDamage function - &ldquo;10_game_dll_injected_extended.c&rdquo;</p>
+<p>So lets start!</p>
+<p>A) Lets create our DLL injector:</p>
+<p>The purpose of this process is to</p>
+<ol>
+<li>Find the process and grab its PID, just as we did in the trainer</li>
+<li>Open the process using the PID to get a handle</li>
+<li>Allocate memory inside the target process large enough to hold the DLL path string, then write the path string into that allocated memory</li>
+<li>Get the address of <code>LoadLibraryA</code> from <code>kernel32.dll</code>, then create a remote thread inside the target process pointing at <code>LoadLibraryA</code> with the DLL path as its argument, this forces the target process to load our DLL</li>
+<li>Wait until the thread finishes loading the DLL</li>
+<li>Clean up, free the allocated memory and close the handles. The injected DLL remains running inside the target process.</li>
+</ol>
+<hr>
+<p>B) Now we&rsquo;ve completed out DLL injector, lets create a simple testing DLL to see if it worked</p>
+<p>Lets add DLL boilerplate, all DLLs will follow this format:
+<img src="images/Pasted%20image%2020260426201817.png" alt="">
+(Compile with: gcc dll.c -o dll.dll -shared -luser32)</p>
+<p>To summarise once the DLL is loaded automatically runs DLLMain, and our switch case of DLL_PROCESS_ATTACH is run, our actual payload in this DLL is the MessageBoxA, which pops up a mesagebox.</p>
+<p>Now to test this:</p>
+<ol>
+<li>compile the dll to be injected -10_game_dll_injected_tester.dll</li>
+<li>RUN the &ldquo;game&rdquo; exe - 9_game_trainer_trainer.exe</li>
+<li>update the injector to use our newly compiled tester DLL</li>
+<li>RUN the &ldquo;injector&rdquo; exe - 10_game_dll_injector.exe</li>
+</ol>
+<p>Once we get that message box popup we know the injector worked!</p>
+<hr>
+<p>C) Now we know our testing DLL works, lets build our actual DLL which will hook our takeDamage function and alter it as we please! This is the meaty part.</p>
+<p>HookedTakeDamage
+<img src="images/Pasted%20image%2020260425223415.png" alt="">
+explanation: why we restore original takeDamage</p>
+<p>An analogy: Your friend wants to call the pizza shop (<code>takeDamage</code>) but you&rsquo;ve secretly redirected their call to you (<code>hookedTakeDamage</code>) first.</p>
+<p>When the call comes to you:</p>
+<ol>
+<li><strong>You turn off the redirect</strong>, otherwise when you try to call the pizza shop yourself, it would redirect back to you again, you&rsquo;d call yourself, redirect again&hellip; infinite loop</li>
+<li><strong>You call the real pizza shop</strong>,  order goes through normally, pizza gets made (damage gets applied)</li>
+<li><strong>You do your extra thing</strong> , check if health is low, restore it</li>
+<li><strong>You turn the redirect back on</strong>, ready for the next time your friend calls</li>
+</ol>
+<hr>
+<p><img src="images/Pasted%20image%2020260426110630.png" alt=""></p>
+<p><strong>Left side: what we&rsquo;re creating:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>originalTakeDamage)(<span style="color:#66d9ef">struct</span> Character<span style="color:#f92672">*</span>, <span style="color:#66d9ef">int</span>)
+</span></span></code></pre></div><ul>
+<li><code>void</code> - the function returns nothing</li>
+<li><code>(*originalTakeDamage)</code> - we&rsquo;re creating a variable called <code>originalTakeDamage</code> that is a <strong>pointer to a function</strong>. The <code>*</code> inside the brackets means it&rsquo;s a pointer, not a regular variable</li>
+<li><code>(struct Character*, int)</code> - the function it points to takes these two arguments</li>
+</ul>
+<p><strong>So the left side just creates a variable that can hold the address of a function with that specific signature.</strong></p>
+<p><strong>Right side: what we&rsquo;re setting it to:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>)(<span style="color:#66d9ef">struct</span> Character<span style="color:#f92672">*</span>, <span style="color:#66d9ef">int</span>))takeDamageAddr
+</span></span></code></pre></div><ul>
+<li><code>takeDamageAddr</code> - this is our raw address, a <code>void*</code> with no type information</li>
+<li><code>(void (*)(struct Character*, int))</code> - this is a cast, telling the compiler &ldquo;treat this raw address as a pointer to a function that returns void and takes a <code>struct Character*</code> and an <code>int</code>&rdquo;</li>
+</ul>
+<p>Extra noob friendly explanation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>originalTakeDamage)(<span style="color:#66d9ef">struct</span> Character<span style="color:#f92672">*</span>, <span style="color:#66d9ef">int</span>) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>)(<span style="color:#66d9ef">struct</span> Character<span style="color:#f92672">*</span>, <span style="color:#66d9ef">int</span>)) takeDamageAddr;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// [return type] ([*name])  [argument types]       =  [cast to matching function ptr type] [the address]
+</span></span></span></code></pre></div><p><strong>Putting it together:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>originalTakeDamage)(...) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>)(...))takeDamageAddr;
+</span></span></code></pre></div><p>Is essentially saying:</p>
+<p>&ldquo;Create a function pointer called <code>originalTakeDamage</code> and point it at the address stored in <code>takeDamageAddr</code>, treating whatever is at that address as a callable function with this signature.&rdquo;</p>
+<p>Then <code>originalTakeDamage(p, dmg)</code> just calls that address like a normal function.</p>
+<hr>
+<p>Next: BULD ABSOLUITE JUMP (because relative jump didnt work, my dll was being loaded &gt;2gb away from the .exe)</p>
+<p><img src="images/Pasted%20image%2020260426125826.png" alt=""></p>
+<p><strong>Function signature:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">buildAbsJmp</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> buf, <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> target)
+</span></span></code></pre></div><p>Takes two arguments, <code>buf</code> is a pointer to a 12 byte array we&rsquo;ll write the instruction bytes into, and <code>target</code> is the address we want to jump to (in our case <code>hookedTakeDamage</code>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>buf[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x48</span>; buf[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xB8</span>;
+</span></span></code></pre></div><p>These two bytes are the start of a <code>MOV RAX, imm64</code> instruction:</p>
+<ul>
+<li><code>0x48</code> - the REX.W prefix, tells the CPU this is a 64 bit operation</li>
+<li><code>0xB8</code> - the opcode for <code>MOV RAX</code></li>
+</ul>
+<p>Together they tell the CPU &ldquo;move the next 8 bytes into RAX&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">uintptr_t</span> addr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uintptr_t</span>)target;
+</span></span></code></pre></div><p>Casts <code>target</code> (a <code>void*</code>) to an unsigned integer so we can copy its raw bytes. Same pattern as before - cast to <code>uintptr_t</code> to do arithmetic or byte manipulation on an address.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">memcpy</span>(buf <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>, <span style="color:#f92672">&amp;</span>addr, <span style="color:#ae81ff">8</span>);
+</span></span></code></pre></div><p>Copies the full 64 bit address into the buffer starting at position 2 (after our two opcode bytes). <code>&amp;addr</code> gives us the address of the integer, and we copy 8 bytes because a 64 bit address is 8 bytes. So bytes 2-9 of the buffer now contain the raw address of <code>hookedTakeDamage</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>buf[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFF</span>; buf[<span style="color:#ae81ff">11</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xE0</span>;
+</span></span></code></pre></div><p>These two bytes are the <code>JMP RAX</code> instruction:</p>
+<ul>
+<li><code>0xFF</code> - opcode for an indirect jump</li>
+<li><code>0xE0</code> - modifier specifying RAX as the register to jump to</li>
+</ul>
+<p>So the CPU loads our target address into RAX with <code>MOV RAX</code>, then <code>JMP RAX</code> jumps to whatever address is in RAX.</p>
+<p><strong>The full 12 bytes assembled:</strong></p>
+<pre tabindex="0"><code>48 B8 [8 bytes of address] FF E0
+MOV RAX, &lt;hookedTakeDamage address&gt;
+JMP RAX
+</code></pre><p>&amp;&amp;&amp;</p>
+<p>how does the hookedTakeDamage address get generated to use in this function?</p>
+<p>When you compile the DLL, <code>hookedTakeDamage</code> is a function defined in your code. The compiler assigns it a memory address in the DLL&rsquo;s code section. When you write:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">buildAbsJmp</span>(jmpBytes, hookedTakeDamage);
+</span></span></code></pre></div><p><code>hookedTakeDamage</code> without parentheses is not a function call, it&rsquo;s the address of the function. In C, a function name without <code>()</code> decays to a pointer to that function, giving you its address.</p>
+<p>So the compiler essentially substitutes <code>hookedTakeDamage</code> with whatever address it assigned to that function when it compiled the DLL. At runtime when the DLL is loaded into memory, that address is resolved to wherever the DLL was loaded.</p>
+<hr>
+<p>TO RUN THE PROCESS</p>
+<ol>
+<li>compile the dll to be injected 10_game_dll_injected_extended.dll</li>
+<li>update the 10_game_dll_injector.exe with the dll we intend to use (10_game_dll_injected_extended.dll)</li>
+<li>RUN the &ldquo;game&rdquo; exe - 9_game_trainer_trainer.exe</li>
+<li>RUN the &ldquo;injector&rdquo; exe - 10_game_dll_injector.exe</li>
+</ol>
+<p><strong>Next lesson: DLL Injection and Function Hooking</strong></p>
+<p>We&rsquo;ll write two programs — a DLL injector and a DLL. The injector forces our target process to load our DLL using Windows API calls you already know from the trainer, plus two new ones: <code>VirtualAllocEx</code> and <code>CreateRemoteThread</code>. Once injected, the DLL installs a <strong>trampoline hook</strong> on <code>takeDamage</code> — overwriting its first 5 bytes with a <code>jmp</code> to our own function, which restores health if it drops below 50, then calls the original function and reinstalls the hook.</p>
+<p>The plan is:</p>
+<ol>
+<li><strong>Write the injector</strong> — a standalone exe that finds <code>8_code_cave.exe</code>, allocates memory inside it, writes your DLL path there, then forces it to load your DLL via <code>CreateRemoteThread</code> and <code>LoadLibraryA</code></li>
+<li><strong>Write the DLL</strong> — starts with a simple message box to prove injection works, then extended to hook <code>takeDamage</code> by overwriting its first 5 bytes with a <code>jmp</code> to your hook function</li>
+<li><strong>The hook</strong> — your hook function runs instead of <code>takeDamage</code>, calls the real <code>takeDamage</code> via the trampoline, checks if health dropped below 50, restores it to 100 if so, then reinstalls the hook</li>
+</ol>
+<p>So at the end you have three programs running together:</p>
+<ul>
+<li><code>8_code_cave.exe</code> — the target</li>
+<li><code>injector.exe</code> — gets your DLL into the target</li>
+<li><code>dll.dll</code> — does the actual work once inside</li>
+</ul>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1314/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1314&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AOE2: Infinite Resources | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1314/re/aoe2/aoe2-infinite-resources/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1314/re/aoe2/aoe2-infinite-resources/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="AOE2: Infinite Resources">
+  <meta property="og:description" content="Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="re">
+    <meta property="article:published_time" content="2026-05-18T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-05-18T00:00:00+11:00">
+
+  <meta itemprop="name" content="AOE2: Infinite Resources">
+  <meta itemprop="description" content="Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.">
+  <meta itemprop="datePublished" content="2026-05-18T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-05-18T00:00:00+11:00">
+  <meta itemprop="wordCount" content="997">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AOE2: Infinite Resources">
+  <meta name="twitter:description" content="Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-AOE2-inf-resources">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link active">
+            Reverse Engineering
+          </a>
+
+          
+            
+              
+              
+
+              <a href="/re/beginner-tutorial/"
+                 class="sidebar-sub-link">
+                Beginner Tutorial
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/aoe2/"
+                 class="sidebar-sub-link active">
+                AOE2
+              </a>
+
+              
+                
+                  <a href="/re/aoe2/aoe2-infinite-resources/"
+                     class="sidebar-post-link active">
+                    AOE2: Infinite Resources
+                  </a>
+                
+              
+            
+              
+              
+
+              <a href="/re/asscube/"
+                 class="sidebar-sub-link">
+                AssCube
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/crackmes/"
+                 class="sidebar-sub-link">
+                CrackMes
+              </a>
+
+              
+            
+              
+              
+
+              <a href="/re/beginner-malware-analysis/"
+                 class="sidebar-sub-link">
+                Beginner Malware Analysis
+              </a>
+
+              
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link">
+            Art
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/interactive-tools/"
+             class="sidebar-section-link">
+            Interactive Tools
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-AOE2-inf-resources flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        AOE2
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">AOE2: Infinite Resources</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-05-18T00:00:00+11:00">May 18, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>Our goal here is to create a trainer which sets resources to 9999 every time we hit F1!
+(using AOE HD build 3062235 on steam)</p>
+<p>Our first an most obvious step finding gold via cheat engine (CE):
+<img src="images/Pasted%20image%2020260504213416.png" alt=""></p>
+<p>3 values all the same, set the first one, they all change. The other two change back to whatever the first address&rsquo;s value is.</p>
+<p>This is likely due to the first value being the main value, the other two being that same value stored elsewhere for reasons</p>
+<p>lets save the first value, and do a pointer scan to get the static address.</p>
+<p><img src="images/Pasted%20image%2020260504214321.png" alt=""></p>
+<p>our pointer scan resulted in 23,000 potential paths! Thats too many for us to process. So we need to restart our game, find the gold address again, and re-do our pointer scan on the new gold address.</p>
+<p>redoing pointer scan, this will prompt you to enter your new memory address for gold
+<img src="images/Pasted%20image%2020260504214951.png" alt=""></p>
+<p>and repeat once more, the 2nd scan had reduced potentail paths down to 188, from 23,000!</p>
+<p><img src="images/Pasted%20image%2020260504215505.png" alt=""></p>
+<p>at this point there is a manageable amount of potential base addresses, items with THREADSTACK can be ignored.</p>
+<p>Add all of the &ldquo;AoK HD.exe&rdquo;+&hellip; base addresses to the main CE window. Restart the game and ensure they remain&hellip;.</p>
+<p>Here we have identified a &lsquo;static&rsquo; pointer from our list of 20. Usually those addresses with fewer jumps are more likely to persist.
+<img src="images/Pasted%20image%2020260505210216.png" alt=""></p>
+<p>Now we have our gold pointer chain which is:</p>
+<pre tabindex="0"><code>AoK HD.exe + 0x6F3D90 + 0x12C + 0x15C + 0x3C + 0xC → gold (float)
+</code></pre><p>we should begin searching to see if that gold is within a resources struct, or within a player struct! A good first guess at where the beginning of this struct would be to simply look at what exists at what is in memory around this location, or better yet, what is in memory before the final C jump</p>
+<p><img src="images/Pasted%20image%2020260505211404.png" alt=""></p>
+<p>Now open dissect data/structures tool and lets take a look at what is at the address above!</p>
+<p><img src="images/Pasted%20image%2020260505212231.png" alt=""></p>
+<p>And there we have it.. Some of those numbers align!</p>
+<p>Have a go at messing with some of them, see what happens!</p>
+<p>Now Cheat engine does a alright job at showing us these values, but we have one more tool up our sleeve to use, alongside cheat engine which does this particular task even better. Its called ReClass.net!</p>
+<p><img src="images/Pasted%20image%2020260505212727.png" alt=""></p>
+<p>ReClass.NET lets you visualise memory as a struct in real time, showing all fields at once with their offsets and values updating live as the game runs, making it far faster to map out an entire struct than scanning for each value individually in Cheat Engine. It also lets you assign types, name fields, follow pointers visually, and export the result as C++ struct code ready to use in your trainer.</p>
+<p>Open it and attach it to AOE (remember to use the 32bit version of ReClass.net!) and add</p>
+<p><img src="images/Pasted%20image%2020260505220827.png" alt="">
+From your screenshot the chain is:</p>
+<pre tabindex="0"><code>AoK HD.exe + 0x6F3D90 → 0x187CF8E8
++ 0x12C               → 0x1229AA38
++ 0x15C               → 0x1874C02C
++ 0x3C                → 0x1B6FA4C0
++ 0xC                 → 0x1B6FA4CC (gold = 33.198)
+</code></pre><p>In ReClass.NET:</p>
+<ol>
+<li>Type <code>&lt;AoK HD.exe&gt;+6F3D90</code> into the address bar, change item 0000 to a pointer — you&rsquo;re now at <code>0x187CF8E8</code></li>
+<li>Scroll to offset <code>+0x12C</code>, right click → <strong>Change Type → Pointer</strong> — follow it to <code>0x1229AA38</code></li>
+<li>At that address scroll to offset <code>+0x15C</code>, change to <strong>Pointer</strong> — follow to <code>0x1874C02C</code></li>
+<li>Scroll to <code>+0x3C</code>, change to <strong>Pointer</strong> — follow to <code>0x1B6FA4C0</code></li>
+<li>Scroll to <code>+0xC</code>, change to <strong>Float</strong> — you should see <code>33.198</code> which is your gold value</li>
+</ol>
+<p><img src="images/Pasted%20image%2020260505221017.png" alt="">
+-&gt; shows <code>0x187CF8E8</code></p>
+<p>Once we&rsquo;ve finally traversed the pointer chain we arrive at a familiar looking structure:
+<img src="images/Pasted%20image%2020260505223931.png" alt=""></p>
+<p>now to classify these, make sure to start at the top (very important), the orange text to the right is the values represented in 3 different format, float, int and hex</p>
+<p>riught click these rows of data and classify them as floats, then we can give them names too!
+<img src="images/Pasted%20image%2020260505225706.png" alt=""></p>
+<p>Yes we could do this with cheat engine, but as the structures increase in complexity, a tool like ReClass.net is much better suited for those. The way it displays each value in 3 different ways is extremely helpful, CE does not do this. Now we can export this data via generate c++ code, to give us a nice little layout of our player struct, here&rsquo;s the relevant part of that export.</p>
+<pre tabindex="0"><code>// Created with ReClass.NET 1.2 by KN4CK3R
+
+class playerStruct
+{
+public:
+	float food; //0x0000
+	float wood; //0x0004
+	float stone; //0x0008
+	float gold; //0x000C
+}; //Size: 0x0044
+static_assert(sizeof(playerStruct) == 0x44);
+</code></pre><p>Using this alongside our pointer chain</p>
+<pre tabindex="0"><code>AoK HD.exe + 0x6F3D90 → 0x187CF8E8
++ 0x12C               → 0x1229AA38
++ 0x15C               → 0x1874C02C
++ 0x3C                → 0x1B6FA4C0
++ 0xC                 → 0x1B6FA4CC (gold = 33.198)
+</code></pre><p>we can construct the required jumps to reach our player struct, then update all of the resource accordingly.</p>
+<p><img src="images/Pasted%20image%2020260507214750.png" alt=""></p>
+<p>Please refer to the associated repository item for the code for this one, it builds upon previous lessons and going through it again would mostly be repeating myself, but I will briefly explain the few changes we&rsquo;ve made:</p>
+<p><img src="images/Pasted%20image%2020260507215314.png" alt=""></p>
+<p>Firstly we&rsquo;ve added <code>followPointer</code>, which reads a 4-byte value from a given address and returns it as a new address to follow, essentially asking &ldquo;what address is stored here?&rdquo; and jumping to it. This is called a dereference. The pointer chain calls this repeatedly, adding a small offset at each step to navigate to the right field before following the next pointer. The final dereference has no offset because by that point the chain has landed at the base of the resource struct.</p>
+<p><img src="images/Pasted%20image%2020260507214711.png" alt=""></p>
+<p>Then we&rsquo;ve also added a chunk of logic to handle the user input, press F1 to set resources.
+then we follow the address and update the values, Just like before.</p>
+<p>compile for 32 bit to match the game with: $ gcc AOE_game_trainer_inf_resources.c -o AOE_game_trainer_inf_resources.exe -lpsapi
+(using program mingw32.exe)</p>
+<p>Additional fun:
+Right after our resources we can see some values that correlate to the population, you can also add some additional logic to our code to reset our population count to 0!</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1314/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
+  </body>
+</html>

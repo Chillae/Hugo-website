@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-04-01T00:00:00+11:00'
 draft = false
 title = 'RE 6: XOR Crackme'
@@ -7,12 +7,16 @@ summary = 'Understanding XOR obfuscation and cracking an XOR encrypted password 
 weight = 7
 +++
 
+Remember how easily we found the password last time by just searching for strings? Lets look at a simple way developers try to stop that, and how quickly we can get around it.
+
+
 Code:
 ![](images/Pasted%20image%2020260401222534.png)
 
 IDA:
 ![](images/Pasted%20image%2020260401222718.png)
 ![](images/Pasted%20image%2020260401222759.png)
+
 
 
 
@@ -69,6 +73,15 @@ Don't get too caught up in the weeds if you don't understand each and every step
 
 
 
+
+
+
+
+
+
+
+
+
 Now, lets try and crack this extremely complex XOR encrypted password...
 
 
@@ -81,6 +94,7 @@ Once again this is quite easy to crack in x64dbg by intercepting the decrypted p
 if we set RDX = RAX or vise versa at this point, our test will always pass. 
 
 ![](images/Pasted%20image%2020260408201140.png)
+
 
 
 

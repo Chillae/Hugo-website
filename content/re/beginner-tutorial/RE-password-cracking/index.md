@@ -1,4 +1,4 @@
-+++
+﻿+++
 date = '2026-03-16T00:00:00+11:00'
 draft = false
 title = 'RE 4: Password Cracking'
@@ -6,6 +6,10 @@ slug = 'RE - password cracking'
 summary = 'Multiple methods to crack a simple password protected program using IDA Free and x64dbg.'
 weight = 5
 +++
+
+
+Alright, now we're getting into the fun stuff. We've learned how to read disassembly, now lets use that knowledge to do something exciting!
+
 
 Our code:
 ![](images/Pasted%20image%2020260316210814.png)
@@ -27,9 +31,7 @@ _Format - 'You entered: ...'        - from printf(format)
 aYouEnter...                      - from printf, but format was already taken?
 ```
 
-This makes it more confusing to read initially, but once you realize you can hover over the call to fgets_0 for example, and see that the comments align with the function:
-
-![](images/Pasted%20image%2020260322214041.png)
+This makes it more confusing to read initially, but once you realize you can hover over the call to fgets_0 for example, and see that the comments align with the function:![](images/Pasted%20image%2020260322214041.png)
 These functions are call's due to CRT functions are pre-compiled in assembly, and are called as needed. these items come from <.h> includes. 
 
 So, with that in mind, lets read what this actually does!
@@ -169,3 +171,8 @@ This one is easy, just right click on the jnz and fill with nops! As we know the
 
 Using x64dbg we can also 'patch' our exe, which will permanently replace the jnz with nops. so no matter what you type in, you will always have a 'correct' password! 
 ![](images/Pasted%20image%2020260328181416.png)
+
+
+
+
+

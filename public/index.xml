@@ -6,14 +6,35 @@
     <description>Recent content in Home on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Apr 2026 00:00:00 +1100</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 00:00:00 +1100</lastBuildDate>
     <atom:link href="http://localhost:1314/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AOE2: Infinite Resources</title>
+      <link>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</link>
+      <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</guid>
+      <description>Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.</description>
+    </item>
+    <item>
+      <title>MA 1: IsDebuggerPresent</title>
+      <link>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present/</link>
+      <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present/</guid>
+      <description>A first look at anti-debugging: how a program detects an attached debugger via the IsDebuggerPresent Win32 API.</description>
+    </item>
     <item>
       <title>RE 0: Introduction &amp; Setup</title>
       <link>http://localhost:1314/re/beginner-tutorial/re_intro/</link>
       <pubDate>Sat, 28 Mar 2026 19:21:29 +1100</pubDate>
       <guid>http://localhost:1314/re/beginner-tutorial/re_intro/</guid>
       <description>Introduction to Reverse Engineering - setup and tools required</description>
+    </item>
+    <item>
+      <title>MA 2: IsDebuggerPresent Workaround</title>
+      <link>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present-workaround/</link>
+      <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/re/beginner-malware-analysis/ma-is-debugger-present-workaround/</guid>
+      <description>The cat-and-mouse next move: detecting a debugger without ever calling IsDebuggerPresent, so common hook-based bypasses (ScyllaHide etc.) miss it.</description>
     </item>
     <item>
       <title>RE 1: Hello World</title>
@@ -70,6 +91,13 @@
       <pubDate>Sun, 19 Apr 2026 00:00:00 +1100</pubDate>
       <guid>http://localhost:1314/re/beginner-tutorial/re-trainer/</guid>
       <description>Writing a game trainer using Windows API to modify process memory externally, just like CheatEngine.</description>
+    </item>
+    <item>
+      <title>RE 10: DLL Injector</title>
+      <link>http://localhost:1314/re/beginner-tutorial/re-dll-injector/</link>
+      <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/re/beginner-tutorial/re-dll-injector/</guid>
+      <description>Combining external memory patching with internal hooks: writing an injector that loads a DLL into a target process, which then hooks a function before it runs.</description>
     </item>
   </channel>
 </rss>
