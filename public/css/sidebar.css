@@ -9,10 +9,13 @@
   width: 250px;
   background-color: #1e1e1e;
   padding: 16px 12px;
-  max-height: 100vh;
+  height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
 }
 
 /* Reset all links inside sidebar — beats theme/Tachyons specificity */
@@ -90,9 +93,11 @@
   box-sizing: border-box;
 }
 
-/* Prevent horizontal overflow on mobile */
+/* Prevent horizontal overflow on mobile.
+   `clip` instead of `hidden` so it doesn't create a scroll container
+   on html/body, which would break position: sticky on the sidebar. */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -179,23 +184,13 @@ html, body {
   list-style: none;
   padding: 0;
   margin: 0;
-  counter-reset: article-counter;
 }
 
 .section-page-item {
-  counter-increment: article-counter;
   padding: 0.9rem 0;
   border-bottom: 1px solid #e5e5e5;
   display: flex;
   flex-direction: column;
-}
-
-.section-page-item::before {
-  content: counter(article-counter, decimal-leading-zero);
-  font-size: 0.75rem;
-  color: #999;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
 }
 
 .section-page-link {

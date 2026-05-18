@@ -28,6 +28,18 @@ const el = (tag, attrs = {}, children = []) => {
 };
 const hex = (n, w = 4) => '0x' + n.toString(16).padStart(w, '0');
 
+/* Scroll a child into view ONLY within its scrollable container, without
+   bubbling to the window. (Element.scrollIntoView cascades upward and on
+   initial page load can jump the whole window to the bottom of the page
+   where the overflow scenario lives.) */
+const scrollWithinContainer = (line, container) => {
+  if (!line || !container) return;
+  const cRect = container.getBoundingClientRect();
+  const lRect = line.getBoundingClientRect();
+  if (lRect.top    < cRect.top)    container.scrollTop -= (cRect.top    - lRect.top);
+  else if (lRect.bottom > cRect.bottom) container.scrollTop += (lRect.bottom - cRect.bottom);
+};
+
 /* ============================================================
    SECTION 1  —  Process address space
    Static interactive: hover/click to inspect each segment.
@@ -445,7 +457,7 @@ function buildStackSection() {
     const cur = asm.querySelector(`.line[data-i="${step.asmLine}"]`);
     if (cur) {
       cur.classList.add('current');
-      cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      scrollWithinContainer(cur, asm);
     }
     // Regs (with change highlight)
     regs.innerHTML = ['rip','rsp','rbp','rax'].map(r => {
@@ -607,7 +619,7 @@ function buildHeapSection() {
     const cur = asm.querySelector(`.line[data-i="${step.asmLine}"]`);
     if (cur) {
       cur.classList.add('current');
-      cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      scrollWithinContainer(cur, asm);
     }
     ptrs.innerHTML = Object.entries(step.ptrs).map(([k, v]) =>
       `<div class="rname">${k}</div><div class="rval">${v}</div>`
@@ -759,7 +771,7 @@ function buildOverflowSection() {
     const curLine = asm.querySelector(`.line[data-i="${asmLine}"]`);
     if (curLine) {
       curLine.classList.add('current');
-      curLine.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      scrollWithinContainer(curLine, asm);
     }
 
     // Registers
