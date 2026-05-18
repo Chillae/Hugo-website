@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="section-content">
+
+  {{ with .Content }}
+    <div class="section-body">{{ . }}</div>
+  {{ end }}
+
+  {{/* Tool cards, sourced from data/tools.yaml */}}
+  {{ if site.Data.tools }}
+    <div class="section-cards">
+      {{ range site.Data.tools }}
+        <a href="{{ .url }}" class="section-card">
+          <h2 class="section-card-title">{{ .title }}</h2>
+          {{ with .description }}
+            <span class="section-card-desc">{{ . }}</span>
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+
+</div>
+{{ end }}

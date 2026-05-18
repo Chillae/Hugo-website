@@ -1,0 +1,3 @@
+- title: Memory Visualizer
+  description: A visual walk-through of how an x86_64 Linux process uses memory — the address space, function calls on the stack, the heap, and what a buffer overflow does at the byte level.
+  url: /memory-visualizer/

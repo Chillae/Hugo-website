@@ -1,0 +1,37 @@
+{{ define "main" }}
+<div class="section-content">
+
+  {{/* Optional intro pulled from content/_index.md body */}}
+  {{ with .Content }}
+    <div class="section-body">{{ . }}</div>
+  {{ end }}
+
+  {{/* One card per top-level section, skipping `posts` to match the sidebar.
+       Adding a new folder under content/ automatically adds a card here. */}}
+  <div class="section-cards">
+    {{ range .Site.Sections.ByWeight }}
+      {{ if ne .Section "posts" }}
+        <a href="{{ .RelPermalink }}" class="section-card">
+          <h2 class="section-card-title">{{ .Title }}</h2>
+
+          {{/* Description from `description = "..."` in the section's _index.md.
+               Sections without one just show title + count. */}}
+          {{ with .Description }}
+            <span class="section-card-desc">{{ . }}</span>
+          {{ end }}
+
+          {{/* Recursive count covers nested subsections like /re/ → aoe2 / beginner-tutorial / etc.
+               Falls back to a subsection count if there are no leaf articles. */}}
+          {{ $count := len .RegularPagesRecursive }}
+          {{ if gt $count 0 }}
+            <span class="section-card-count">{{ $count }} article{{ if gt $count 1 }}s{{ end }}</span>
+          {{ else if .Sections }}
+            <span class="section-card-count">{{ len .Sections }} subsection{{ if gt (len .Sections) 1 }}s{{ end }}</span>
+          {{ end }}
+        </a>
+      {{ end }}
+    {{ end }}
+  </div>
+
+</div>
+{{ end }}

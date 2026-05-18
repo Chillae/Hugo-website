@@ -167,6 +167,13 @@ html, body {
   color: #888;
 }
 
+/* Multi-line description on cards that need more than a count (e.g. tools page) */
+.section-card-desc {
+  font-size: 0.85rem;
+  color: #bbb;
+  line-height: 1.45;
+}
+
 /* Article list (for sub-sections like Beginner Tutorial) */
 .section-page-list {
   list-style: none;

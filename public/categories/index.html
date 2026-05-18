@@ -53,7 +53,7 @@
   <meta name="twitter:title" content="Categories">
 
     
-    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
     
 	
   </head><body class="ma0 avenir bg-near-white development is-taxonomy">
@@ -87,6 +87,10 @@
     </div>
   </header>
 
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
 
     <div class="site-wrapper">
       
@@ -145,6 +149,18 @@
         
       
         
+          
+          
+
+          <a href="/interactive-tools/"
+             class="sidebar-section-link">
+            Interactive Tools
+          </a>
+
+          
+        
+      
+        
       
     </nav>
   </div>
@@ -175,5 +191,24 @@
   </div>
 </footer>
 
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
   </body>
 </html>
