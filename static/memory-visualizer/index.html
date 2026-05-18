@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Memory Visualizer | Stack, Heap, and What Goes Wrong</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>How Memory Actually Works</h1>
+    <p class="lede">A visual tour of an x86_64 Linux process: the address space, function calls on the stack, the heap, and how a buffer overflow shreds it all. Scroll through, each section has its own animation controls and a synced disassembly panel.</p>
+    <nav class="toc">
+      <a href="#layout">1. Process layout</a>
+      <a href="#registers">2. CPU registers</a>
+      <a href="#callstack">3. Function calls</a>
+      <a href="#heap">4. The heap</a>
+      <a href="#overflow">5. Buffer overflow</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: PROCESS MEMORY LAYOUT                              -->
+<!-- ============================================================ -->
+<section id="layout" class="scenario">
+  <div class="scenario-header">
+    <h2>1. The Process Address Space</h2>
+    <p>When the kernel loads your program, it carves a virtual address space into named regions. Hover any band to see what lives there. This is what every running process looks like on x86_64 Linux.</p>
+  </div>
+
+  <div class="scenario-body two-col">
+    <div class="viz" id="layout-viz">
+      <div class="addr-axis">
+        <div class="addr-tick" style="top:0">0x7fff_ffff_ffff</div>
+        <div class="addr-tick" style="top:50%">0x0000_7fff_0000</div>
+        <div class="addr-tick" style="bottom:0">0x0000_0000_0000</div>
+      </div>
+      <div class="address-space" id="address-space"></div>
+    </div>
+
+    <aside class="side-panel">
+      <div class="panel-block">
+        <h3>Segment detail</h3>
+        <div id="layout-detail" class="detail-box">
+          <p class="muted">Hover or click a segment to inspect.</p>
+        </div>
+      </div>
+      <div class="panel-block">
+        <h3>Notes</h3>
+        <ul class="notes">
+          <li>Addresses shown are virtual. The MMU translates them to physical RAM (or swap) on demand.</li>
+          <li>Stack grows <em>down</em>, heap grows <em>up</em>. They share the gap in the middle.</li>
+          <li>The top half is reserved for the kernel and unreachable from user code.</li>
+          <li>ASLR randomizes the base of stack, heap, libraries, and (with PIE) the executable every launch.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: CPU REGISTERS PRIMER                               -->
+<!-- ============================================================ -->
+<section id="registers" class="scenario">
+  <div class="scenario-header">
+    <h2>2. Meet the CPU Registers</h2>
+    <p>Before we follow a real call chain, let's see what those mysterious register names (<strong>RIP</strong>, <strong>RBP</strong>, <strong>RSP</strong>, <strong>RAX</strong>, <strong>RDI</strong>) actually mean. A <strong>register</strong> is a tiny piece of storage <em>inside the CPU itself</em>, not in RAM. There are only a handful of them and they're the fastest memory the CPU can touch. Five of them matter for understanding this example. Step through the tiny program one instruction at a time and watch each register update; hover any register name on the right to highlight what it points to.</p>
+  </div>
+
+  <div class="scenario-body two-col">
+    <div class="viz">
+      <div class="source-box">
+        <pre><code>int square(int n) {
+    return n * n;
+}
+int main(void) {
+    int result = square(5);
+    return result;
+}</code></pre>
+      </div>
+
+      <div class="primer-viz" id="primer-viz"></div>
+      <div class="step-status" id="primer-status"></div>
+      <div class="controls" data-scenario="primer">
+        <button data-act="reset" title="Reset">&#9198;</button>
+        <button data-act="prev"  title="Step back">&#9664;</button>
+        <button data-act="next"  title="Step forward">&#9654;</button>
+        <span class="step-indicator" id="primer-step-indicator"></span>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+      <div class="panel-block">
+        <h3>What each register means</h3>
+        <div class="primer-regs">
+          <div class="primer-reg" data-reg="rip">
+            <span class="rname">RIP</span>
+            <span class="rdesc"><strong>Instruction Pointer.</strong> Where in your code the CPU is right now, like a finger pointing at the next line to run. After each instruction, it moves forward on its own.</span>
+          </div>
+          <div class="primer-reg" data-reg="rbp">
+            <span class="rname">RBP</span>
+            <span class="rdesc"><strong>Base Pointer.</strong> A bookmark at the start of the current function's workspace on the stack. The function uses it to find its own variables.</span>
+          </div>
+          <div class="primer-reg" data-reg="rsp">
+            <span class="rname">RSP</span>
+            <span class="rdesc"><strong>Stack Pointer.</strong> Always points to the very top of the call stack. Moves automatically every time a function is called or returns.</span>
+          </div>
+          <div class="primer-reg" data-reg="rax">
+            <span class="rname">RAX</span>
+            <span class="rdesc"><strong>Accumulator.</strong> A reserved register for function return values. <code>return x</code> compiles to "put x in RAX, then ret".</span>
+          </div>
+          <div class="primer-reg" data-reg="rdi">
+            <span class="rname">RDI</span>
+            <span class="rdesc"><strong>Destination Index.</strong> By x86_64 convention, this holds the first integer argument passed to a function. The caller loads it before <code>call</code>. <code>EDI</code> is just its lower 32 bits (a 32-bit write zero-extends to the full 64).</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel-block">
+        <h3>Live values</h3>
+        <div class="primer-regs-vals" id="primer-regs-vals"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: FUNCTION CALL LIFECYCLE                            -->
+<!-- ============================================================ -->
+<section id="callstack" class="scenario">
+  <div class="scenario-header">
+    <h2>3. The Stack: Function Calls in Motion</h2>
+    <p>Now that you know what RIP, RBP, RSP, and RAX are, let's follow a longer call chain. Every time a function is called, the CPU gives it a private workspace on the <strong>call stack</strong>, a little box holding its inputs, its local variables, and a note saying <em>where to jump back to</em> when it's done. When the function returns, the box vanishes. Below, we trace <code>main</code> calling <code>average</code>, which calls <code>divide</code>, and watch the boxes pile up and disappear.</p>
+    <p class="muted" style="font-size:0.85rem;margin-top:8px">The disassembly panel on the right shows the actual CPU instructions if you're curious; you can safely ignore it and just watch the boxes on the left.</p>
+  </div>
+
+
+  <div class="scenario-body two-col">
+    <div class="viz">
+      <div class="source-box">
+        <pre><code>int divide(int sum, int count) {
+    return sum / count;
+}
+int average(int a, int b) {
+    int sum = a + b;
+    return divide(sum, 2);
+}
+int main(void) {
+    return average(10, 20);
+}</code></pre>
+      </div>
+      <div class="stack-frame-viz" id="stack-viz"></div>
+      <div class="step-status" id="stack-status"></div>
+      <div class="controls" data-scenario="stack">
+        <button data-act="reset" title="Reset">&#9198;</button>
+        <button data-act="prev" title="Step back">&#9664;</button>
+        <button data-act="next" title="Step forward">&#9654;</button>
+        <span class="step-indicator" id="stack-step-indicator"></span>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+      <div class="panel-block">
+        <h3>Disassembly</h3>
+        <pre class="asm" id="stack-asm"></pre>
+      </div>
+      <div class="panel-block">
+        <h3>Registers</h3>
+        <div class="regs" id="stack-regs"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: HEAP INTERNALS                                     -->
+<!-- ============================================================ -->
+<section id="heap" class="scenario">
+  <div class="scenario-header">
+    <h2>4. The Heap: malloc, free, and the Mess in Between</h2>
+    <p>Unlike the stack, the heap is yours to manage. <code>malloc</code> hands out chunks with a hidden header; <code>free</code> returns them. Misuse it and you get fragmentation, use-after-free, or a double free, each rendered live below.</p>
+  </div>
+
+  <div class="scenario-body two-col">
+    <div class="viz">
+      <div class="source-box">
+        <pre><code>char *p1 = malloc(24);
+char *p2 = malloc(48);
+char *p3 = malloc(16);
+free(p2);
+char *p4 = malloc(16);    // reuses p2's hole
+*p2 = 'X';                // use-after-free!
+free(p2);                 // double free!</code></pre>
+      </div>
+      <div class="heap-viz" id="heap-viz"></div>
+      <div class="step-status" id="heap-status"></div>
+      <div class="controls" data-scenario="heap">
+        <button data-act="reset" title="Reset">&#9198;</button>
+        <button data-act="prev" title="Step back">&#9664;</button>
+        <button data-act="next" title="Step forward">&#9654;</button>
+        <span class="step-indicator" id="heap-step-indicator"></span>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+      <div class="panel-block">
+        <h3>Disassembly</h3>
+        <pre class="asm" id="heap-asm"></pre>
+      </div>
+      <div class="panel-block">
+        <h3>Pointer table</h3>
+        <div class="regs" id="heap-ptrs"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: BUFFER OVERFLOW                                    -->
+<!-- ============================================================ -->
+<section id="overflow" class="scenario danger">
+  <div class="scenario-header">
+    <h2>5. Stack Smashing: How a Buffer Overflow Wins</h2>
+    <p><strong>What's a buffer overflow?</strong> Imagine a function reserves 16 mailboxes for some incoming text, but the code filling them doesn't bother to check the limit, it just keeps writing: mailbox 17, mailbox 18, mailbox 99, into whatever memory happens to sit next door. On the stack, those "next door" boxes are not random, they're the function's other local variables, plus the bookkeeping the CPU placed there: the saved RBP and, most importantly, the <strong>return address</strong> (the note from section 3 telling the CPU where to jump back to when this function ends).</p>
+    <p>This is the dangerous part. If an attacker can choose what spills past mailbox 16, they can rewrite that return address with one of their own choosing, sending the CPU wherever they want. That's "hijacking control flow", and it's the bug class behind some of the most famous attacks in computing history (the Morris Worm, Code Red, Slammer).</p>
+    <p>The function below has exactly this bug. It copies an input string into a 16-byte buffer using <code>strcpy</code>, which has no idea where the buffer ends, it just copies until it hits a zero byte. Feed it 17 characters and it writes 17. Feed it 100 and it writes 100. Step through to watch the bytes spill in real time, clobbering a nearby local, then the canary, then the saved RBP, then the return address itself. Then toggle each mitigation below to see how it slams the door.</p>
+  </div>
+
+  <div class="scenario-body two-col">
+    <div class="viz">
+      <div class="source-box">
+        <pre><code>void vuln(const char *src) {
+    long secret = 0xCAFEBABE;
+    char buf[16];
+    strcpy(buf, src);     // no bounds check
+}</code></pre>
+      </div>
+
+      <p class="mit-intro">Toggle a mitigation, then step through the overflow again to see how it changes the outcome. Each one is what a real Linux compiler/kernel turns on by default today.</p>
+      <div class="mitigations">
+        <div class="mit-row">
+          <label><input type="checkbox" id="mit-canary" /> <strong>Stack canary</strong></label>
+          <span class="help-icon" tabindex="0" aria-label="What is a stack canary?">?</span>
+          <div class="help-popover" role="tooltip">
+            A secret random value the compiler places between the locals and the saved return address. The function epilogue re-reads it and compares to the original. If an overflow stomped it, the program calls <code>__stack_chk_fail</code> and aborts <em>before</em> <code>ret</code> ever runs. Cheap, catches almost every linear stack overflow.
+          </div>
+        </div>
+        <div class="mit-row">
+          <label><input type="checkbox" id="mit-nx" /> <strong>NX bit</strong> <span class="muted">(No-eXecute)</span></label>
+          <span class="help-icon" tabindex="0" aria-label="What is the NX bit?">?</span>
+          <div class="help-popover" role="tooltip">
+            The MMU marks the stack and heap as non-executable. Even if an attacker redirects RIP to bytes they wrote into <code>buf</code>, the CPU faults the moment it tries to fetch an instruction from a non-executable page. Killed the classic "shellcode in the buffer" trick; attackers now use ROP instead.
+          </div>
+        </div>
+        <div class="mit-row">
+          <label><input type="checkbox" id="mit-aslr" /> <strong>ASLR</strong> <span class="muted">(Address Space Layout Randomization)</span></label>
+          <span class="help-icon" tabindex="0" aria-label="What is ASLR?">?</span>
+          <div class="help-popover" role="tooltip">
+            The kernel randomizes the base address of the stack, heap, shared libraries, and (with PIE) the executable on every launch. The attacker can't hardcode a target address because they don't know where anything is. Bypassed only with an info leak.
+          </div>
+        </div>
+      </div>
+
+      <div class="overflow-viz" id="overflow-viz"></div>
+      <div class="step-status" id="overflow-status"></div>
+      <div class="controls" data-scenario="overflow">
+        <button data-act="reset" title="Reset">&#9198;</button>
+        <button data-act="prev" title="Step back">&#9664;</button>
+        <button data-act="next" title="Step forward">&#9654;</button>
+        <span class="step-indicator" id="overflow-step-indicator"></span>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+      <div class="panel-block">
+        <h3>Disassembly</h3>
+        <pre class="asm" id="overflow-asm"></pre>
+      </div>
+      <div class="panel-block">
+        <h3>Registers</h3>
+        <div class="regs" id="overflow-regs"></div>
+      </div>
+      <div class="panel-block">
+        <h3>Verdict</h3>
+        <div id="overflow-verdict" class="detail-box"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <p>Built as a teaching aid. Addresses, chunk sizes, and instructions are simplified for clarity, real glibc <code>ptmalloc</code> and GCC code-gen vary. The mechanics shown are accurate.</p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
