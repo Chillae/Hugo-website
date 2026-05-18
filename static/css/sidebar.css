@@ -1,5 +1,39 @@
 /* Sidebar responsive styles */
 
+/* Site-wide colors. (Was a light/dark variable system with a toggle;
+   simplified to dark-only after we removed the toggle button.) */
+:root {
+  --page-bg:          #1a1a1a;
+  --page-text:        #d4d4d4;
+  --page-text-strong: #fff;
+  --page-muted:       #999;
+  --border-color:     #2e2e2e;
+  --code-bg:          #2a2a2a;
+  --card-bg:          #2a2a2a;
+  --card-bg-hover:    #353535;
+  --card-text:        #fff;
+  --card-border:      #404040;
+  --accent:           #66b3ff;
+}
+
+/* Override Tachyons body bg + text so the whole page picks up the palette */
+body,
+body.bg-near-white,
+.bg-near-white { background-color: var(--page-bg) !important; }
+body { color: var(--page-text); }
+
+/* Main article body text: headings stronger, links accent */
+.main-content { color: var(--page-text); }
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 { color: var(--page-text-strong); }
+.main-content a:not(.section-card):not(.section-page-link) { color: var(--accent); }
+.main-content code,
+.main-content pre { background-color: var(--code-bg); }
+
 .site-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -130,7 +164,7 @@ html, body {
 .section-body {
   margin-bottom: 2rem;
   line-height: 1.7;
-  color: #333;
+  color: var(--page-text);
 }
 
 /* Sub-section cards grid */
@@ -146,16 +180,16 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  background: #1e1e1e;
-  color: #fff;
+  background: var(--card-bg);
+  color: var(--card-text);
   text-decoration: none;
   border-radius: 6px;
-  border: 1px solid #333;
+  border: 1px solid var(--card-border);
   transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .section-card:hover {
-  background: #2a2a2a;
+  background: var(--card-bg-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
@@ -164,7 +198,7 @@ html, body {
   margin: 0 0 0.75rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--card-text);
 }
 
 .section-card-count {
@@ -188,7 +222,7 @@ html, body {
 
 .section-page-item {
   padding: 0.9rem 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
 }
@@ -196,19 +230,19 @@ html, body {
 .section-page-link {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--page-text-strong);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .section-page-link:hover {
-  color: #0066cc;
+  color: var(--accent);
 }
 
 .section-page-summary {
   margin: 0.3rem 0 0;
   font-size: 0.88rem;
-  color: #666;
+  color: var(--page-muted);
   line-height: 1.5;
 }
 
