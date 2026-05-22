@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tasmania Mush Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<button id="gpsBtn" class="gps-btn" title="Find my location" aria-label="Find my location">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/>
+    <line x1="12" y1="2"  x2="12" y2="5"/>
+    <line x1="12" y1="19" x2="12" y2="22"/>
+    <line x1="2"  y1="12" x2="5"  y2="12"/>
+    <line x1="19" y1="12" x2="22" y2="12"/>
+  </svg>
+</button>
+
+<aside class="panel">
+  <header class="panel-header">
+    <a href="/maps/" class="back-to-maps">← Maps</a>
+    <h1>Tasmania Mush Map</h1>
+    <p class="subtitle">Wet eucalypt × prime harvest disturbance, public land only</p>
+    <p class="zoom-readout" id="zoomReadout">zoom 7</p>
+  </header>
+
+  <div class="panel-body">
+
+    <section class="layer-group">
+      <h2>Habitat</h2>
+      <button class="layer-btn on" data-layer="habitat">
+        <span class="dot dot-grad"></span>
+        Scored habitat <small>(always on)</small>
+      </button>
+    </section>
+
+    <section class="layer-group">
+      <h2>Access</h2>
+      <button class="layer-btn" data-layer="roads" data-minzoom="10">
+        <span class="dot" style="background:#a04000"></span>
+        Roads + 4WD tracks <small>(zoom 10+)</small>
+      </button>
+      <button class="layer-btn" data-layer="walking" data-minzoom="12">
+        <span class="dot" style="background:#6b3e8c"></span>
+        Walking tracks <small>(zoom 12+)</small>
+      </button>
+      <button class="layer-btn" data-layer="tenure" data-minzoom="0">
+        <span class="dot" style="background:#4ade80"></span>
+        Public land (legal to enter)
+      </button>
+    </section>
+
+    <section class="layer-group">
+      <h2>Environment</h2>
+      <button class="layer-btn" data-layer="lakes" data-minzoom="9">
+        <span class="dot" style="background:#a8dadc"></span>
+        Lakes &amp; water bodies <small>(zoom 9+)</small>
+      </button>
+      <button class="layer-btn" data-layer="streams" data-minzoom="12">
+        <span class="dot" style="background:#3b8ec2"></span>
+        Rivers, streams &amp; creeks <small>(zoom 12+)</small>
+      </button>
+      <button class="layer-btn" data-layer="contours" data-minzoom="13">
+        <span class="dot" style="background:#6b5947"></span>
+        Elevation contours <small>(zoom 13+)</small>
+      </button>
+    </section>
+
+    <section class="layer-group">
+      <h2>Trip planning</h2>
+      <button class="layer-btn" data-layer="camping" data-minzoom="9">
+        <span class="dot" style="background:#2a9d8f">⛺</span>
+        Camping areas <small>(zoom 9+)</small>
+      </button>
+    </section>
+
+    <section class="layer-group">
+      <h2>Basemap</h2>
+      <div class="basemap-row">
+        <button class="base-btn on" data-base="osm">OSM</button>
+        <button class="base-btn"     data-base="topo">Topo</button>
+        <button class="base-btn"     data-base="sat">Satellite</button>
+      </div>
+    </section>
+
+    <section class="layer-group legend">
+      <h2>Score (0–10)</h2>
+      <div class="legend-row"><span class="sw" style="background:#1a9850"></span> 8.5–10 Excellent</div>
+      <div class="legend-row"><span class="sw" style="background:#66bd63"></span> 7.5–8.5 Very good</div>
+      <div class="legend-row"><span class="sw" style="background:#a6d96a"></span> 6.0–7.5 Good</div>
+      <div class="legend-row"><span class="sw" style="background:#d9ef8b"></span> 5.0–6.0 Fair (upper)</div>
+      <div class="legend-row"><span class="sw" style="background:#fee08b"></span> 4.0–5.0 Fair (lower)</div>
+    </section>
+
+    <details class="weather-panel">
+      <summary>When to go (fruiting conditions)</summary>
+      <div class="weather-body">
+        <h3>Season (Tasmania)</h3>
+        <ul>
+          <li><strong>Onset:</strong> Late March to mid April</li>
+          <li><strong>Peak:</strong> April, May, June</li>
+          <li><strong>Tail:</strong> Extends into July or August</li>
+        </ul>
+        <h3>Triggers to watch for</h3>
+        <ul>
+          <li>Several days of rain (&gt;10mm/day)</li>
+          <li>Night temperatures consistently below 8°C</li>
+          <li>Morning dew or mist on south facing slopes</li>
+        </ul>
+        <h3>Disturbance age guide</h3>
+        <ul>
+          <li><strong>4 to 8 yr post harvest:</strong> Prime, peak diversity</li>
+          <li><strong>9 to 12 yr:</strong> Still excellent, late peak</li>
+          <li><strong>13 to 18 yr:</strong> Declining but productive</li>
+          <li><strong>2023 (3 yr):</strong> Too fresh, fungi just colonising</li>
+        </ul>
+      </div>
+    </details>
+
+  </div>
+</aside>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

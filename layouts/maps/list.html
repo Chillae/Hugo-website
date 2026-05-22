@@ -1,0 +1,161 @@
+{{ define "main" }}
+<div class="section-content">
+
+  {{/* Password gate. Defaults to hiding the maps until the user enters the
+       password. Once accepted, sessionStorage is set so they don't need to
+       re-enter for the rest of the browser session. */}}
+  <div id="mapsGate" class="maps-gate">
+    <form id="mapsGateForm" class="maps-gate-form" autocomplete="off">
+      <p class="maps-gate-prompt">Enter password to view maps.</p>
+      <input id="mapsGateInput"
+             type="password"
+             autocomplete="off"
+             autocapitalize="off"
+             autocorrect="off"
+             spellcheck="false"
+             aria-label="Password">
+      <button type="submit">Unlock</button>
+      <p id="mapsGateError" class="maps-gate-error" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div id="mapsContent" class="maps-content" style="display:none">
+
+    {{ with .Content }}
+      <div class="section-body">{{ . }}</div>
+    {{ end }}
+
+    {{/* Map cards from data/maps.yaml */}}
+    {{ if site.Data.maps }}
+      <div class="section-cards">
+        {{ range site.Data.maps }}
+          <a href="{{ .url }}" class="section-card">
+            <h2 class="section-card-title">{{ .title }}</h2>
+            {{ with .description }}
+              <span class="section-card-desc">{{ . }}</span>
+            {{ end }}
+          </a>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{/* Also list any content articles in this section, in case there are some */}}
+    {{ if .RegularPages }}
+      <ol class="section-page-list">
+        {{ range .RegularPages.ByWeight }}
+          <li class="section-page-item">
+            <a href="{{ .RelPermalink }}" class="section-page-link">{{ .Title }}</a>
+            {{ with .Summary }}
+              <p class="section-page-summary">{{ . }}</p>
+            {{ end }}
+          </li>
+        {{ end }}
+      </ol>
+    {{ end }}
+
+  </div>
+
+</div>
+
+<style>
+  .maps-gate {
+    max-width: 320px;
+    margin: 60px auto;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .maps-gate-prompt {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: #444;
+  }
+  .maps-gate-form input {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-transform: lowercase;
+  }
+  .maps-gate-form input:focus {
+    outline: none;
+    border-color: #2d6a4f;
+  }
+  .maps-gate-form button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 600;
+    background: #2d6a4f;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .maps-gate-form button:hover { background: #1a3a2a; }
+  .maps-gate-error {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: #c1121f;
+    min-height: 16px;
+  }
+</style>
+
+<script>
+  (function () {
+    var STORAGE_KEY = 'maps_unlocked_v1';
+    var SECRET      = 'sabina';
+
+    var gate    = document.getElementById('mapsGate');
+    var content = document.getElementById('mapsContent');
+    var form    = document.getElementById('mapsGateForm');
+    var input   = document.getElementById('mapsGateInput');
+    var errMsg  = document.getElementById('mapsGateError');
+
+    function unlock() {
+      gate.style.display    = 'none';
+      content.style.display = 'block';
+    }
+
+    // Already unlocked this session?
+    try {
+      if (sessionStorage.getItem(STORAGE_KEY) === 'yes') {
+        unlock();
+        return;
+      }
+    } catch (e) { /* sessionStorage may be unavailable; just show the gate */ }
+
+    // Lowercase input live as user types
+    input.addEventListener('input', function () {
+      var lower = this.value.toLowerCase();
+      if (this.value !== lower) this.value = lower;
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = (input.value || '').toLowerCase().trim();
+      if (v === SECRET) {
+        try { sessionStorage.setItem(STORAGE_KEY, 'yes'); } catch (e) {}
+        errMsg.textContent = '';
+        unlock();
+      } else {
+        errMsg.textContent = 'Incorrect.';
+        input.value = '';
+        input.focus();
+      }
+    });
+
+    // Autofocus the input
+    setTimeout(function () { input.focus(); }, 50);
+  })();
+</script>
+
+{{ end }}
