@@ -261,6 +261,31 @@ function updateZoomUI() {
 map.on("zoomend", updateZoomUI);
 updateZoomUI();
 
+// ── Collapsible side panel ─────────────────────────────────────────────────
+// Mobile users get the panel collapsed by default so the map is usable; desktop
+// users get it expanded. State is remembered per session.
+const panelEl     = document.getElementById("panel");
+const panelOpen   = document.getElementById("panelOpenBtn");
+const panelClose  = document.getElementById("panelCloseBtn");
+const PANEL_KEY   = "mush_panel_collapsed";
+
+function setPanelCollapsed(yes) {
+  panelEl.classList.toggle("collapsed", yes);
+  panelOpen.classList.toggle("show", yes);
+  try { sessionStorage.setItem(PANEL_KEY, yes ? "yes" : "no"); } catch (e) {}
+}
+
+(function initPanelState() {
+  let stored = null;
+  try { stored = sessionStorage.getItem(PANEL_KEY); } catch (e) {}
+  if (stored === "yes") setPanelCollapsed(true);
+  else if (stored === "no") setPanelCollapsed(false);
+  else setPanelCollapsed(window.innerWidth < 700);
+})();
+
+panelClose.addEventListener("click", () => setPanelCollapsed(true));
+panelOpen.addEventListener("click", () => setPanelCollapsed(false));
+
 // ── GPS "find me" button ───────────────────────────────────────────────────
 // Note: geolocation requires HTTPS in modern browsers, but localhost is
 // treated as secure so this works during local development.
