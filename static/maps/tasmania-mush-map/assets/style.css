@@ -20,10 +20,6 @@ html, body {
   overflow: hidden;
 }
 
-.panel.collapsed {
-  display: none;
-}
-
 .panel-header {
   position: relative;
   padding: 12px 16px 10px;
@@ -31,44 +27,45 @@ html, body {
   color: #f0f4ef;
 }
 
-.panel-close-btn {
+.panel-toggle {
   position: absolute;
   top: 6px; right: 8px;
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.15);
+  width: 30px; height: 30px;
+  background: rgba(255,255,255,0.18);
   border: 0;
   border-radius: 50%;
   color: #fff;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.2s;
   font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.panel-close-btn:hover {
-  background: rgba(255,255,255,0.28);
+.panel-toggle:hover {
+  background: rgba(255,255,255,0.32);
+}
+.panel.collapsed .panel-toggle {
+  transform: rotate(-90deg);
 }
 
-.panel-open-btn {
+/* When collapsed, hide everything except the H1 and the toggle */
+.panel.collapsed .panel-body,
+.panel.collapsed .panel-header .back-to-maps,
+.panel.collapsed .panel-header .subtitle,
+.panel.collapsed .panel-header .zoom-readout {
   display: none;
-  position: absolute;
-  top: 12px; left: 12px;
-  z-index: 1001;
-  padding: 9px 14px;
-  background: linear-gradient(135deg, #2d6a4f, #1a3a2a);
-  color: #fff;
-  border: 0;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  transition: transform 0.15s;
 }
-.panel-open-btn:hover  { transform: translateY(-1px); }
-.panel-open-btn:active { transform: translateY(0); }
-.panel-open-btn.show   { display: inline-block; }
+
+.panel.collapsed .panel-header {
+  padding: 10px 44px 10px 14px;
+}
+.panel.collapsed .panel-header h1 {
+  margin: 0;
+  font-size: 14px;
+}
 .panel-header h1 {
   margin: 0;
   font-size: 16px;
