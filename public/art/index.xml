@@ -2,10 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Art on baseaddress.org</title>
-    <link>http://localhost:1314/art/</link>
+    <link>http://localhost:1313/art/</link>
     <description>Recent content in Art on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:1314/art/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/art/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Emotional Shape of Books</title>
+      <link>http://localhost:1313/art/emotional-shape-of-books/</link>
+      <pubDate>Fri, 22 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1313/art/emotional-shape-of-books/</guid>
+      <description>Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.</description>
+    </item>
   </channel>
 </rss>

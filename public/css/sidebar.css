@@ -4,7 +4,7 @@
    simplified to dark-only after we removed the toggle button.) */
 :root {
   --page-bg:          #1a1a1a;
-  --page-text:        #d4d4d4;
+  --page-text:        #cccccc;
   --page-text-strong: #fff;
   --page-muted:       #999;
   --border-color:     #2e2e2e;
@@ -33,6 +33,14 @@ body { color: var(--page-text); }
 .main-content a:not(.section-card):not(.section-page-link) { color: var(--accent); }
 .main-content code,
 .main-content pre { background-color: var(--code-bg); }
+
+/* The Ananke theme wraps article bodies in a div with the Tachyons class
+   "mid-gray" (color:#555) by default (see themes/ananke/layouts/single.html
+   and page/single.html). On a dark background that's nearly unreadable.
+   Force the article body to use our --page-text variable instead. */
+.main-content .mid-gray,
+.main-content .dark-gray,
+.main-content .gray { color: var(--page-text) !important; }
 
 .site-wrapper {
   display: flex;
