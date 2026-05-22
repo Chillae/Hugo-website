@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>x86_64 Register Map | RE Reference</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>x86_64 Register Map</h1>
+    <p class="lede">The 16 general-purpose registers your CPU has, what their smaller names refer to (RAX vs EAX vs AX vs AL), and how Linux versus Windows use them differently for function arguments. If you've ever read disassembly and wondered why AL and RAX appear in the same code, this is for you.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="block">
+  <h2 class="block-title">First, what's a register?</h2>
+  <p class="block-prose">A <strong>register</strong> is a tiny piece of storage that lives <em>inside the CPU itself</em>, not in RAM. There are only a handful of them, but the CPU can read or write them at full clock speed (orders of magnitude faster than RAM). Every instruction you'll see in disassembly is shuffling values between registers, between registers and memory, or doing math on register values.</p>
+  <p class="block-prose">x86_64 has 16 main <strong>general-purpose registers</strong>: RAX, RBX, RCX, RDX, RSI, RDI, RBP, RSP, and R8 through R15. Each one is 64 bits wide. But for historical compatibility (x86 has been around since 1978), you can also access pieces of these registers under different names. That's what the next section explains.</p>
+</section>
+
+<section class="block">
+  <h2 class="block-title">The size pyramid: RAX contains EAX contains AX contains AL</h2>
+  <p class="block-prose">A 64-bit register isn't just a 64-bit register. You can also name its lower 32 bits, its lower 16 bits, and even its individual bytes. Writes to a smaller alias don't change the high bits (with one exception, noted below). Here's the layout for RAX:</p>
+  <div class="pyramid" id="pyramid"></div>
+  <p class="block-prose"><strong>Two important rules:</strong></p>
+  <ul class="block-prose">
+    <li>Writing to a 32-bit alias (like <code>mov eax, 5</code>) <em>zero-extends</em> the value into the full 64-bit register, clearing the upper 32 bits. This is x86_64-specific behavior.</li>
+    <li>Writing to a 16-bit or 8-bit alias does NOT clear the higher bits; the unaffected bits keep their previous value. This is the source of many subtle bugs.</li>
+  </ul>
+  <p class="block-prose">The same nesting works for the other registers, with these naming conventions:</p>
+  <div class="naming-grid" id="naming-grid"></div>
+</section>
+
+<section class="block">
+  <h2 class="block-title">The 16 registers</h2>
+  <p class="block-prose">Each card below shows one register's aliases, its historical role, and what real code uses it for. The "Linux" and "Windows" rows refer to the two main calling conventions you'll meet: <strong>System V x86_64</strong> (Linux, macOS, BSD) and <strong>Microsoft x64</strong> (Windows). They use registers differently for function arguments and have different rules about which registers a function is allowed to clobber.</p>
+  <div class="reg-grid" id="reg-grid"></div>
+</section>
+
+<section class="block">
+  <h2 class="block-title">Calling convention cheatsheet</h2>
+  <p class="block-prose">When function A calls function B, which registers hold the arguments? Which can B safely overwrite? The "calling convention" is the contract between caller and callee. Linux/macOS use the System V ABI; Windows uses its own. Here are the cliff notes:</p>
+  <div class="abi-grid" id="abi-grid"></div>
+  <p class="block-prose">
+    <strong>Caller-saved (volatile):</strong> the caller is responsible for saving these if it needs their values preserved across the call. The callee can freely clobber them.<br/>
+    <strong>Callee-saved (non-volatile):</strong> the callee must preserve these. If it wants to use them, it must save and restore them.
+  </p>
+</section>
+
+<footer>
+  <p>This is a starter map; some details simplified for clarity. SIMD registers (XMM, YMM, ZMM), segment registers (CS, DS, etc.), and control registers (CR0-CR8) aren't covered here. For the authoritative source, see the Intel SDM Volume 1, Chapter 3, "Basic Execution Environment".</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+/* ============================================================
+   x86 Instruction Reference
+   Same dark palette as the memory & endianness visualizers.
+   ============================================================ */
+
+:root {
+  --bg:         #0f1115;
+  --surface:    #181b22;
+  --surface-2:  #1f242d;
+  --border:     #2a2e38;
+  --text:       #e6e8ee;
+  --muted:      #8a93a6;
+  --accent:     #6ea8ff;
+
+  /* Category accent colors (subtle, used on category title borders) */
+  --cat-data:    #4ea1ff;
+  --cat-stack:   #38bdf8;
+  --cat-arith:   #fb923c;
+  --cat-logic:   #facc15;
+  --cat-shift:   #eab308;
+  --cat-cmp:     #c084fc;
+  --cat-uncond:  #4ade80;
+  --cat-cond:    #f87171;
+  --cat-sys:     #a78bfa;
+  --cat-flags:   #ec4899;
+
+  /* Flag badge colors */
+  --flag-read:   #6ea8ff;
+  --flag-set:    #fb923c;
+
+  --mono: ui-monospace, "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre { font-family: var(--mono); }
+code { background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+em { color: var(--accent); font-style: normal; }
+
+/* ---------- Hero ---------- */
+.hero {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #11141b 0%, var(--bg) 100%);
+}
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 32px 32px;
+}
+.hero h1 {
+  font-size: 2.2rem;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+.lede {
+  font-size: 1.02rem;
+  color: var(--muted);
+  max-width: 820px;
+}
+.toc {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+.toc a {
+  background: var(--surface);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+}
+
+/* ---------- Category section ---------- */
+.category {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.category-title {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+}
+.category-title.cat-data    { border-left-color: var(--cat-data); }
+.category-title.cat-stack   { border-left-color: var(--cat-stack); }
+.category-title.cat-arith   { border-left-color: var(--cat-arith); }
+.category-title.cat-logic   { border-left-color: var(--cat-logic); }
+.category-title.cat-shift   { border-left-color: var(--cat-shift); }
+.category-title.cat-cmp     { border-left-color: var(--cat-cmp); }
+.category-title.cat-uncond  { border-left-color: var(--cat-uncond); }
+.category-title.cat-cond    { border-left-color: var(--cat-cond); }
+.category-title.cat-sys     { border-left-color: var(--cat-sys); }
+#flags-section .category-title { border-left-color: var(--cat-flags); }
+
+.category-desc {
+  color: var(--muted);
+  max-width: 900px;
+  margin: 0 0 22px;
+}
+
+/* ---------- Flag grid (top section) ---------- */
+.flag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.flag-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  position: relative;
+}
+.flag-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.flag-card-abbr {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cat-flags);
+  letter-spacing: 0.04em;
+}
+.flag-card-full {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.flag-card-desc {
+  font-size: 0.88rem;
+  color: var(--text);
+  margin: 4px 0 6px;
+  line-height: 1.5;
+}
+.flag-card-example {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: #0b0d12;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border-left: 2px solid var(--cat-flags);
+}
+
+/* ---------- Instruction grid ---------- */
+.instr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+.instr-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.instr-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.instr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.instr-mnem {
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+.instr-card.cat-data    .instr-mnem { color: var(--cat-data); }
+.instr-card.cat-stack   .instr-mnem { color: var(--cat-stack); }
+.instr-card.cat-arith   .instr-mnem { color: var(--cat-arith); }
+.instr-card.cat-logic   .instr-mnem { color: var(--cat-logic); }
+.instr-card.cat-shift   .instr-mnem { color: var(--cat-shift); }
+.instr-card.cat-cmp     .instr-mnem { color: var(--cat-cmp); }
+.instr-card.cat-uncond  .instr-mnem { color: var(--cat-uncond); }
+.instr-card.cat-cond    .instr-mnem { color: var(--cat-cond); }
+.instr-card.cat-sys     .instr-mnem { color: var(--cat-sys); }
+
+.instr-aliases {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.instr-summary {
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.instr-syntax {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: #0b0d12;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border-left: 2px solid var(--border);
+}
+
+.instr-flags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  margin-top: 2px;
+}
+.flags-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.flags-group-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.flag-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-weight: 700;
+  cursor: help;
+  position: relative;
+  user-select: none;
+  font-size: 0.78rem;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.flag-badge.read {
+  background: rgba(110, 168, 255, 0.18);
+  color: var(--flag-read);
+  border: 1px solid rgba(110, 168, 255, 0.35);
+}
+.flag-badge.set {
+  background: rgba(251, 146, 60, 0.18);
+  color: var(--flag-set);
+  border: 1px solid rgba(251, 146, 60, 0.35);
+}
+.flag-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.flag-badge .flag-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 240px;
+  max-width: 320px;
+  padding: 10px 12px;
+  background: #0b0d12;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: -apple-system, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-align: left;
+  z-index: 100;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.flag-badge:hover .flag-tooltip,
+.flag-badge:focus .flag-tooltip { opacity: 1; }
+.flag-badge .flag-tooltip strong {
+  display: block;
+  color: var(--cat-flags);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.flag-badge .flag-none {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.instr-note {
+  font-size: 0.84rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  line-height: 1.5;
+}
+.instr-note strong { color: var(--text); font-weight: 600; }
+
+/* When a card has no flags, show a small "no flags" label instead */
+.no-flags {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 30px 20px 60px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+footer p { max-width: 820px; margin: 0 auto 10px; }
+footer .back-link { font-family: var(--mono); }

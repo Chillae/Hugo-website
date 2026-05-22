@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Anti-Debug Catalog | RE Reference</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Anti-Debug Techniques Catalog</h1>
+    <p class="lede">Programs that don't want to be debugged use checks like these to detect a debugger and act differently when they find one. Game anti-cheat, malware, DRM, and some commercial software all rely on the same playbook. Each card below shows one technique: what it reads from memory or the OS, how a debugger makes that value change, and the standard ways to defeat it.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="block">
+  <h2 class="block-title">Quick orientation: what is "anti-debug"?</h2>
+  <p class="block-prose">When you attach a debugger like x64dbg, IDA, or WinDbg to a running process, the operating system changes a few small flags so the kernel knows to send debug events your way. <strong>Anti-debug techniques are just code that checks for those flags</strong> (or for the side effects of having a debugger nearby). If a check trips, the program might exit, change behavior, throw a fake error, or feed the debugger fake data to waste your time.</p>
+  <p class="block-prose">There are dozens of these checks, but they fall into a few families: <strong>API-based</strong> (call a Windows function that asks the OS), <strong>PEB-based</strong> (read the flags directly without calling an API), <strong>behavioral</strong> (measure how slowly the code runs), <strong>hardware-state</strong> (look at debug registers), and <strong>code-integrity</strong> (check whether the program's own code has been modified).</p>
+  <p class="block-prose">The catalog below covers the ten you'll meet most often. Each card includes a <strong>stealth</strong> rating (how easy it is to spot when reverse engineering the program) and a <strong>bypass difficulty</strong> rating (how easy it is to defeat once you've found it). For most beginner targets, ScyllaHide (a free x64dbg plugin) automatically handles the easy ones.</p>
+</section>
+
+<div id="catalog"></div>
+
+<section class="block">
+  <h2 class="block-title">What's next after these?</h2>
+  <p class="block-prose">The checks above are the "starter pack". Real-world anti-cheat and commercial obfuscators stack <em>dozens</em> of these (often custom and undocumented), combined with code obfuscation, virtual machines, and kernel-mode drivers that can see the whole system. Tools like ScyllaHide handle the well-known ones automatically; against custom checks you'll be patching them out one at a time.</p>
+  <p class="block-prose">Two general bypass principles to internalize:</p>
+  <ul class="block-prose">
+    <li><strong>Patch the result, not the check.</strong> If a check returns 1 to mean "debugger detected", change the return value to 0 instead of removing the call. The code path the developer wrote for "debugger" might be the booby trap; the "no debugger" path is the one you want.</li>
+    <li><strong>Hook early, hook low.</strong> Hooking IsDebuggerPresent at the top of the kernel32 export gets you the API form for free; hooking it at the syscall layer (NtQueryInformationProcess) catches the direct-PEB variants too. The deeper the hook, the more techniques it kills at once.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Anti-debug is an arms race. Defenders constantly invent new checks; analysts catalog and bypass them. This page covers the basics most binaries you'll meet in tutorials, CTFs, and entry-level malware will use. For deeper coverage see anti-debug-protection-techniques.com and the published source of ScyllaHide.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+/* ============================================================
+   x86_64 Register Map
+   Same dark palette as the rest of the tool family.
+   ============================================================ */
+
+:root {
+  --bg:        #0f1115;
+  --surface:   #181b22;
+  --surface-2: #1f242d;
+  --border:    #2a2e38;
+  --text:      #e6e8ee;
+  --muted:     #8a93a6;
+  --accent:    #6ea8ff;
+
+  /* Size-pyramid colors */
+  --sz-64: #4ea1ff;
+  --sz-32: #38bdf8;
+  --sz-16: #facc15;
+  --sz-8h: #fb923c;
+  --sz-8l: #4ade80;
+
+  /* Caller / callee colors */
+  --caller:   #fb923c;
+  --callee:   #4ade80;
+
+  --mono: ui-monospace, "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: var(--mono); background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+em { color: var(--accent); font-style: normal; }
+ul.block-prose { padding-left: 22px; }
+ul.block-prose li { margin-bottom: 4px; color: var(--muted); }
+ul.block-prose li code { font-size: 0.85em; }
+
+.hero {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #11141b 0%, var(--bg) 100%);
+}
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 32px 32px;
+}
+.hero h1 { font-size: 2.1rem; margin: 0 0 12px; letter-spacing: -0.02em; }
+.lede { font-size: 1rem; color: var(--muted); max-width: 820px; }
+
+.block {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.block-title {
+  margin: 0 0 14px;
+  font-size: 1.4rem;
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+  letter-spacing: -0.01em;
+}
+.block-prose {
+  color: var(--muted);
+  max-width: 900px;
+  margin: 0 0 14px;
+}
+.block-prose strong { color: var(--text); }
+
+/* ---------- Size pyramid ---------- */
+.pyramid {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px;
+  margin: 14px 0;
+  font-family: var(--mono);
+}
+.pyramid-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.pyramid-label {
+  width: 130px;
+  text-align: right;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.pyramid-bar {
+  display: flex;
+  height: 38px;
+  background: #0b0d12;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.pyramid-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-right: 1px solid #0b0d12;
+}
+.pyramid-seg:last-child { border-right: none; }
+.pyramid-seg.sz-64 { background: var(--sz-64); color: #0b0d12; }
+.pyramid-seg.sz-32 { background: var(--sz-32); color: #0b0d12; }
+.pyramid-seg.sz-16 { background: var(--sz-16); color: #0b0d12; }
+.pyramid-seg.sz-8h { background: var(--sz-8h); color: #0b0d12; }
+.pyramid-seg.sz-8l { background: var(--sz-8l); color: #0b0d12; }
+.pyramid-seg.unused { background: #0b0d12; color: var(--muted); border: 1px dashed var(--border); }
+.pyramid-note {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ---------- Naming grid (small reference under pyramid) ---------- */
+.naming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+.naming-grid .nm {
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.naming-grid .nm .nm-title { font-weight: 700; color: var(--text); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.naming-grid .nm .nm-detail { color: var(--muted); font-size: 0.78rem; }
+
+/* ---------- Register cards grid ---------- */
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.reg-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.reg-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.reg-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.reg-name {
+  font-family: var(--mono);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.reg-role {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.reg-aliases {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+.alias-badge {
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--text);
+}
+.alias-badge .alias-size {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-left: 4px;
+}
+.reg-note {
+  font-size: 0.86rem;
+  color: var(--text);
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.reg-abi {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 6px 10px;
+  font-size: 0.82rem;
+  font-family: var(--mono);
+  margin-top: 4px;
+}
+.reg-abi .abi-os { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.reg-abi .abi-val { color: var(--text); }
+.reg-abi .abi-val .saved-caller { color: var(--caller); font-size: 0.72rem; margin-left: 6px; }
+.reg-abi .abi-val .saved-callee { color: var(--callee); font-size: 0.72rem; margin-left: 6px; }
+
+/* ---------- ABI cheatsheet ---------- */
+.abi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+.abi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.abi-card h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: var(--accent);
+}
+.abi-card .abi-section {
+  margin-bottom: 12px;
+}
+.abi-card .abi-section-h {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.abi-card .abi-row {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+.abi-card .abi-row.caller-row .reg-list { color: var(--caller); }
+.abi-card .abi-row.callee-row .reg-list { color: var(--callee); }
+.abi-card .abi-row.args-row  .reg-list { color: var(--text); }
+.abi-card .abi-comment {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: -apple-system, system-ui, sans-serif;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px 60px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+footer p { max-width: 820px; margin: 0 auto 10px; }
+footer .back-link { font-family: var(--mono); }

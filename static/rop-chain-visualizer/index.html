@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Return-Oriented Programming | The Stack is a Program</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Return-Oriented Programming (ROP)</h1>
+    <p class="lede">If you've read the memory visualizer's buffer overflow walk-through, it ended with "you can hijack the return address, but NX prevents you from running shellcode on the stack". This is the answer to that. ROP is how attackers get arbitrary code execution when they can't put their own code anywhere executable: they build a "program" out of pieces of the target's own legitimate, already-executable code.</p>
+    <nav class="toc">
+      <a href="#problem">1. The problem</a>
+      <a href="#gadget">2. What's a gadget?</a>
+      <a href="#chain">3. Chain mechanics</a>
+      <a href="#exploit">4. A real chain</a>
+      <a href="#aslr">5. What stops it</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="problem" class="scenario">
+  <div class="scenario-header">
+    <h2>1. The Problem: NX Killed Shellcode</h2>
+    <p>Before NX (mid-2000s), buffer overflow exploits worked by writing CPU instructions ("shellcode") into the buffer, then redirecting RIP to that shellcode. NX killed this. Now what?</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="problem-viz"></div>
+    <div class="step-status" id="problem-status"></div>
+    <div class="controls" data-scenario="problem">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="problem-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="gadget" class="scenario">
+  <div class="scenario-header">
+    <h2>2. What's a "Gadget"?</h2>
+    <p>A gadget is a tiny snippet of code (1 to about 5 instructions) ending in <code>ret</code>, that exists somewhere in legitimate executable memory. libc has thousands of them. Your binary has hundreds. The attacker scans for them with tools like ROPgadget or Ropper.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="gadget-viz"></div>
+    <div class="step-status" id="gadget-status"></div>
+    <div class="controls" data-scenario="gadget">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="gadget-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="chain" class="scenario">
+  <div class="scenario-header">
+    <h2>3. The Chain: Stack-as-Program</h2>
+    <p>The key insight: when a function executes <code>ret</code>, it pops the next 8 bytes off the stack into RIP and jumps there. If those 8 bytes are the address of another gadget that also ends in <code>ret</code>, the gadgets chain automatically.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="chain-viz"></div>
+    <div class="step-status" id="chain-status"></div>
+    <div class="controls" data-scenario="chain">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="chain-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="exploit" class="scenario danger">
+  <div class="scenario-header">
+    <h2>4. A Real 3-Gadget Chain: Call system("/bin/sh")</h2>
+    <p>The classic. The goal is to call <code>system("/bin/sh")</code> from libc to get a shell. system\'s first argument has to be in RDI (System V x86_64 ABI). We need a gadget that puts our string\'s address into RDI, then a way to jump into system. Step through it.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="exploit-viz"></div>
+    <div class="step-status" id="exploit-status"></div>
+    <div class="controls" data-scenario="exploit">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="exploit-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="aslr" class="scenario">
+  <div class="scenario-header">
+    <h2>5. ASLR: What (Mostly) Stops This</h2>
+    <p>ROP needs the attacker to know exact addresses of gadgets. ASLR randomizes those addresses every time the program (and libc) loads. Without the addresses, the chain can\'t be built. This is the modern defense, and it works, until the attacker finds an "info leak".</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="aslr-viz"></div>
+    <div class="step-status" id="aslr-status"></div>
+    <div class="controls" data-scenario="aslr">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="aslr-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Real exploits chain dozens of gadgets, deal with stack alignment requirements (some functions like system require 16-byte aligned RSP, so you may need a "ret-sled" gadget for padding), and use information leaks to defeat ASLR. The mental model here is the same. ROP is just "the stack is a program where each instruction is an address". Once you see that, the rest is plumbing.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

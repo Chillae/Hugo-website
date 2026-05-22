@@ -63,8 +63,10 @@
   </head><body class="ma0 avenir bg-near-white development is-section is-section">
     
 
+
+
   <header>
-    <div class="pb3-m pb6-l bg-black">
+    <div class="pb2 bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l center items-center justify-between">
     <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
@@ -82,12 +84,12 @@
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
+      <div class="tc-l pv2 ph3 ph4-ns">
+        <h1 class="f3 fw2 light-silver mb0 lh-title">
           Interactive Tools
         </h1>
         
-          <h2 class="fw1 f5 f3-l white-80 measure-wide-l center lh-copy mt3 mb4">
+          <h2 class="fw1 f6 white-80 measure-wide-l center lh-copy mt2 mb2">
             Browser-based visualizers and demos. No install required.
           </h2>
         
@@ -189,10 +191,73 @@
   
     <div class="section-cards">
       
+        <a href="/pointers-explained/" class="section-card">
+          <h2 class="section-card-title">Pointers Explained Visually</h2>
+          
+            <span class="section-card-desc">Beginner walk-through of pointers in C: memory, addresses, the &amp; and * operators, NULL, and pointer-to-pointer. Boxes in memory with arrows between them.</span>
+          
+        </a>
+      
+        <a href="/x86_64-register-map/" class="section-card">
+          <h2 class="section-card-title">x86_64 Register Map</h2>
+          
+            <span class="section-card-desc">All 16 general-purpose CPU registers with their 8/16/32/64-bit aliases, traditional roles, and Linux vs Windows calling conventions.</span>
+          
+        </a>
+      
+        <a href="/endianness-visualizer/" class="section-card">
+          <h2 class="section-card-title">Endianness Visualizer</h2>
+          
+            <span class="section-card-desc">Why hex dumps look backwards, why exploit payloads write addresses LSB-first, and why x86 chose little-endian.</span>
+          
+        </a>
+      
+        <a href="/asm-instruction-reference/" class="section-card">
+          <h2 class="section-card-title">x86 Instruction Reference</h2>
+          
+            <span class="section-card-desc">Cheatsheet of the 50 or so x86 instructions you see in 90% of disassembled code. Syntax, flags read and written, RE-context notes.</span>
+          
+        </a>
+      
         <a href="/memory-visualizer/" class="section-card">
           <h2 class="section-card-title">Memory Visualizer</h2>
           
-            <span class="section-card-desc">A visual walk-through of how an x86_64 Linux process uses memory: the address space, function calls on the stack, the heap, and what a buffer overflow does at the byte level.</span>
+            <span class="section-card-desc">Visual walk-through of how an x86_64 Linux process uses memory: address space, stack frames, heap, and what a buffer overflow does at the byte level.</span>
+          
+        </a>
+      
+        <a href="/anti-debug-catalog/" class="section-card">
+          <h2 class="section-card-title">Anti-Debug Techniques Catalog</h2>
+          
+            <span class="section-card-desc">Ten techniques programs use to detect debuggers, with what each check reads, how a debugger trips it, and the usual bypass.</span>
+          
+        </a>
+      
+        <a href="/format-string-exploit/" class="section-card">
+          <h2 class="section-card-title">Format String Vulnerabilities</h2>
+          
+            <span class="section-card-desc">How printf becomes arbitrary read and write when an attacker controls the format string. From %x leak through %s read to %n write.</span>
+          
+        </a>
+      
+        <a href="/hooking-comparison/" class="section-card">
+          <h2 class="section-card-title">Function Hooking: IAT vs Inline</h2>
+          
+            <span class="section-card-desc">Side-by-side walk-through of IAT and inline (Detours-style) hooks on Windows, with byte-level diffs and a traced call through each.</span>
+          
+        </a>
+      
+        <a href="/dma-object-lifecycle/" class="section-card">
+          <h2 class="section-card-title">Dynamic Memory in Games</h2>
+          
+            <span class="section-card-desc">Why your Cheat Engine address breaks every match, and how multi-level pointer chains survive memory reallocation.</span>
+          
+        </a>
+      
+        <a href="/rop-chain-visualizer/" class="section-card">
+          <h2 class="section-card-title">ROP Chain Visualizer</h2>
+          
+            <span class="section-card-desc">Return-oriented programming: how attackers turn the stack itself into a program made of existing code, defeating NX. Traced 3-gadget chain ending in a shell.</span>
           
         </a>
       

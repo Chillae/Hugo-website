@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Function Hooking | IAT vs Inline</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Function Hooking: IAT vs Inline</h1>
+    <p class="lede">"Hooking" means making a function do your work instead of (or in addition to) its normal work. Game cheats, DLLs that log API calls, anti-cheat systems, and malware all use the same handful of techniques. The two foundational ones, IAT hooking and inline hooking, work in very different ways. This walks through both side by side.</p>
+    <nav class="toc">
+      <a href="#what">1. What is hooking?</a>
+      <a href="#iat">2. IAT hook</a>
+      <a href="#inline">3. Inline hook</a>
+      <a href="#compare">4. Which to use when</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="what" class="scenario">
+  <div class="scenario-header">
+    <h2>1. What is "hooking" and why do people do it?</h2>
+    <p>A short orientation before we dig into the two techniques.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="what-viz"></div>
+    <div class="step-status" id="what-status"></div>
+    <div class="controls" data-scenario="what">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="what-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="iat" class="scenario">
+  <div class="scenario-header">
+    <h2>2. IAT Hooking</h2>
+    <p>Every Windows program has an <strong>Import Address Table</strong> (IAT): a list of pointers to functions it imports from DLLs like kernel32 or user32. Every call to an imported function goes through this table. Rewrite an IAT entry, and you've hooked every future call to that function from this program.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="iat-viz"></div>
+    <div class="step-status" id="iat-status"></div>
+    <div class="controls" data-scenario="iat">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="iat-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="inline" class="scenario">
+  <div class="scenario-header">
+    <h2>3. Inline Hooking (Detours-style)</h2>
+    <p>Instead of changing where a pointer points, an inline hook changes the function's code directly. Overwrite the first few bytes with a <code>jmp</code> to your hook, save the original bytes somewhere safe (the "trampoline") so you can still call the real function later.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="inline-viz"></div>
+    <div class="step-status" id="inline-status"></div>
+    <div class="controls" data-scenario="inline">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="inline-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="compare" class="scenario">
+  <div class="scenario-header">
+    <h2>4. Which One When?</h2>
+    <p>Both techniques have tradeoffs. A short comparison to decide which fits the job.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="compare-viz"></div>
+    <div class="step-status" id="compare-status"></div>
+    <div class="controls" data-scenario="compare">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="compare-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Real hooking libraries (Microsoft Detours, MinHook, EasyHook) handle the byte-level details, instruction-boundary alignment, multi-thread safety, and SMC-cache-flush automatically. The pictures here are simplified; real inline hooks also have to copy a variable-length instruction prefix, not always exactly 5 bytes. The high-level mechanic is unchanged.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

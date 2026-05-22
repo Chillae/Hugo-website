@@ -178,7 +178,7 @@ html, body {
 .section-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1.25rem 1.5rem;
   background: var(--card-bg);
   color: var(--card-text);
@@ -204,6 +204,7 @@ html, body {
 .section-card-count {
   font-size: 0.78rem;
   color: #888;
+  margin-top: auto;  /* pushed to bottom of card on /re/ cards (title + count only) */
 }
 
 /* Multi-line description on cards that need more than a count (e.g. tools page) */

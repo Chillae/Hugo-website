@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Endianness | Why Bytes Look Backwards</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Endianness: Why Your Hex Dump Looks Backwards</h1>
+    <p class="lede">Computers store everything as bytes (8 bits each, each holding a value from 0 to 255). Small numbers fit in one byte. Bigger numbers (like 1000, or a memory address) need several bytes lined up side by side in memory. The question this article answers: <strong>when a number takes multiple bytes, which byte goes first?</strong></p>
+    <p class="lede">Two natural answers exist, and both are in use today.</p>
+    <p class="lede"><strong>Big-endian</strong> stores the most-significant byte first, the way humans write numbers. The value <code>0x12345678</code> would live in memory as <code>12 34 56 78</code>. Network protocols (TCP/IP headers), older Unix-style systems, and a few non-Intel CPUs use this.</p>
+    <p class="lede"><strong>Little-endian</strong> does the opposite: least-significant byte first. The same <code>0x12345678</code> lives in memory as <code>78 56 34 12</code> (reversed compared to how you wrote it). <strong>Every x86, x86_64, RISC-V, and (by default) ARM machine you've ever touched uses little-endian.</strong> This is the immediate reason hex dumps in your debugger look "backwards".</p>
+    <p class="lede">Neither order is "right". Both work fine internally. The names come from a 1980 paper called "On Holy Wars and a Plea for Peace", which riffed on Jonathan Swift's <em>Gulliver's Travels</em>: two factions of Lilliputians went to war over which end of a soft-boiled egg to crack first. CPU designers in the 1970s picked sides independently, no one ever standardized, and now we live with both. The practical impact today: you have to know which one applies any time you read raw bytes as numbers, send binary data over a network, or write an exploit payload.</p>
+    <p class="lede">Five short sections walk through what this actually looks like: why hex dumps appear reversed, why exploit payloads write addresses LSB-first, why file formats have those distinctive "magic number" bytes at the start, and the real engineering reason little-endian won on consumer CPUs.</p>
+    <nav class="toc">
+      <a href="#basics">1. The basics</a>
+      <a href="#hex-dump">2. Reading a hex dump</a>
+      <a href="#return-addr">3. Return addresses</a>
+      <a href="#magic">4. File magic numbers</a>
+      <a href="#why-le">5. Why x86 chose LE</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: BASICS                                             -->
+<!-- ============================================================ -->
+<section id="basics" class="scenario">
+  <div class="scenario-header">
+    <h2>1. Same Value, Two Byte Orders</h2>
+    <p>A 32-bit integer is conceptually one number, but in RAM it lives across four byte-sized addresses. <strong>Little-endian</strong> stores the least-significant byte first; <strong>big-endian</strong> stores the most-significant byte first. Modern x86, x86_64, and ARM (in its usual mode) are all little-endian.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="basics-viz"></div>
+    <div class="step-status" id="basics-status"></div>
+    <div class="controls" data-scenario="basics">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="basics-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: READING A HEX DUMP                                 -->
+<!-- ============================================================ -->
+<section id="hex-dump" class="scenario">
+  <div class="scenario-header">
+    <h2>2. The Same Bytes, Four Valid Readings</h2>
+    <p>You've opened a chunk of memory in your debugger. The same 8 bytes can be interpreted as a string, as a string of small integers, or as larger integers, and the "larger integer" interpretation flips depending on the machine's endianness. This is the #1 source of "why does my disassembler show a different value than my hex dump" confusion.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="dump-viz"></div>
+    <div class="step-status" id="dump-status"></div>
+    <div class="controls" data-scenario="dump">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="dump-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: RETURN ADDRESS TRICK                               -->
+<!-- ============================================================ -->
+<section id="return-addr" class="scenario">
+  <div class="scenario-header">
+    <h2>3. The Return-Address Trick (Exploit Payloads)</h2>
+    <p>If you've read the buffer overflow walk-through (or written your first exploit), this is the mistake that catches everyone: when you overwrite a return address, you write the bytes <em>backwards</em>, because that's what the CPU will read back. This section connects "little-endian" to "why does my Python payload look reversed".</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="ret-viz"></div>
+    <div class="step-status" id="ret-status"></div>
+    <div class="controls" data-scenario="ret">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="ret-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: FILE FORMAT MAGIC NUMBERS                          -->
+<!-- ============================================================ -->
+<section id="magic" class="scenario">
+  <div class="scenario-header">
+    <h2>4. File Format Magic Numbers</h2>
+    <p>Almost every binary file format starts with a short fixed byte sequence called a "magic number" that identifies it. They're usually picked so the bytes look like recognizable ASCII (so you can spot them in a hex dump), but if you ever see them quoted as integers (in source code, in docs), endianness flips the value.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="magic-viz"></div>
+    <div class="step-status" id="magic-status"></div>
+    <div class="controls" data-scenario="magic">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="magic-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: WHY LE WON                                         -->
+<!-- ============================================================ -->
+<section id="why-le" class="scenario">
+  <div class="scenario-header">
+    <h2>5. Why x86 Chose Little-Endian (the Useful "Why")</h2>
+    <p>The "which way is more natural" debate is usually settled with "big-endian matches how humans write numbers, so it's more natural". That's not wrong, but there's a real engineering reason little-endian won on consumer CPUs: it makes <em>type widening</em> free.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="why-viz"></div>
+    <div class="step-status" id="why-status"></div>
+    <div class="controls" data-scenario="why">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="why-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Examples simplified for clarity. x86, x86_64, RISC-V, and ARM (in default mode) are all little-endian. Network protocols (IP, TCP, UDP headers) and many file formats from older Unix systems are big-endian, also called "network byte order". PowerPC and SPARC traditionally big-endian. The functions <code>htons</code>, <code>htonl</code>, <code>ntohs</code>, <code>ntohl</code> exist precisely to swap between the two.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

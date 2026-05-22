@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dynamic Memory in Games | Why Addresses Change</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Dynamic Memory in Games (and Why Your Cheat Breaks Every Match)</h1>
+    <p class="lede">If you've ever used Cheat Engine on a game, found a value, written your cheat, then watched it stop working when you started a new match, this tool is for you. The reason is that game objects (the player, enemies, items) live in <strong>dynamically allocated memory</strong>. Their addresses change. The fix is a multi-level pointer chain that starts at a fixed location and walks through pointers to find the current address. This walks through how that works.</p>
+    <nav class="toc">
+      <a href="#static-vs-dynamic">1. Static vs dynamic</a>
+      <a href="#lifecycle">2. The lifecycle</a>
+      <a href="#chain">3. Pointer chain</a>
+      <a href="#scan">4. Finding the chain</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="static-vs-dynamic" class="scenario">
+  <div class="scenario-header">
+    <h2>1. Two Kinds of Addresses in Every Process</h2>
+    <p>Some addresses are predictable; others are random. Knowing which is which is the entire foundation of writing cheats that survive a restart.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="static-viz"></div>
+    <div class="step-status" id="static-status"></div>
+    <div class="controls" data-scenario="static">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="static-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="lifecycle" class="scenario">
+  <div class="scenario-header">
+    <h2>2. The Lifecycle of a Game Object</h2>
+    <p>What actually happens between matches: where the Player struct goes, why it has a new address next time, and what your old "found in CE" address actually points to.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="lifecycle-viz"></div>
+    <div class="step-status" id="lifecycle-status"></div>
+    <div class="controls" data-scenario="lifecycle">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="lifecycle-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="chain" class="scenario">
+  <div class="scenario-header">
+    <h2>3. The Pointer Chain: How to Survive Reallocation</h2>
+    <p>The trick is to never bookmark a dynamic address directly. Instead, find a STATIC address that holds a pointer to where the dynamic data currently lives. Then follow the pointer. The walk through a multi-level chain is what Cheat Engine\'s "pointer scan" finds for you.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="chain-viz"></div>
+    <div class="step-status" id="chain-status"></div>
+    <div class="controls" data-scenario="chain">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="chain-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="scan" class="scenario">
+  <div class="scenario-header">
+    <h2>4. Finding the Chain in Cheat Engine</h2>
+    <p>The practical workflow: how you actually discover the offsets that make up your pointer chain, starting from a value you found via a scan.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="scan-viz"></div>
+    <div class="step-status" id="scan-status"></div>
+    <div class="controls" data-scenario="scan">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="scan-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Examples use plausible but fictional addresses. Real game memory layouts vary wildly, and many games further protect their entity lists with obfuscation, indirect pointer encryption, or anti-cheat scrambling. The core mental model (static base + offset chain + heap object at the end) applies regardless.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

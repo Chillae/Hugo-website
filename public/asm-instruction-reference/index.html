@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>x86 Instruction Reference | RE Cheatsheet</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>x86 Instruction Reference</h1>
+    <p class="lede">The ~50 instructions you actually see in 90% of disassembled code, grouped by what they do. Each instruction shows what it reads, what flags it sets, and a short note about where it shows up in real reverse engineering. Hover any flag badge to see what that flag means.</p>
+    <nav class="toc" id="toc"></nav>
+  </div>
+</header>
+
+<main>
+
+<section id="flags-section" class="category">
+  <h2 class="category-title">CPU Flags</h2>
+  <p class="category-desc">Many x86 instructions don't return a value the way a function would. Instead they set bits in a special register called <strong>RFLAGS</strong> (or <code>EFLAGS</code> in 32-bit, <code>FLAGS</code> in 16-bit). Subsequent instructions (most often conditional jumps) then read those bits to decide what to do. The eight flags below are the ones you'll meet in real disassembly. Hover any of them to see when they're set and which instructions read them.</p>
+  <div class="flag-grid" id="flag-grid"></div>
+</section>
+
+<div id="categories"></div>
+
+<footer>
+  <p>Operand formats simplified. Many instructions accept multiple operand forms (register, immediate, memory) with subtle encoding differences. This reference covers the cases you'll meet 95% of the time. The Intel SDM (Software Developer's Manual) Volume 2 is the authoritative source.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

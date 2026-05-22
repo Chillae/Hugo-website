@@ -1,0 +1,417 @@
+/* ============================================================
+   Endianness Visualizer
+   Same dark-with-color-coding palette as the memory visualizer
+   so the two tools feel like siblings.
+   ============================================================ */
+
+:root {
+  --bg:         #0f1115;
+  --surface:    #181b22;
+  --surface-2:  #1f242d;
+  --border:     #2a2e38;
+  --text:       #e6e8ee;
+  --muted:      #8a93a6;
+  --accent:     #6ea8ff;
+  --accent-2:   #b78bff;
+
+  /* Per-byte colors: low-order on the cool side, high-order on the warm. */
+  --byte-0:     #4ea1ff;   /* lowest-significance byte */
+  --byte-1:     #38bdf8;
+  --byte-2:     #facc15;
+  --byte-3:     #fb923c;
+  --byte-4:     #ec4899;   /* used for 8-byte (64-bit) sections */
+  --byte-5:     #a78bfa;
+  --byte-6:     #f87171;
+  --byte-7:     #4ade80;   /* highest-significance byte */
+
+  --c-string:   #4ade80;
+  --c-int:      #fb923c;
+  --c-addr:     #ec4899;
+  --c-warn:     #f59e0b;
+  --c-ok:       #22c55e;
+
+  --mono: ui-monospace, "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre { font-family: var(--mono); }
+code { background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+pre code { background: none; padding: 0; }
+em { color: var(--accent); font-style: normal; }
+
+/* ---------- Hero ---------- */
+.hero {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #11141b 0%, var(--bg) 100%);
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 32px 36px;
+}
+.hero h1 {
+  font-size: 2.2rem;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+.lede {
+  font-size: 1.02rem;
+  color: var(--muted);
+  max-width: 780px;
+}
+.toc {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+.toc a {
+  background: var(--surface);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* ---------- Section frame ---------- */
+.scenario {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.scenario-header h2 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.scenario-header p {
+  color: var(--muted);
+  max-width: 820px;
+  margin: 0 0 8px;
+}
+
+.scenario-body { margin-top: 24px; }
+
+.viz {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  min-height: 240px;
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+}
+.controls button {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.controls button:hover:not(:disabled) { background: #262b35; border-color: var(--accent); }
+.controls button:active:not(:disabled) { transform: translateY(1px); }
+.controls button:disabled { opacity: 0.35; cursor: not-allowed; }
+.step-indicator {
+  margin-left: auto;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.step-status {
+  margin-top: 14px;
+  font-size: 0.92rem;
+  color: var(--text);
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  min-height: 60px;
+}
+
+/* ---------- Memory-cell grid (used in most sections) ---------- */
+.mem-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+}
+.mem-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: right;
+}
+.mem-cells {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #0b0d12;
+  font-family: var(--mono);
+  position: relative;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+.cell.empty {
+  background: repeating-linear-gradient(45deg,
+    rgba(255,255,255,0.02) 0 6px,
+    transparent 6px 12px);
+}
+.cell.filled {
+  animation: cellFill 0.35s ease-out;
+}
+.cell .cell-addr {
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: -4px;
+}
+.cell .cell-byte {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cell .cell-meta {
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+
+@keyframes cellFill {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Per-byte coloring (cycled by position-from-low) */
+.cell.b0 { border-color: var(--byte-0); }
+.cell.b1 { border-color: var(--byte-1); }
+.cell.b2 { border-color: var(--byte-2); }
+.cell.b3 { border-color: var(--byte-3); }
+.cell.b4 { border-color: var(--byte-4); }
+.cell.b5 { border-color: var(--byte-5); }
+.cell.b6 { border-color: var(--byte-6); }
+.cell.b7 { border-color: var(--byte-7); }
+
+.cell.b0 .cell-byte { color: var(--byte-0); }
+.cell.b1 .cell-byte { color: var(--byte-1); }
+.cell.b2 .cell-byte { color: var(--byte-2); }
+.cell.b3 .cell-byte { color: var(--byte-3); }
+.cell.b4 .cell-byte { color: var(--byte-4); }
+.cell.b5 .cell-byte { color: var(--byte-5); }
+.cell.b6 .cell-byte { color: var(--byte-6); }
+.cell.b7 .cell-byte { color: var(--byte-7); }
+
+.cell.highlight {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* "Value pill" used to show the conceptual integer above its memory */
+.value-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.value-pill .pill-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.value-pill .pill-val { color: var(--accent); }
+
+/* Each digit pair of the value gets the same color as its byte cell. */
+.value-pill .nb { display: inline-block; }
+.value-pill .nb.b0 { color: var(--byte-0); }
+.value-pill .nb.b1 { color: var(--byte-1); }
+.value-pill .nb.b2 { color: var(--byte-2); }
+.value-pill .nb.b3 { color: var(--byte-3); }
+.value-pill .nb.b4 { color: var(--byte-4); }
+.value-pill .nb.b5 { color: var(--byte-5); }
+.value-pill .nb.b6 { color: var(--byte-6); }
+.value-pill .nb.b7 { color: var(--byte-7); }
+
+/* ---------- Interpretation rows (section 2) ---------- */
+.interpretations {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.interpretation {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 14px;
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--mono);
+  opacity: 0.35;
+  transition: opacity 0.25s, border-color 0.25s;
+}
+.interpretation.shown { opacity: 1; border-color: var(--accent); }
+.interpretation .label { color: var(--muted); font-size: 0.82rem; }
+.interpretation .reading {
+  font-size: 0.95rem;
+  color: var(--text);
+  word-break: break-all;
+}
+.interpretation .reading.string  { color: var(--c-string); }
+.interpretation .reading.int-le  { color: var(--c-int); }
+.interpretation .reading.int-be  { color: var(--c-addr); }
+
+/* ---------- Side-by-side LE vs BE (section 1) ---------- */
+.le-be-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 8px;
+}
+@media (max-width: 760px) {
+  .le-be-grid { grid-template-columns: 1fr; }
+}
+.le-be-grid .panel {
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+.le-be-grid .panel-h {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+.le-be-grid .panel.active .panel-h { color: var(--accent); }
+.le-be-grid .panel.dim { opacity: 0.4; }
+
+/* ---------- Magic numbers table (section 4) ---------- */
+.magic-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: #0b0d12;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  opacity: 0.35;
+  transition: opacity 0.25s, border-color 0.25s;
+}
+.magic-row.shown { opacity: 1; border-color: var(--accent); }
+.magic-row .name { font-weight: 700; color: var(--text); }
+.magic-row .bytes { color: var(--byte-0); letter-spacing: 0.06em; }
+.magic-row .ascii { color: var(--c-string); }
+.magic-row .as-int { color: var(--c-int); }
+.magic-row .col-h {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.magic-header {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 0 12px 6px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* ---------- Why-LE widening demo (section 5) ---------- */
+.widen-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.widen-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  text-align: right;
+}
+.widen-value {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+}
+.widen-value .equals {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.widen-value .int-val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 32px 20px 60px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+footer p { max-width: 820px; margin: 0 auto 10px; }
+footer .back-link { font-family: var(--mono); }

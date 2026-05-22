@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pointers Explained Visually | Intro for Beginners</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Pointers, Visually Explained</h1>
+    <p class="lede">"Pointer" is the word that scares more beginners off C than anything else. It shouldn't. A pointer is just a variable that holds the address of another variable. This walks through what that actually means, with every step shown as boxes in memory and arrows between them. By the end of section 5 you'll have the whole concept; sections 6 through 10 cover the common pitfalls and the "why bother".</p>
+    <nav class="toc">
+      <a href="#memory">1. Memory</a>
+      <a href="#variable">2. Variables</a>
+      <a href="#address-of">3. The &amp; operator</a>
+      <a href="#pointer">4. What is a pointer?</a>
+      <a href="#deref">5. Dereferencing</a>
+      <a href="#two-stars">6. Two meanings of *</a>
+      <a href="#write-through">7. Writing through</a>
+      <a href="#why">8. Why pointers matter</a>
+      <a href="#null">9. NULL</a>
+      <a href="#pp">10. Pointer to pointer</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="memory" class="scenario">
+  <div class="scenario-header">
+    <h2>1. Memory is Just a Long Row of Numbered Boxes</h2>
+    <p>Before pointers, you need to know what "memory" actually looks like to your program. It's simpler than you might think.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="memory-viz"></div>
+    <div class="step-status" id="memory-status"></div>
+    <div class="controls" data-scenario="memory">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="memory-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="variable" class="scenario">
+  <div class="scenario-header">
+    <h2>2. A Variable is Just a Name for a Box</h2>
+    <p>When you write <code>int age = 25;</code>, three things happen. Let's go through them.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="variable-viz"></div>
+    <div class="step-status" id="variable-status"></div>
+    <div class="controls" data-scenario="variable">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="variable-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="address-of" class="scenario">
+  <div class="scenario-header">
+    <h2>3. The &amp; Operator: "Where Does It Live?"</h2>
+    <p>The ampersand <code>&amp;</code> is your way of asking "where is this variable stored?". The answer is an address (a box number).</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="address-of-viz"></div>
+    <div class="step-status" id="address-of-status"></div>
+    <div class="controls" data-scenario="address-of">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="address-of-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="pointer" class="scenario">
+  <div class="scenario-header">
+    <h2>4. A Pointer is a Variable That Holds an Address</h2>
+    <p>That's the whole definition. A pointer is just a variable whose value happens to be a memory address. It "points at" whatever is at that address.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="pointer-viz"></div>
+    <div class="step-status" id="pointer-status"></div>
+    <div class="controls" data-scenario="pointer">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="pointer-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="deref" class="scenario">
+  <div class="scenario-header">
+    <h2>5. Dereferencing: Following the Pointer</h2>
+    <p>If a pointer holds an address, the natural next move is "go look at what's stored at that address". The <code>*</code> operator does exactly that.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="deref-viz"></div>
+    <div class="step-status" id="deref-status"></div>
+    <div class="controls" data-scenario="deref">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="deref-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="two-stars" class="scenario">
+  <div class="scenario-header">
+    <h2>6. The Two Meanings of the Asterisk</h2>
+    <p>This trips up every C beginner. The <code>*</code> symbol means two different things depending on where it appears. Once you see the distinction, it stops being confusing.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="two-stars-viz"></div>
+    <div class="step-status" id="two-stars-status"></div>
+    <div class="controls" data-scenario="two-stars">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="two-stars-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="write-through" class="scenario">
+  <div class="scenario-header">
+    <h2>7. Writing Through a Pointer</h2>
+    <p>You can read through a pointer with <code>*ptr</code>. You can also write through it: <code>*ptr = 99</code>. This is the move that makes pointers actually useful.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="write-through-viz"></div>
+    <div class="step-status" id="write-through-status"></div>
+    <div class="controls" data-scenario="write-through">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="write-through-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="scenario">
+  <div class="scenario-header">
+    <h2>8. Why Pointers Exist (the Real Reason)</h2>
+    <p>If pointers feel like extra complication for no reason, here's the payoff: they're how a function can modify the caller's variables. Without pointers, every function call is a one-way street.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="why-viz"></div>
+    <div class="step-status" id="why-status"></div>
+    <div class="controls" data-scenario="why">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="why-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="null" class="scenario">
+  <div class="scenario-header">
+    <h2>9. NULL: A Pointer That Points at Nothing</h2>
+    <p>Sometimes you want a pointer variable that exists but doesn't point at anything yet. C uses the value 0 (called <code>NULL</code>) for that. Trying to follow a NULL pointer crashes the program.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="null-viz"></div>
+    <div class="step-status" id="null-status"></div>
+    <div class="controls" data-scenario="null">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="null-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<section id="pp" class="scenario">
+  <div class="scenario-header">
+    <h2>10. Pointer to Pointer</h2>
+    <p>A pointer is a variable. Variables have addresses. So you can have a pointer that holds the address of another pointer. The syntax doubles up: <code>int **pp</code>.</p>
+  </div>
+  <div class="scenario-body">
+    <div class="viz" id="pp-viz"></div>
+    <div class="step-status" id="pp-status"></div>
+    <div class="controls" data-scenario="pp">
+      <button data-act="reset" title="Reset">&#9198;</button>
+      <button data-act="prev"  title="Step back">&#9664;</button>
+      <button data-act="next"  title="Step forward">&#9654;</button>
+      <span class="step-indicator" id="pp-step-indicator"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Sizes and addresses shown reflect real x86_64 layout: <code>int</code> is 4 bytes, pointers are 8 bytes, and stack variables are typically aligned on 8-byte boundaries (which is why consecutive variables are 8 bytes apart in the diagrams, not 4). Each cell in sections 2 onward represents one variable; the address on the cell is the variable\'s starting address. The chosen base address (0x100) is arbitrary; the real one depends on where the compiler placed the variables.</p>
+  <p class="back-link"><a href="/">&larr; Back to baseaddress.org</a></p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

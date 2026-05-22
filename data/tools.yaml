@@ -1,3 +1,39 @@
+- title: Pointers Explained Visually
+  description: "Beginner walk-through of pointers in C: memory, addresses, the & and * operators, NULL, and pointer-to-pointer. Boxes in memory with arrows between them."
+  url: /pointers-explained/
+
+- title: x86_64 Register Map
+  description: "All 16 general-purpose CPU registers with their 8/16/32/64-bit aliases, traditional roles, and Linux vs Windows calling conventions."
+  url: /x86_64-register-map/
+
+- title: Endianness Visualizer
+  description: "Why hex dumps look backwards, why exploit payloads write addresses LSB-first, and why x86 chose little-endian."
+  url: /endianness-visualizer/
+
+- title: x86 Instruction Reference
+  description: "Cheatsheet of the 50 or so x86 instructions you see in 90% of disassembled code. Syntax, flags read and written, RE-context notes."
+  url: /asm-instruction-reference/
+
 - title: Memory Visualizer
-  description: "A visual walk-through of how an x86_64 Linux process uses memory: the address space, function calls on the stack, the heap, and what a buffer overflow does at the byte level."
+  description: "Visual walk-through of how an x86_64 Linux process uses memory: address space, stack frames, heap, and what a buffer overflow does at the byte level."
   url: /memory-visualizer/
+
+- title: Anti-Debug Techniques Catalog
+  description: "Ten techniques programs use to detect debuggers, with what each check reads, how a debugger trips it, and the usual bypass."
+  url: /anti-debug-catalog/
+
+- title: Format String Vulnerabilities
+  description: "How printf becomes arbitrary read and write when an attacker controls the format string. From %x leak through %s read to %n write."
+  url: /format-string-exploit/
+
+- title: "Function Hooking: IAT vs Inline"
+  description: "Side-by-side walk-through of IAT and inline (Detours-style) hooks on Windows, with byte-level diffs and a traced call through each."
+  url: /hooking-comparison/
+
+- title: Dynamic Memory in Games
+  description: "Why your Cheat Engine address breaks every match, and how multi-level pointer chains survive memory reallocation."
+  url: /dma-object-lifecycle/
+
+- title: ROP Chain Visualizer
+  description: "Return-oriented programming: how attackers turn the stack itself into a program made of existing code, defeating NX. Traced 3-gadget chain ending in a shell."
+  url: /rop-chain-visualizer/
