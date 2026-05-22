@@ -6,8 +6,15 @@
     <description>Recent content in Home on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 May 2026 00:00:00 +1100</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 00:00:00 +1100</lastBuildDate>
     <atom:link href="http://localhost:1314/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Emotional Shape of Books</title>
+      <link>http://localhost:1314/art/emotional-shape-of-books/</link>
+      <pubDate>Fri, 22 May 2026 00:00:00 +1100</pubDate>
+      <guid>http://localhost:1314/art/emotional-shape-of-books/</guid>
+      <description>Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.</description>
+    </item>
     <item>
       <title>AOE2: Infinite Resources</title>
       <link>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</link>

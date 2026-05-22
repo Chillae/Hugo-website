@@ -1,6 +1,6 @@
 +++
 date = '2026-05-22T00:00:00+11:00'
-draft = true
+draft = false
 title = 'The Emotional Shape of Books'
 slug = 'emotional-shape-of-books'
 summary = 'Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.'
