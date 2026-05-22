@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>The Emotional Shape of Books | baseaddress.org</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.">
+    <meta name="generator" content="Hugo 0.159.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/art/emotional-shape-of-books/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/art/emotional-shape-of-books/">
+  <meta property="og:site_name" content="baseaddress.org">
+  <meta property="og:title" content="The Emotional Shape of Books">
+  <meta property="og:description" content="Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="art">
+    <meta property="article:published_time" content="2026-05-22T00:00:00+11:00">
+    <meta property="article:modified_time" content="2026-05-22T00:00:00+11:00">
+
+  <meta itemprop="name" content="The Emotional Shape of Books">
+  <meta itemprop="description" content="Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.">
+  <meta itemprop="datePublished" content="2026-05-22T00:00:00+11:00">
+  <meta itemprop="dateModified" content="2026-05-22T00:00:00+11:00">
+  <meta itemprop="wordCount" content="451">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Emotional Shape of Books">
+  <meta name="twitter:description" content="Compressing whole novels into single coloured grids using per-sentence sentiment analysis. Inspired by Adam Calhoun.">
+
+    
+    <link rel="stylesheet" href="/css/sidebar.css?v=5">
+    
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-emotional-shape-of-books">
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        baseaddress.org
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">&#9776;</button>
+
+    <div class="site-wrapper">
+      
+
+
+<aside class="sidebar-nav">
+  <div class="sidebar-content">
+    <nav>
+      
+        
+          
+          
+
+          <a href="/re/"
+             class="sidebar-section-link">
+            Reverse Engineering
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/maps/"
+             class="sidebar-section-link">
+            Maps
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/art/"
+             class="sidebar-section-link active">
+            Art
+          </a>
+
+          
+            
+          
+        
+      
+        
+          
+          
+
+          <a href="/videos/"
+             class="sidebar-section-link">
+            Videos
+          </a>
+
+          
+        
+      
+        
+          
+          
+
+          <a href="/interactive-tools/"
+             class="sidebar-section-link">
+            Interactive Tools
+          </a>
+
+          
+        
+      
+        
+      
+    </nav>
+  </div>
+</aside>
+
+      <main class="pb7 main-content" role="main">
+        
+  
+
+  <article class="page-emotional-shape-of-books flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Art
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">The Emotional Shape of Books</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2026-05-22T00:00:00+11:00">May 22, 2026</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>A while back I read <a href="https://medium.com/@neuroecology/punctuation-in-novels-8f316d542ec4">this article by Adam J Calhoun</a>, where he stripped the words out of famous novels and left only the punctuation. Each book turned into a strange little visual fingerprint of its author&rsquo;s style. I loved it.</p>
+<p>I wanted to try the same trick but with a different question. Not how an author writes, but how a book <em>feels</em>. Where are the dark patches, where are the bright ones, and what does the emotional shape of an entire novel look like at a glance?</p>
+<p>So I built this.</p>
+<p><img src="images/outputCombinedVertical.png" alt="Combined visualization of six books"></p>
+<p><strong>What you&rsquo;re looking at</strong></p>
+<p>Each square is one whole book. Every character of text is one pixel, coloured by the sentiment of the sentence that character belongs to. Bright yellow is positive, deep purple is negative, with a thin band of magenta, pink, and orange in between for everything in the middle.</p>
+<p>You read each grid left-to-right, top-to-bottom, same as a page of English. The upper-left is the start of the book, the lower-right is the end.</p>
+<p><strong>How it was built</strong></p>
+<p>About a hundred lines of Python. The pipeline is short and dumb on purpose:</p>
+<ol>
+<li>Read the book as plain text.</li>
+<li>Split it into sentences with NLTK.</li>
+<li>Score each sentence with <a href="https://github.com/cjhutto/vaderSentiment">VADER</a>, a rule-based sentiment analyzer that gives you a number from -1 (very negative) to +1 (very positive).</li>
+<li>Build a flat array where every character of every sentence gets that sentence&rsquo;s score. A 200-character negative sentence contributes 200 negative values.</li>
+<li>Pad the array out to a perfect square and reshape it into a 2D grid.</li>
+<li>Render the grid as a heatmap with a custom plasma colormap, anchored to [-1, +1] so the colours are directly comparable across every book.</li>
+</ol>
+<p><strong>Two ends of the spectrum</strong></p>
+<p>I picked two books on purpose so the colours have something to anchor against.</p>
+<p><strong>Winnie-the-Pooh</strong> is the yellowest grid. It&rsquo;s one of the most cheerful books ever written, and the picture knows it. There&rsquo;s almost no purple in there at all.</p>
+<p><strong>The Road</strong> by Cormac McCarthy is the darkest. Post-apocalyptic, sparse, bleak, and the colours don&rsquo;t pretend otherwise. The purple runs nearly the entire length of the book.</p>
+<p>Everything else sits between those two. <em>A Christmas Carol</em> visibly shifts as Scrooge changes. <em>Anne Frank&rsquo;s diary</em> flickers between hope and dread. <em>Animal Farm</em> darkens as the story rolls toward its ending. <em>Anne of Green Gables</em> stays warm and bright, sitting closer to Pooh than anything else here.</p>
+<p><strong>References</strong></p>
+<ul>
+<li>The Road : Cormac McCarthy</li>
+<li>Anne of Green Gables : L. M. Montgomery</li>
+<li>Animal Farm : George Orwell</li>
+<li>The Diary of a Young Girl : Anne Frank</li>
+<li>A Christmas Carol : Charles Dickens</li>
+<li>Winnie-the-Pooh : A. A. Milne</li>
+</ul>
+<p>Original inspiration: <a href="https://medium.com/@neuroecology/punctuation-in-novels-8f316d542ec4">&ldquo;Punctuation in Novels&rdquo; by Adam J Calhoun</a>.</p>
+<ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+
+      </main>
+    </div>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  baseaddress.org 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+
+    <script>
+      (function () {
+        var nav     = document.querySelector('.sidebar-nav');
+        var overlay = document.getElementById('sidebarOverlay');
+        var btn     = document.getElementById('sidebarToggle');
+
+        function open()  { nav.classList.add('sidebar-open');    overlay.classList.add('sidebar-open');    btn.innerHTML = '&#10005;'; }
+        function close() { nav.classList.remove('sidebar-open'); overlay.classList.remove('sidebar-open'); btn.innerHTML = '&#9776;'; }
+        function toggle() { nav.classList.contains('sidebar-open') ? close() : open(); }
+
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', close);
+
+        document.querySelectorAll('.sidebar-post-link').forEach(function (a) {
+          a.addEventListener('click', close);
+        });
+      })();
+    </script>
+  </body>
+</html>

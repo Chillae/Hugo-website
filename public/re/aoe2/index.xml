@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AOE2 on baseaddress.org</title>
-    <link>http://localhost:1314/re/aoe2/</link>
+    <link>http://localhost:1313/re/aoe2/</link>
     <description>Recent content in AOE2 on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 May 2026 00:00:00 +1100</lastBuildDate>
-    <atom:link href="http://localhost:1314/re/aoe2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/re/aoe2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AOE2: Infinite Resources</title>
-      <link>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</link>
+      <link>http://localhost:1313/re/aoe2/aoe2-infinite-resources/</link>
       <pubDate>Mon, 18 May 2026 00:00:00 +1100</pubDate>
-      <guid>http://localhost:1314/re/aoe2/aoe2-infinite-resources/</guid>
+      <guid>http://localhost:1313/re/aoe2/aoe2-infinite-resources/</guid>
       <description>Building a trainer for Age of Empires 2 HD that pegs resources at 9999 on an F1 hotkey, using Cheat Engine pointer scans to find the static address.</description>
     </item>
   </channel>

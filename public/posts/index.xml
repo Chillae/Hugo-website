@@ -2,10 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on baseaddress.org</title>
-    <link>http://localhost:1314/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on baseaddress.org</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:1314/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 27 Mar 2026 19:56:26 +1100</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome</title>
+      <link>http://localhost:1313/posts/welcome/</link>
+      <pubDate>Fri, 27 Mar 2026 19:56:26 +1100</pubDate>
+      <guid>http://localhost:1313/posts/welcome/</guid>
+      <description>&lt;p&gt;blah blah blah website splash page with custom links to the things I am prod of.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
